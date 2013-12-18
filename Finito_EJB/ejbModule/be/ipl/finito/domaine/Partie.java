@@ -46,7 +46,7 @@ public class Partie implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Etat etat = Etat.EN_ATTENTE;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(schema = "FINITO", joinColumns = { @JoinColumn(name = "PARTIE_ID") }, inverseJoinColumns = { @JoinColumn(name = "JETON_ID") })
 	@MapKeyColumn(name="position")
 	private Map<Integer,Jeton> jetonRestant = new HashMap<Integer,Jeton>();
@@ -75,7 +75,7 @@ public class Partie implements Serializable {
 	 * 
 	 * @param etat
 	 */
-	public void setEtat(Etat etat) {
+	public void setEtat(final Etat etat) {
 		this.etat = etat;
 	}
 
@@ -93,7 +93,7 @@ public class Partie implements Serializable {
 	 * 
 	 * @param resultatDe
 	 */
-	public void setResultatDe(int resultatDe) {
+	public void setResultatDe(final int resultatDe) {
 		this.resultatDe = resultatDe;
 	}
 
@@ -139,7 +139,7 @@ public class Partie implements Serializable {
 	 * 
 	 * @param indiceTirage
 	 */
-	public void setIndiceTirage(int indiceTirage) {
+	public void setIndiceTirage(final int indiceTirage) {
 		this.indiceTirage = indiceTirage;
 	}
 
@@ -160,16 +160,20 @@ public class Partie implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Partie other = (Partie) obj;
-		if (id != other.id)
+		if (id != other.id) {
 			return false;
+		}
 		return true;
 	}
 
@@ -179,11 +183,12 @@ public class Partie implements Serializable {
 				return true;
 			}
 			
-			public void debuterPartie(Partie partie){
-				List<Integer> listePositions = new ArrayList<Integer>();
-				for (int i = 0; i < 3; i++) 
-					partie.piocherJeton();
+			public void debuterPartie(final Partie partie){
 				partie.setEtat(EN_COURS);
+				List<Integer> listePositions = new ArrayList<Integer>();
+				for (int i = 0; i < 3; i++) {
+					partie.piocherJeton();
+				}
 				partie.lancerDe();
 			}
 		},
@@ -192,12 +197,13 @@ public class Partie implements Serializable {
 				return true;
 			}
 			
-			public Jeton piocherJeton(Partie partie) {
+			public Jeton piocherJeton(final Partie partie) {
 				Map<Integer, Jeton> listeJetonsRestants = partie.getJetonsRestants();
 				List<Plateau> listePlateau = partie.getPlateauEnJeu();
 
-				if(listeJetonsRestants.isEmpty())
+				if(listeJetonsRestants.isEmpty()) {
 					return null;
+				}
 				
 				Jeton jeton = listeJetonsRestants.get(partie.getIndiceTirage());
 				
@@ -207,7 +213,7 @@ public class Partie implements Serializable {
 				return jeton;
 			}
 
-			public int[] finirPartie(Partie partie) {
+			public int[] finirPartie(final Partie partie) {
 				List<Plateau> listePlateau = partie.getPlateauEnJeu();
 				int[] score = new int[listePlateau.size()];
 
@@ -218,22 +224,24 @@ public class Partie implements Serializable {
 				return score;
 			}
 
-			public void suspendrePartie(Partie partie) {
+			public void suspendrePartie(final Partie partie) {
 				partie.setEtat(Etat.SUSPENDU);
 			}
 			
 		},
 		SUSPENDU {
-			public void reprendreJoueur(Plateau plateau, Partie partie) {
+			public void reprendreJoueur(final Plateau plateau, final Partie partie) {
 				plateau.setSuspendu(false);
 				List<Plateau>plateauDeJeu = partie.getPlateauEnJeu();
 				int nbJoueurPret = 0;
 				for (Plateau p : plateauDeJeu){
-					if(p.isSuspendu() == false)
+					if(p.isSuspendu() == false) {
 						nbJoueurPret ++;
+					}
 				}
-				if(nbJoueurPret == plateauDeJeu.size())
+				if(nbJoueurPret == plateauDeJeu.size()) {
 					partie.setEtat(EN_COURS);
+				}
 			}
 		},
 		FINI {
@@ -248,23 +256,23 @@ public class Partie implements Serializable {
 			return false;
 		}
 
-		public void suspendrePartie(Partie partie) {
+		public void suspendrePartie(final Partie partie) {
 			throw new UnsupportedOperationException();
 		}
 
-		public int[] finirPartie(Partie partie) {
+		public int[] finirPartie(final Partie partie) {
 			throw new UnsupportedOperationException();
 		}
 
-		public Jeton piocherJeton(Partie partie) {
+		public Jeton piocherJeton(final Partie partie) {
 			throw new UnsupportedOperationException();
 		}
 
-		public void reprendreJoueur(Plateau plateau, Partie partie) {
+		public void reprendreJoueur(final Plateau plateau, final Partie partie) {
 			throw new UnsupportedOperationException();
 			
 		}
-		public void debuterPartie(Partie partie){
+		public void debuterPartie(final Partie partie){
 			throw new UnsupportedOperationException();
 		}
 
@@ -287,7 +295,7 @@ public class Partie implements Serializable {
 		return etat.piocherJeton(this);
 	}
 
-	public void reprendreJoueur(Plateau plateau) {
+	public void reprendreJoueur(final Plateau plateau) {
 		etat.reprendreJoueur(plateau, this);
 	}
 }

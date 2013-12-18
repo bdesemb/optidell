@@ -32,7 +32,7 @@ public class GestionPartieImpl implements GestionPartie {
 	GestionPlateau gestionPlateau;
 
 	@Override
-	public Partie creerPartie(Joueur joueur) {
+	public Partie creerPartie(final Joueur joueur) {
 
 		Partie partie = new Partie();
 		partieDao.enregistrer(partie);
@@ -49,7 +49,7 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public Boolean ajouterJoueur(Partie partie, Joueur joueur) {
+	public Boolean ajouterJoueur(Partie partie, final Joueur joueur) {
 
 		if (partie.isEnAttente()) {
 			partie = partieDao.chargerPlateaux(partie);
@@ -74,16 +74,17 @@ public class GestionPartieImpl implements GestionPartie {
 		return jeton;
 	}
 
-	public int lancerDe(Partie partie) {
-		if (!partie.isEnCours())
+	public int lancerDe(final Partie partie) {
+		if (!partie.isEnCours()) {
 			return -1;
+		}
 		int resultat = partie.lancerDe();
 		partie.incrementerTirage();
 		partieDao.mettreAJour(partie);
 		return resultat;
 	}
 
-	public void suspendreJoueur(Partie partie, Plateau plateau) {
+	public void suspendreJoueur(final Partie partie, final Plateau plateau) {
 		partie.getEtat().suspendrePartie(partie);
 		plateau.setSuspendu(true);
 		plateauDao.mettreAJour(plateau);
@@ -97,7 +98,7 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public void debuterPartie(Partie partie) {
+	public void debuterPartie(final Partie partie) {
 		List<Jeton> jetons = jetonDao.lister();
 		Collections.shuffle(jetons);
 		partie.getEtat().debuterPartie(partie);
@@ -114,13 +115,14 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public List<Partie> listerPartiesEnSuspend(Joueur joueur) {
+	public List<Partie> listerPartiesEnSuspend(final Joueur joueur) {
 		return partieDao.listePartiesSuspendues(joueur);
 	}
 
 	@Override
-	public void reprendreJoueur(Partie partie, Plateau plateau) {
+	public void reprendreJoueur(Partie partie, final Joueur joueur) {
 		partie = partieDao.chargerPlateaux(partie);
+		Plateau plateau = plateauDao.recherchePlateauPourJoueurEtPartie(partie.getId(), joueur.getId());
 		partie.reprendreJoueur(plateau);
 		plateauDao.mettreAJour(plateau);
 		partieDao.mettreAJour(partie);
@@ -132,14 +134,15 @@ public class GestionPartieImpl implements GestionPartie {
 		List<Plateau>plateauEnJeu = partie.getPlateauEnJeu();
 		int nbConnectes = 0;
 		for(Plateau p : plateauEnJeu){
-			if(!p.isSuspendu())
+			if(!p.isSuspendu()) {
 				nbConnectes ++;
+			}
 		}
 		return nbConnectes;
 	}
 
 	@Override
-	public Partie recupererPartieAvecID(int id) {
+	public Partie recupererPartieAvecID(final int id) {
 		return partieDao.rechercher(id);
 	}
 

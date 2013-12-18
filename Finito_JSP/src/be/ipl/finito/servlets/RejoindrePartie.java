@@ -42,14 +42,14 @@ public class RejoindrePartie extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("etat")!=null){
 			HttpSession session =  request.getSession();
 			Partie partie = gestionPartie.recupererPartieAvecID(Integer.parseInt(request.getParameter("radio_partie")));
@@ -63,8 +63,9 @@ public class RejoindrePartie extends HttpServlet {
 					
 			}
 			else {
-				//if(gestionPartie.reprendreJoueur(partie, gestionPlateau.)){	
-					
+				gestionPartie.reprendreJoueur(partie, joueur);	
+				session.setAttribute("id_partie", partie.getId());
+				getServletContext().getNamedDispatcher("jouer.html").forward(request, response);
 			}
 		}
 		getServletContext().getNamedDispatcher("lobby.html").forward(request, response);

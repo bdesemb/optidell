@@ -19,7 +19,7 @@ public interface GestionPartie {
 	void suspendreJoueur(Partie partie, Plateau plateau);
 	int[] finirPartie(Partie partie);
 	void debuterPartie(Partie partie);
-	void reprendreJoueur(Partie partie, Plateau plateau);
+	void reprendreJoueur(Partie partie, Joueur joueur);
 	List<Partie>listerPartiesEnAttente();
 	List<Partie>listerPartiesEnSuspend(Joueur joueur);
 	int nbrJoueurConnectes(Partie partie);

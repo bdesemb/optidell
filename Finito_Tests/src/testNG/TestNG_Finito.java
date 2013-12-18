@@ -31,6 +31,8 @@ public class TestNG_Finito {
 	private static String[] emailJoueurs = {"emmeline.leconte@ipl.be", "michel.debacker@ipl.be", "olivier.choquet@ipl.be"};
 	private static Joueur[] joueurs = new Joueur[nomsJoueurs.length];
 	
+	private static Partie partieEnCours = null;
+	
 	@BeforeClass
 	public void init() throws Exception {
 		Context jndi = new InitialContext();
@@ -38,6 +40,9 @@ public class TestNG_Finito {
 		gestionPlateaux = (GestionPlateau) jndi.lookup("ejb:Finito_EAR/Finito_EJB/GestionPlateauImpl!be.ipl.finito.ucc.GestionPlateau");
 		gestionJoueurs = (GestionJoueur) jndi.lookup("ejb:Finito_EAR/Finito_EJB/GestionJoueurImpl!be.ipl.finito.ucc.GestionJoueur");
 		gestionCases = (GestionCase) jndi.lookup("ejb:Finito_EAR/Finito_EJB/GestionCaseImpl!be.ipl.finito.ucc.GestionCase");
+		for(int i=0;i<11;i++){
+			
+		}
 		
 	}
 
@@ -75,5 +80,15 @@ public class TestNG_Finito {
 		Partie partie = gestionParties.listerPartiesEnAttente().get(0);
 		gestionParties.ajouterJoueur(partie, joueurs[1]);
 		assertEquals(gestionParties.listerPartiesEnAttente().get(0).getPlateauEnJeu().get(1).getJoueur(), joueurs[1]);
+	}
+	
+	@Test(priority=5)
+	public void testDebuterPartie() {
+		partieEnCours = gestionParties.listerPartiesEnAttente().get(0);
+		gestionParties.debuterPartie(partieEnCours);
+		partieEnCours = gestionParties.recupererPartieAvecID(partieEnCours.getId());
+		assertEquals(true, partieEnCours.isEnCours());
+		assertEquals(partieEnCours.getJetonsRestants().size(), 12);
+		assertEquals(partieEnCours.getIndiceTirage(),0);
 	}
 }
