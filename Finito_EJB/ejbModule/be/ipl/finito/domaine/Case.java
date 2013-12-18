@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -29,8 +30,8 @@ public class Case implements Serializable {
 	@Column(nullable = false)
 	private int numero;
 
-	@OneToOne(cascade = { CascadeType.ALL })
-	@PrimaryKeyJoinColumn
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@PrimaryKeyJoinColumn(name="JETON_ID")
 	private Jeton jeton;
 
 	/**
