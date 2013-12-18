@@ -48,4 +48,8 @@
     <servlet-name>lobby</servlet-name>
     <jsp-file>/WEB-INF/jsp/lobby.jsp</jsp-file>
   </servlet>
+  <servlet>
+    <servlet-name>pageInscription.html</servlet-name>
+    <jsp-file>/WEB-INF/jsp/inscription.jsp</jsp-file>
+  </servlet>
 </web-app>
