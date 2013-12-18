@@ -76,6 +76,6 @@ public class TestNG_Finito {
 		Partie partie = gestionParties.listerPartiesEnAttente().get(0);
 		gestionParties.ajouterJoueur(partie, joueurs[1]);
 		System.out.println(gestionParties.listerPartiesEnAttente().get(0)); //.getPlateauEnJeu().get(1));
-		assertEquals(gestionParties.listerPartiesEnAttente().get(0).getPlateauEnJeu().get(1), joueurs[1]);
+		assertEquals(gestionParties.listerPartiesEnAttente().get(0).getPlateauEnJeu().get(1).getJoueur(), joueurs[1]);
 	}
 }
