@@ -126,4 +126,21 @@ public class GestionPartieImpl implements GestionPartie {
 		partieDao.mettreAJour(partie);
 	}
 
+	@Override
+	public int nbrJoueurConnectes(Partie partie) {
+		partie = partieDao.chargerPlateaux(partie);
+		List<Plateau>plateauEnJeu = partie.getPlateauEnJeu();
+		int nbConnectes = 0;
+		for(Plateau p : plateauEnJeu){
+			if(!p.isSuspendu())
+				nbConnectes ++;
+		}
+		return nbConnectes;
+	}
+
+	@Override
+	public Partie recupererPartieAvecID(int id) {
+		return partieDao.rechercher(id);
+	}
+
 }

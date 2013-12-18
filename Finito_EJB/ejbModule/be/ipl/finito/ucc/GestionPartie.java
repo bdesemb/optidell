@@ -22,4 +22,6 @@ public interface GestionPartie {
 	void reprendreJoueur(Partie partie, Plateau plateau);
 	List<Partie>listerPartiesEnAttente();
 	List<Partie>listerPartiesEnSuspend(Joueur joueur);
+	int nbrJoueurConnectes(Partie partie);
+	Partie recupererPartieAvecID(int id);
 }
