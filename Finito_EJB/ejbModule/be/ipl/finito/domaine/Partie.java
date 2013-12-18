@@ -52,13 +52,10 @@ public class Partie implements Serializable {
 
 	@ManyToMany
 	@JoinTable(schema = "FINITO", joinColumns = { @JoinColumn(name = "PARTIE_ID") }, inverseJoinColumns = { @JoinColumn(name = "JETON_ID") })
-	//@Column(name = "POSITION")
-	// @OrderBy("POSITION")
 	@MapKeyColumn(name="position")
 	private Map<Integer,Jeton> jetonRestant = new HashMap<Integer,Jeton>();
 
-	@OneToMany(mappedBy = "partie", fetch=FetchType.LAZY)
-	//@Transient
+	@OneToMany(mappedBy = "partie", fetch=FetchType.EAGER)
 	private List<Plateau> plateauEnJeu = new ArrayList<Plateau>();
 
 	/**
@@ -187,6 +184,7 @@ public class Partie implements Serializable {
 			}
 			
 			public void debuterPartie(Partie partie){
+				List<Integer> listePositions = new ArrayList<Integer>();
 				for (int i = 0; i < 3; i++) 
 					partie.piocherJeton();
 				partie.setEtat(EN_COURS);

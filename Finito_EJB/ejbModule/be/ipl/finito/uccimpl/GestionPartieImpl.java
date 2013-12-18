@@ -1,10 +1,13 @@
 package be.ipl.finito.uccimpl;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import be.ipl.finito.dao.JetonDao;
 import be.ipl.finito.dao.PartieDao;
 import be.ipl.finito.dao.PlateauDao;
 import be.ipl.finito.domaine.Jeton;
@@ -21,6 +24,9 @@ public class GestionPartieImpl implements GestionPartie {
 
 	@EJB
 	PlateauDao plateauDao;
+	
+	@EJB
+	JetonDao jetonDao;
 
 	@EJB
 	GestionPlateau gestionPlateau;
@@ -92,8 +98,14 @@ public class GestionPartieImpl implements GestionPartie {
 
 	@Override
 	public void debuterPartie(Partie partie) {
+		List<Jeton> jetons = jetonDao.lister();
+		Collections.shuffle(jetons);
 		partie.getEtat().debuterPartie(partie);
-
+		Map<Integer, Jeton> jetonsRestants = partie.getJetonsRestants();
+		for(int i=1;i<=12;i++){
+			jetonsRestants.put(i, jetons.get(i-1));
+		}
+		partieDao.mettreAJour(partie);
 	}
 
 	@Override
