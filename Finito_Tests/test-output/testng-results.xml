@@ -2,28 +2,28 @@
 <testng-results skipped="0" failed="0" total="4" passed="4">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="2251" started-at="2013-12-18T15:26:02Z" finished-at="2013-12-18T15:26:04Z">
+  <suite name="Default suite" duration-ms="2420" started-at="2013-12-18T16:05:47Z" finished-at="2013-12-18T16:05:49Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="2251" started-at="2013-12-18T15:26:02Z" finished-at="2013-12-18T15:26:04Z">
+    <test name="Default test" duration-ms="2420" started-at="2013-12-18T16:05:47Z" finished-at="2013-12-18T16:05:49Z">
       <class name="testNG.TestNG_Finito">
-        <test-method status="PASS" signature="init()[pri:0, instance:testNG.TestNG_Finito@1c94b51]" name="init" is-config="true" duration-ms="412" started-at="2013-12-18T16:26:02Z" finished-at="2013-12-18T16:26:02Z">
+        <test-method status="PASS" signature="init()[pri:0, instance:testNG.TestNG_Finito@6fee3a]" name="init" is-config="true" duration-ms="499" started-at="2013-12-18T17:05:47Z" finished-at="2013-12-18T17:05:48Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- init -->
-        <test-method status="PASS" signature="testInscriptionJoueurs()[pri:0, instance:testNG.TestNG_Finito@1c94b51]" name="testInscriptionJoueurs" duration-ms="1131" started-at="2013-12-18T16:26:02Z" finished-at="2013-12-18T16:26:03Z">
+        <test-method status="PASS" signature="testInscriptionJoueurs()[pri:0, instance:testNG.TestNG_Finito@6fee3a]" name="testInscriptionJoueurs" duration-ms="1493" started-at="2013-12-18T17:05:48Z" finished-at="2013-12-18T17:05:49Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testInscriptionJoueurs -->
-        <test-method status="PASS" signature="testConnexionJoueur()[pri:0, instance:testNG.TestNG_Finito@1c94b51]" name="testConnexionJoueur" duration-ms="24" started-at="2013-12-18T16:26:03Z" finished-at="2013-12-18T16:26:04Z">
+        <test-method status="PASS" signature="testConnexionJoueur()[pri:0, instance:testNG.TestNG_Finito@6fee3a]" name="testConnexionJoueur" duration-ms="17" started-at="2013-12-18T17:05:49Z" finished-at="2013-12-18T17:05:49Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testConnexionJoueur -->
-        <test-method status="PASS" signature="testCreerPartie()[pri:0, instance:testNG.TestNG_Finito@1c94b51]" name="testCreerPartie" duration-ms="518" started-at="2013-12-18T16:26:04Z" finished-at="2013-12-18T16:26:04Z">
+        <test-method status="PASS" signature="testCreerPartie()[pri:0, instance:testNG.TestNG_Finito@6fee3a]" name="testCreerPartie" duration-ms="206" started-at="2013-12-18T17:05:49Z" finished-at="2013-12-18T17:05:49Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testCreerPartie -->
-        <test-method status="PASS" signature="testRejoindrePartie()[pri:0, instance:testNG.TestNG_Finito@1c94b51]" name="testRejoindrePartie" duration-ms="154" started-at="2013-12-18T16:26:04Z" finished-at="2013-12-18T16:26:04Z">
+        <test-method status="PASS" signature="testRejoindrePartie()[pri:0, instance:testNG.TestNG_Finito@6fee3a]" name="testRejoindrePartie" duration-ms="193" started-at="2013-12-18T17:05:49Z" finished-at="2013-12-18T17:05:49Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testRejoindrePartie -->
