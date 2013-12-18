@@ -8,6 +8,7 @@ import be.ipl.finito.dao.PlateauDao;
 import be.ipl.finito.domaine.Case;
 import be.ipl.finito.domaine.Jeton;
 import be.ipl.finito.domaine.Joueur;
+import be.ipl.finito.domaine.Partie;
 import be.ipl.finito.domaine.Plateau;
 import be.ipl.finito.ucc.GestionPlateau;
 
@@ -20,8 +21,8 @@ public class GestionPlateauImpl implements GestionPlateau{
 	CaseDao caseDao;
 	
 	
-	public Plateau creerPlateau(Joueur joueur) {
-		Plateau plateau = new Plateau(joueur);
+	public Plateau creerPlateau(Joueur joueur, Partie partie) {
+		Plateau plateau = new Plateau(joueur,partie);
 		plateauDao.enregistrer(plateau);
 		plateauDao.chargerCases(plateau);
 		for(int i=1;i<=20;i++){

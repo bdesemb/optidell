@@ -18,7 +18,6 @@ import be.ipl.finito.domaine.Partie;
 public class PartieDaoImpl extends DaoImpl<Integer, Partie> implements
 		PartieDao {
 
-
 	public List<Partie> listePartiesEnAttente(){
 		String query = "SELECT p FROM Partie p " +
 				"WHERE p.etat LIKE 'EN_ATTENTE'";

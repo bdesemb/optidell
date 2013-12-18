@@ -1,6 +1,5 @@
 package be.ipl.finito.uccimpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -31,10 +30,11 @@ public class GestionPartieImpl implements GestionPartie {
 
 		Partie partie = new Partie();
 		partieDao.enregistrer(partie);
-		Plateau plateau = gestionPlateau.creerPlateau(joueur);
+		Plateau plateau = gestionPlateau.creerPlateau(joueur,partie);
 		partieDao.chargerPlateaux(partie);
 
 		List<Plateau> listePlateau = partie.getPlateauEnJeu();
+
 		listePlateau.add(plateau);
 
 		partieDao.mettreAJour(partie);
@@ -46,9 +46,9 @@ public class GestionPartieImpl implements GestionPartie {
 	public Boolean ajouterJoueur(Partie partie, Joueur joueur) {
 
 		if (partie.isEnAttente()) {
-			Plateau plateau = gestionPlateau.creerPlateau(joueur);
-
 			partie = partieDao.chargerPlateaux(partie);
+			Plateau plateau = gestionPlateau.creerPlateau(joueur,partie);
+
 			List<Plateau> listePlateau = partie.getPlateauEnJeu();
 			listePlateau.add(plateau);
 

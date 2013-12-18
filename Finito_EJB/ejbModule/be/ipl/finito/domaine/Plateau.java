@@ -52,8 +52,9 @@ public class Plateau implements Serializable {
 		super();
 	}
 	
-	public Plateau(Joueur joueur){
+	public Plateau(Joueur joueur, Partie partie){
 		this.joueur = joueur;
+		this.partie = partie;
 	}
 
 	/**
