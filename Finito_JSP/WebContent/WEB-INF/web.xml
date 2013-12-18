@@ -45,7 +45,7 @@
     <jsp-file>/WEB-INF/jsp/index.jsp</jsp-file>
   </servlet>
   <servlet>
-    <servlet-name>lobby.html</servlet-name>
+    <servlet-name>lobby</servlet-name>
     <jsp-file>/WEB-INF/jsp/lobby.jsp</jsp-file>
   </servlet>
 </web-app>

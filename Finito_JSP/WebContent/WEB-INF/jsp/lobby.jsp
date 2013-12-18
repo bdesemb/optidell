@@ -1,4 +1,4 @@
 <c:if test="${message != null}">
 	<div id="erreur">${message}</div>
 </c:if>
-<div>Vous êtes connecté</div>
+<div>${pseudo}, vous êtes connecté</div>

@@ -25,9 +25,12 @@ public class Connexion extends HttpServlet {
 	private GestionJoueur gestionJoueur;
 	
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//test
+		gestionJoueur.inscription("Jean", "Jean", "test@test.com", "aa", "bb");
+		//----
 		String pseudo = request.getParameter("pseudo");
 		String password = request.getParameter("password");
 		Joueur joueur = gestionJoueur.connexion(pseudo, password);
@@ -41,14 +44,14 @@ public class Connexion extends HttpServlet {
 		synchronized (session) {
 			session.setAttribute("pseudo", pseudo);
 		}
-		getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
+		session.getServletContext().getNamedDispatcher("lobby").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		getServletContext().getNamedDispatcher("lobby").forward(request, response);
 	}
 
 }
