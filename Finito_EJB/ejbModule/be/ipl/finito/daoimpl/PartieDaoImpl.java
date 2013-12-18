@@ -26,8 +26,8 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> implements
 	
 	public List<Partie> listePartiesSuspendues(Joueur joueur){
 		String query = "SELECT pa FROM Partie pa, Plateau pl " +
-				"WHERE pa.etat = 'SUSPENDUES' " +
-				"pa.id = pl.partie_id "+
+				"WHERE pa.etat LIKE 'SUSPENDUE' " +
+				"AND pa.id = pl.partie_id "+
 				"AND p1.joueur_id = ?1";
 		return liste(query, joueur.getId());
 	}
