@@ -5,6 +5,9 @@
     <classes>
       <class name="testNG.TestNG_Finito">
         <methods>
+          <include name="testInscriptionJoueurs"/>
+          <include name="testConnexionJoueur"/>
+          <include name="testCreerPartie"/>
           <include name="init"/>
           <include name="testRejoindrePartie"/>
         </methods>

@@ -3,6 +3,7 @@ package be.ipl.finito.servlets;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import be.ipl.finito.domaine.Joueur;
 import be.ipl.finito.ucc.GestionJoueur;
+import be.ipl.finito.ucc.GestionPartie;
 
 
 /**
@@ -24,13 +26,13 @@ public class Connexion extends HttpServlet {
 	@EJB
 	private GestionJoueur gestionJoueur;
 	
+	@EJB
+	private GestionPartie gestionPartie;
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//test
-		gestionJoueur.inscription("Jean", "Jean", "test@test.com", "aa", "bb");
-		//----
 		String pseudo = request.getParameter("pseudo");
 		String password = request.getParameter("password");
 		Joueur joueur = gestionJoueur.connexion(pseudo, password);
@@ -42,16 +44,21 @@ public class Connexion extends HttpServlet {
 		}
 		HttpSession session = request.getSession();		
 		synchronized (session) {
-			session.setAttribute("pseudo", pseudo);
+			session.setAttribute("joueur", joueur);
+			session.setAttribute("partiesSuspendues", gestionPartie.listerPartiesEnSuspend(joueur));
 		}
-		session.getServletContext().getNamedDispatcher("lobby").forward(request, response);
+		ServletContext ctx = request.getServletContext();
+		synchronized(ctx) {
+			ctx.setAttribute("partiesEnAttente", gestionPartie.listerPartiesEnAttente());
+		}
+		session.getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getNamedDispatcher("lobby").forward(request, response);
+		getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
 	}
 
 }
