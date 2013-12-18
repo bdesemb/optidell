@@ -66,7 +66,6 @@ public class TestNG_Finito {
 	
 	@Test(priority=3)
 	public void testCreerPartie() {
-		System.out.println(joueurs[0]);
 		Partie partie = gestionParties.creerPartie(joueurs[0]);
 		assertEquals(gestionParties.listerPartiesEnAttente().get(0), partie);
 	}
@@ -75,7 +74,6 @@ public class TestNG_Finito {
 	public void testRejoindrePartie() {
 		Partie partie = gestionParties.listerPartiesEnAttente().get(0);
 		gestionParties.ajouterJoueur(partie, joueurs[1]);
-		System.out.println(gestionParties.listerPartiesEnAttente().get(0)); //.getPlateauEnJeu().get(1));
 		assertEquals(gestionParties.listerPartiesEnAttente().get(0).getPlateauEnJeu().get(1).getJoueur(), joueurs[1]);
 	}
 }
