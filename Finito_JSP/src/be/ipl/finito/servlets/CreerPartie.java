@@ -18,7 +18,7 @@ import be.ipl.finito.ucc.GestionPartie;
 /**
  * Servlet implementation class CreerPartie
  */
-@WebServlet(name = "CreerPartie")
+@WebServlet(name = "creerPartie.html")
 public class CreerPartie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -36,14 +36,14 @@ public class CreerPartie extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		synchronized (session) {
 			String pseudo = (String) session.getAttribute("pseudo");
@@ -51,7 +51,7 @@ public class CreerPartie extends HttpServlet {
 			Partie partie = gestionPartie.creerPartie(joueur);
 			session.setAttribute("id_partie", partie.getId());
 		}
-		session.getServletContext().getNamedDispatcher("jouer.html").forward(request, response);
+		getServletContext().getNamedDispatcher("jouer.html").forward(request, response);
 	}
 
 }

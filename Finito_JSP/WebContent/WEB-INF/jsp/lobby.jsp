@@ -11,7 +11,7 @@ Partie(s) en attente
 </c:forEach>
 <input type="hidden" name="etat" value="en_attente"/>
 <input type="submit" value="Rejoindre"/>
-</form>
+</form><form action="creerPartie.html" method="post"><input type="submit" value="Créer une partie"/></form>
 <br/>
 Partie(s) suspendues
 <form action="jouer.html" method="post">

@@ -19,25 +19,25 @@ import be.ipl.finito.ucc.GestionPlateau;
 /**
  * Servlet implementation class RejoindrePartie
  */
-@WebServlet(name="rejoindrePartie.html")
+@WebServlet(name = "rejoindrePartie.html")
 public class RejoindrePartie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      
+
 	@EJB
 	private GestionPartie gestionPartie;
-	
+
 	@EJB
 	private GestionJoueur gestionJoueur;
-	
+
 	@EJB
 	private GestionPlateau gestionPlateau;
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RejoindrePartie() {
-        super();
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public RejoindrePartie() {
+		super();
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -50,21 +50,26 @@ public class RejoindrePartie extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("etat")!=null){
-			HttpSession session =  request.getSession();
+		if (request.getParameter("etat") != null) {
+			HttpSession session = request.getSession();
 			Partie partie = gestionPartie.recupererPartieAvecID(Integer.parseInt(request.getParameter("radio_partie")));
-			Joueur joueur  = gestionJoueur.rechercheJoueurViaPseudo((String) session.getAttribute("pseudo"));
-			
-			if(!request.getParameter("etat").equals("suspendue")){
-				if(gestionPartie.ajouterJoueur(partie, joueur)){
-					session.setAttribute("id_partie", partie.getId());
+			Joueur joueur = null;
+			synchronized (session) {
+				joueur = gestionJoueur.rechercheJoueurViaPseudo((String) session.getAttribute("pseudo"));
+			}
+			if (!request.getParameter("etat").equals("suspendue")) {
+				if (gestionPartie.ajouterJoueur(partie, joueur)) {
+					synchronized (session) {
+						session.setAttribute("id_partie", partie.getId());
+					}
 					getServletContext().getNamedDispatcher("jouer.html").forward(request, response);
 				}
-					
-			}
-			else {
-				gestionPartie.reprendreJoueur(partie, joueur);	
-				session.setAttribute("id_partie", partie.getId());
+
+			} else {
+				gestionPartie.reprendreJoueur(partie, joueur);
+				synchronized (session) {
+					session.setAttribute("id_partie", partie.getId());
+				}
 				getServletContext().getNamedDispatcher("jouer.html").forward(request, response);
 			}
 		}
