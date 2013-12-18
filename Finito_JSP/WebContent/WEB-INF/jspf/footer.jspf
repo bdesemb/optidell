@@ -1,0 +1,9 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<hr>
+	<c:if test="${pageContext.request.servletPath!='/index.html'}">
+		<c:url var="urlIndex" value="index.html" />
+		<a href="${urlIndex}">Home</a><br>
+	</c:if>
+	<p><label for="email">Nous contacter: </label><a id="email" href="mailto:${initParam.email}">Finitooine</a></p>
+</body>
+</html>
