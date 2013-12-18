@@ -14,6 +14,7 @@ import be.ipl.finito.domaine.Joueur;
 import be.ipl.finito.domaine.Partie;
 import be.ipl.finito.ucc.GestionJoueur;
 import be.ipl.finito.ucc.GestionPartie;
+import be.ipl.finito.ucc.GestionPlateau;
 
 /**
  * Servlet implementation class RejoindrePartie
@@ -36,7 +37,6 @@ public class RejoindrePartie extends HttpServlet {
      */
     public RejoindrePartie() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -63,7 +63,7 @@ public class RejoindrePartie extends HttpServlet {
 					
 			}
 			else {
-				if(gestionPartie.reprendreJoueur(partie, gestionPlateau.)){	
+				//if(gestionPartie.reprendreJoueur(partie, gestionPlateau.)){	
 					
 			}
 		}
