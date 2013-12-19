@@ -1,6 +1,8 @@
-
-Bienvenue dans la partie !
+<<<<<<< .mine Bienvenue dans la partie !
 </br>
+======= Bienvenue dans la partie !
+</br>
+>>>>>>> .r55
 
 
 <c:set var="cases" value="${cases}" />
@@ -13,7 +15,11 @@ Plateau de jeu :
 			<c:forEach var="j" begin="0" end="5">
 				<c:set var="case" value="${cases[position]}" />
 				<c:set var="position" value="${position +1}" />
-				<td><div id="${case.id}" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)"><b>${case.numero}</b></div></td>
+				<td><div id="${case.id}" class="div1" ondrop="drop(event)"
+						ondragover="allowDrop(event)">
+						<b>${case.numero}</b>
+					</div></td>
+
 			</c:forEach>
 		</tr>
 	</c:forEach>
@@ -22,7 +28,6 @@ Plateau de jeu :
 </br>
 Mes jetons en main :
 </br>
-
 <table align="center">
 	<tr>
 		<c:forEach var="jetonsEnMain" items="${jetonsEnMain}">

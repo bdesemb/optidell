@@ -15,6 +15,7 @@ import be.ipl.finito.domaine.Partie;
 import be.ipl.finito.ucc.GestionJoueur;
 import be.ipl.finito.ucc.GestionPartie;
 import be.ipl.finito.ucc.GestionPlateau;
+import be.ipl.finito.util.Util;
 
 /**
  * Servlet implementation class RejoindrePartie
@@ -61,6 +62,9 @@ public class RejoindrePartie extends HttpServlet {
 				if (gestionPartie.ajouterJoueur(partie, joueur)) {
 					synchronized (session) {
 						session.setAttribute("id_partie", partie.getId());
+						int nbrJoueur = gestionPartie.nbrJoueurConnectes(partie);
+						if(nbrJoueur == Util.MAX_JOUEURS)
+							gestionPartie.debuterPartie(partie);
 					}
 					getServletContext().getNamedDispatcher("jouerPartie").forward(request, response);
 				}
