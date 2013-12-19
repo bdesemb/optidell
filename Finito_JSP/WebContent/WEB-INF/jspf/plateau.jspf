@@ -11,10 +11,20 @@ Plateau de jeu :
 			<c:forEach var="j" begin="0" end="5">
 				<c:set var="case" value="${cases[position]}" />
 				<c:set var="position" value="${position +1}" />
-				<td><div id="case_${case.id}" class="div1" ondrop="drop(event)"
+				<td><c:choose>
+					<c:when test="${case.numero == de}">
+				<div id="${case.id}" class="div2" ondrop="drop(event)"
 						ondragover="allowDrop(event)">
 						<b>${case.numero}</b>
 					</div>
+					</c:when>
+					<c:otherwise>
+					<div id="${case.id}" class="div1" ondrop="drop(event)"
+						ondragover="allowDrop(event)">
+						<b>${case.numero}</b>
+					</div>
+					</c:otherwise>
+					</c:choose>
 				</td>
 			</c:forEach>
 		</tr>
@@ -28,11 +38,13 @@ Mes jetons en main :
 	<tr>
 		<c:forEach var="jetonsEnMain" items="${jetonsEnMain}">
 			<td><div id="jeton_${jetonsEnMain.id}" class="drag" draggable="true"
-					ondragstart="drag(event)" width="40" height="40">
-					<b>${jetonsEnMain.numero}</b>
-				</div></td>
+					ondragstart="drag(event)" width="40" height="40"><b>${jetonsEnMain.numero}</b></div></td>
 		</c:forEach>
 	</tr>
 </table>
 
+<form id="form" action="jouer.html" method="post">
+	<input type="hidden" name="numeroJeton" value="" id="numeroJeton"/>
+	<input type="hidden" name="idCase" value="" id="idCase"/>
+</form>
 

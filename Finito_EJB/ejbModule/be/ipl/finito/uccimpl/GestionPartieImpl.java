@@ -114,7 +114,6 @@ public class GestionPartieImpl implements GestionPartie {
 			plateau = plateauDao.mettreAJour(plateau);
 			System.out.println(plateau.getId()+" "+plateau.getJetonsEnMain().size());
 		}
-		partieDao.chargerPlateaux(partie);
 		partie = partieDao.mettreAJour(partie);
 		return partie;
 	}
