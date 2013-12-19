@@ -14,7 +14,7 @@ function drop(ev) {
 
 function refresh() {
 	var $request = $.ajax({
-		url: "plateau.html",
+		url: "jouerPartie",
 		type: "post",
 	});
 	$request.done(function (response, textStatus, xhr) {
