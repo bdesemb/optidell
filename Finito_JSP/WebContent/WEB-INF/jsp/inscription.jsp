@@ -1,3 +1,20 @@
+
+<title>Bienvenue sur Finitooine</title>
+</head>
+<body>
+
+	<c:if test="${message != null}">
+		<div id="erreur">${message}</div>
+	</c:if>
+	
+	<c:if test="${ sessionScope.joueur != null}">
+		<div id="entete">
+			Connecté: ${ sessionScope.joueur.login }
+			<c:url var="deconnexion" value="deconnexion.html" />
+			<a href="${ deconnexion }">Se déconnecter</a>
+		</div>
+	</c:if>
+<table id="page_table"><tr><td id="page_td"><div id="contenu">
 <c:if test="${message != null}">
 	<div id="erreur">${message}</div>
 </c:if>
@@ -13,3 +30,4 @@
 	<input type="submit" value="S'inscrire"/>
 </form>
 
+</div></td></tr></table>
