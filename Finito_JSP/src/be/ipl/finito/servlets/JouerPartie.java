@@ -64,7 +64,7 @@ public class JouerPartie extends HttpServlet {
 			Plateau plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
 			System.out.println(plateau);
 			List<Case> cases = gestionPlateau.recuperLaListeDeCase(plateau);
-			List<Jeton> jetonsEnMain = plateau.getJetonsEnMain();
+			List<Jeton> jetonsEnMain = gestionPlateau.recupererMainPlateau(plateau);
 			
 			session.setAttribute("cases", cases);
 			session.setAttribute("jetonsEnMain", jetonsEnMain);
