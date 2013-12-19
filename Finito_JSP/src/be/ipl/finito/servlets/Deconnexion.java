@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class Deconnexion
  */
-@WebServlet("deconnexion.html")
+@WebServlet(name="deconnexion.html")
 public class Deconnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -21,6 +21,8 @@ public class Deconnexion extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Gérer le fait que le joueur peut être dans une partie
 		HttpSession session = request.getSession();
+		session.invalidate();
+		getServletContext().getNamedDispatcher("index.html").forward(request, response);
 	}
 
 	/**
