@@ -1,0 +1,92 @@
+
+html {
+	height: 100%;	
+}
+
+body {
+	height: 100%;
+	background-color: black;
+	background-image: url("../ressources/images/Tatooine.jpg");
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	color: white;
+	margin: 0;
+	padding: 0;
+}
+
+#page_table {
+	height: 100%;
+	width: 100%;
+}
+
+#page_td {
+	height: 100%;
+	padding: 0;
+	vertical-align: middle;
+}
+
+#entete {
+	width: 100%;
+	height: 30px;
+	margin-right: 10px;
+	text-align: right;
+}
+
+a {
+	color: yellow;
+}
+
+
+#contenu {
+	width: 500px;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: -200px;
+}
+
+#titre {
+	font-family: "Star wars";
+	font-size: 200%;
+	color: #D1AD66;
+}
+
+/* #formulaire {
+	background: rgba(225, 192, 128, 0.7);
+	border: 1px solid black rgba(147, 184, 189, 0.8);
+	box-shadow: 0pt 2px 5px rgba(105, 108, 109, 0.7),
+				0px 0px 8px 5px rgba(208, 223, 220, 0.4) inset;
+	border-radius: 5px;
+	color: #6B4E15;
+} */
+
+/* .bouton {
+	width:30%;
+	cursor: pointer;
+	background: rgb(61, 157, 179);
+	color: #fff;
+	font-size:18px;
+	border: 1px solid rgb(28, 108, 122);
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+	border-radius: 3px;
+	box-shadow: 0px 1px 3px 2px rgba(0, 0, 0, 0.07) inset,
+				0px 0px 0px 1.5px rgb(254, 254, 254),
+				0px 2.5px 3px 1.5px rgb(210, 210, 210);
+	transition: all 0.2s linear;
+}*/
+
+#liste_suspendues{
+	float:right;
+	width:40%;
+	margin-left:100px;
+}
+
+#liste_attentes{
+	float:left;
+	width:40%;
+	margin-margin:100px;
+}
+
+@FONT-FACE {
+	font-family: "Star Wars";
+	src: url('../ressources/polices/Starjout.ttf');
+}
