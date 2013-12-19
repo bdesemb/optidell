@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<link rel="stylesheet" type="text/css" href='<c:url value="css/style.css"/>' />
 <c:choose>
 	<c:when test="${title-html != null}">
 		<title>Finitooine - ${title-html}</title>
@@ -24,10 +24,11 @@
 	</c:if>
 	
 	<c:if test="${ sessionScope.joueur != null}">
-		<div id="login">
+		<div id="entete">
 			Connecté: ${ sessionScope.joueur.login }
 			<c:url var="deconnexion" value="deconnexion.html" />
 			<a href="${ deconnexion }">Se déconnecter</a>
 		</div>
 	</c:if>
+<table id="page_table"><tr><td id="page_td"><div id="contenu">
 	
