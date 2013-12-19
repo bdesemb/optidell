@@ -27,6 +27,7 @@
 		<div id="login">
 			Salut, ${ sessionScope.joueur.login }
 			<c:url var="deconnexion" value="deconnexion.html" />
-			<a href="deconnexion">Se déconnecter</a>
+			<a href="${ deconnexion }">Se déconnecter</a>
 		</div>
 	</c:if>
+	
