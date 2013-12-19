@@ -53,6 +53,7 @@ public class Inscription extends HttpServlet {
 			if(gestionJoueur.rechercheJoueurViaPseudo(login) != null){
 				String message = "Le pseudo est déja présent";
 				request.setAttribute("message", message);
+				request.setAttribute("title-html", "Inscription");
 				getServletContext().getNamedDispatcher("pageInscription.html").forward(request, response);
 				return;
 			}

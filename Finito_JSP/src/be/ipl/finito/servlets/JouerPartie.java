@@ -70,10 +70,13 @@ public class JouerPartie extends HttpServlet {
 
 			session.setAttribute("cases", cases);
 			session.setAttribute("jetonsEnMain", jetonsEnMain);
-
+			
+			request.setAttribute("title-html", "Partie");
+			
 			getServletContext().getNamedDispatcher("pagePlateau.html").forward(
 					request, response);
 		} else {
+			request.setAttribute("title-html", "Lobby");
 			getServletContext().getNamedDispatcher("lobby.html").forward(
 					request, response);
 		}

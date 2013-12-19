@@ -51,6 +51,7 @@ public class Connexion extends HttpServlet {
 		synchronized(ctx) {
 			ctx.setAttribute("partiesEnAttente", gestionPartie.listerPartiesEnAttente());
 		}
+		request.setAttribute("title-html", "Lobby");
 		session.getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
 	}
 
@@ -58,7 +59,7 @@ public class Connexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
+		getServletContext().getNamedDispatcher("index.html").forward(request, response);
 	}
 
 }

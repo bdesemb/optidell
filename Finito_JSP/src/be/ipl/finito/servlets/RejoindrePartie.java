@@ -70,9 +70,12 @@ public class RejoindrePartie extends HttpServlet {
 				synchronized (session) {
 					session.setAttribute("id_partie", partie.getId());
 				}
+				
+				request.setAttribute("title-html", "Partie");
 				getServletContext().getNamedDispatcher("jouerPartie").forward(request, response);
 			}
 		}else{
+			request.setAttribute("title-html", "Lobby");
 			getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
 		}
 	}

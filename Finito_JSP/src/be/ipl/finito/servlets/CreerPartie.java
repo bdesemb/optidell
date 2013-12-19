@@ -51,6 +51,7 @@ public class CreerPartie extends HttpServlet {
 			Partie partie = gestionPartie.creerPartie(joueur);
 			session.setAttribute("id_partie", partie.getId());
 		}
+		request.setAttribute("title-html", "Partie");
 		getServletContext().getNamedDispatcher("jouerPartie").forward(request, response);
 	}
 
