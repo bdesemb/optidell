@@ -13,12 +13,12 @@ import be.ipl.finito.domaine.Plateau;
 public interface GestionPartie {
 	
 	Partie creerPartie(Joueur joueur);
-	Boolean ajouterJoueur(Partie partie, Joueur joueur);
+	Partie ajouterJoueur(Partie partie, Joueur joueur);
 	Jeton piocherJeton(Partie partie);
 	int lancerDe(Partie partie);
 	void suspendreJoueur(Partie partie, Plateau plateau);
 	int[] finirPartie(Partie partie);
-	void debuterPartie(Partie partie);
+	Partie debuterPartie(Partie partie);
 	void reprendreJoueur(Partie partie, Joueur joueur);
 	List<Partie>listerPartiesEnAttente();
 	List<Partie>listerPartiesEnSuspend(Joueur joueur);

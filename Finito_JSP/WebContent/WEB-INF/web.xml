@@ -60,7 +60,11 @@
     <jsp-file>/WEB-INF/jspf/attente.jspf</jsp-file>
   </servlet>
   <servlet>
-    <servlet-name>pagePlateau.html</servlet-name>
+    <servlet-name>plateau.html</servlet-name>
     <jsp-file>/WEB-INF/jsp/plateau.jsp</jsp-file>
+  </servlet>
+    <servlet>
+    <servlet-name>plateauMaj.html</servlet-name>
+    <jsp-file>/WEB-INF/jspf/plateau.jspf</jsp-file>
   </servlet>
 </web-app>

@@ -35,9 +35,9 @@ public class GestionPartieImpl implements GestionPartie {
 	public Partie creerPartie(final Joueur joueur) {
 
 		Partie partie = new Partie();
-		partieDao.enregistrer(partie);
+		partie = partieDao.enregistrer(partie);
 		Plateau plateau = gestionPlateau.creerPlateau(joueur,partie);
-		partieDao.chargerPlateaux(partie);
+		partie = partieDao.chargerPlateaux(partie);
 
 		List<Plateau> listePlateau = partie.getPlateauEnJeu();
 
@@ -49,20 +49,20 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public Boolean ajouterJoueur(Partie partie, final Joueur joueur) {
+	public Partie ajouterJoueur(Partie partie, final Joueur joueur) {
 
 		if (partie.isEnAttente()) {
 			partie = partieDao.chargerPlateaux(partie);
 			Plateau plateau = gestionPlateau.creerPlateau(joueur,partie);
-
+			
 			List<Plateau> listePlateau = partie.getPlateauEnJeu();
 			listePlateau.add(plateau);
 			partie.incrementJoueursConnectes();
 
 			partie = partieDao.mettreAJour(partie);
-			return true;
+			return partie;
 		}
-		return false;
+		return null;
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public void debuterPartie(Partie partie) {
+	public Partie debuterPartie(Partie partie) {
 		List<Jeton> jetons = jetonDao.lister();
 		Collections.shuffle(jetons);
 		Map<Integer, Jeton> jetonsRestants = partie.getJetonsRestants();
@@ -116,6 +116,7 @@ public class GestionPartieImpl implements GestionPartie {
 		}
 		partieDao.chargerPlateaux(partie);
 		partie = partieDao.mettreAJour(partie);
+		return partie;
 	}
 
 	@Override

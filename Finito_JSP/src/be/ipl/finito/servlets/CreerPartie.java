@@ -2,6 +2,7 @@ package be.ipl.finito.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -24,17 +25,18 @@ import be.ipl.finito.ucc.GestionPartie;
 @WebServlet(name = "creerPartie.html")
 public class CreerPartie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+
 	@EJB
 	private GestionJoueur gestionJoueur;
 	@EJB
 	private GestionPartie gestionPartie;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CreerPartie() {
-        super();
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public CreerPartie() {
+		super();
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,20 +49,27 @@ public class CreerPartie extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+		ServletContext context = getServletContext();
 		HttpSession session = request.getSession();
-		synchronized (session) {
+		synchronized (context) {
+			if (context.getAttribute("partiesOuvertes") == null) {
+				HashMap<Integer, String> partiesOuvertes = new HashMap<Integer, String>();
+				context.setAttribute("partiesOuvertes", partiesOuvertes);
+			}
+
+			final HashMap<Integer, String> partiesOuvertes = (HashMap<Integer, String>) context.getAttribute("partiesOuvertes");
+			
 			Joueur joueur = (Joueur) session.getAttribute("joueur");
 			Partie partie = gestionPartie.creerPartie(joueur);
-			session.setAttribute("partie", partie);
-			ServletContext ctx = getServletContext();
-			synchronized (ctx) {
-				List<Partie> liste = (List<Partie>) ctx.getAttribute("partiesEnAttente");
-				if(liste == null){
-					liste = new ArrayList<Partie>();
-					ctx.setAttribute("partiesEnAttente", liste);
-				}
-				liste.add(partie);
+			session.setAttribute("partie", partie.getId());
+			partiesOuvertes.put(partie.getId(), partie.getEtat().toString());
+			List<Partie> liste = (List<Partie>) context.getAttribute("partiesEnAttente");
+			if (liste == null) {
+				liste = new ArrayList<Partie>();
 			}
+			liste.add(partie);
+			context.setAttribute("partiesEnAttente", liste);
+			System.out.println(partie.getPlateauEnJeu().size());
 		}
 		request.setAttribute("title-html", "Partie");
 		getServletContext().getNamedDispatcher("attente.html").forward(request, response);
