@@ -6,3 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<title>Bienvenue sur Finitooine</title>
+</head>
+<body>
+
+<c:if test="${message != null}">
+	<div id="erreur">${message}</div>
+</c:if>
+
