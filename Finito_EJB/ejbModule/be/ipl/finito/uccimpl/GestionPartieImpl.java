@@ -42,9 +42,9 @@ public class GestionPartieImpl implements GestionPartie {
 		List<Plateau> listePlateau = partie.getPlateauEnJeu();
 
 		listePlateau.add(plateau);
-
+		partie.incrementJoueursConnectes();
+		
 		partieDao.mettreAJour(partie);
-
 		return partie;
 	}
 
@@ -57,6 +57,7 @@ public class GestionPartieImpl implements GestionPartie {
 
 			List<Plateau> listePlateau = partie.getPlateauEnJeu();
 			listePlateau.add(plateau);
+			partie.incrementJoueursConnectes();
 
 			partieDao.mettreAJour(partie);
 			return true;
@@ -87,7 +88,9 @@ public class GestionPartieImpl implements GestionPartie {
 	public void suspendreJoueur(final Partie partie, final Plateau plateau) {
 		partie.getEtat().suspendrePartie(partie);
 		plateau.setSuspendu(true);
+		partie.decrementJoueursConnectes();
 		plateauDao.mettreAJour(plateau);
+		partieDao.mettreAJour(partie);
 	}
 
 	public int[] finirPartie(Partie partie) {

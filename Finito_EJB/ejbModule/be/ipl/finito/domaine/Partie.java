@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -54,6 +55,9 @@ public class Partie implements Serializable {
 	@OneToMany(mappedBy = "partie", fetch=FetchType.EAGER)
 	private List<Plateau> plateauEnJeu = new ArrayList<Plateau>();
 
+	@Transient
+	private int nombreJoueursConnectes;
+	
 	/**
 	 * Constructeur vide de Partie utile pour EJB
 	 */
@@ -151,6 +155,18 @@ public class Partie implements Serializable {
 		return etat.isEnCours();
 	}
 
+	public int getNombreJoueursConnectes(){
+		return nombreJoueursConnectes;
+	}
+	
+	public void incrementJoueursConnectes(){
+		nombreJoueursConnectes++;
+	}
+	
+	public void decrementJoueursConnectes(){
+		nombreJoueursConnectes--;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
