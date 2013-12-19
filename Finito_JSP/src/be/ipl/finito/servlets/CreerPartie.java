@@ -46,8 +46,7 @@ public class CreerPartie extends HttpServlet {
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		synchronized (session) {
-			String pseudo = (String) session.getAttribute("pseudo");
-			Joueur joueur = gestionJoueur.rechercheJoueurViaPseudo(pseudo);
+			Joueur joueur = (Joueur) session.getAttribute("joueur");
 			Partie partie = gestionPartie.creerPartie(joueur);
 			session.setAttribute("id_partie", partie.getId());
 		}

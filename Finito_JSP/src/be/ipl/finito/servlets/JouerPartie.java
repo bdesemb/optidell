@@ -14,9 +14,7 @@ import javax.servlet.http.HttpSession;
 import be.ipl.finito.domaine.Case;
 import be.ipl.finito.domaine.Jeton;
 import be.ipl.finito.domaine.Joueur;
-import be.ipl.finito.domaine.Partie;
 import be.ipl.finito.domaine.Plateau;
-import be.ipl.finito.ucc.GestionCase;
 import be.ipl.finito.ucc.GestionJoueur;
 import be.ipl.finito.ucc.GestionPartie;
 import be.ipl.finito.ucc.GestionPlateau;
@@ -65,9 +63,9 @@ public class JouerPartie extends HttpServlet {
 			int idPartie = (Integer) session.getAttribute("id_partie");
 			Plateau plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
 			System.out.println(plateau);
-			List<Case> cases = plateau.getCases();
+			List<Case> cases = gestionPlateau.recuperLaListeDeCase(plateau);
 			List<Jeton> jetonsEnMain = plateau.getJetonsEnMain();
-
+			
 			session.setAttribute("cases", cases);
 			session.setAttribute("jetonsEnMain", jetonsEnMain);
 			

@@ -1,5 +1,5 @@
 <div id="listages">
-	Partie(s) en attente
+	<br />Partie(s) en attente
 	<form action="rejoindrePartie.html" method="post">
 		<c:forEach var="partie" items="${partiesEnAttente}">
 			<input type="radio" name="radio_partie" value="${partie.id}"
@@ -12,7 +12,8 @@
 			type="submit" value="Rejoindre" />
 	</form>
 	<form action="creerPartie.html" method="post">
-		<input type="submit" value="Créer une partie" />
+		<input type="hidden" name="etat" value="suspendue" /> <input
+			type="submit" value="Créer une partie" />
 	</form>
 	<br /> Partie(s) suspendues
 	<form action="rejoindrePartie.html" method="post">
