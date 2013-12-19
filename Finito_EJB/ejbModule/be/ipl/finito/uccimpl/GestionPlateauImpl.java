@@ -58,5 +58,10 @@ public class GestionPlateauImpl implements GestionPlateau{
 		return false;
 	}
 
+	@Override
+	public Plateau recherchePlateauPourJoueurEtPartie(int idPartie, int idJoueur) {
+		return plateauDao.recherchePlateauPourJoueurEtPartie(idPartie, idJoueur);
+	}
+
 	
 }

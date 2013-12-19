@@ -14,4 +14,5 @@ public interface GestionPlateau {
 	Plateau creerPlateau(Joueur joueur, Partie partie);
 	boolean placerJeton(Plateau plateau,Jeton jeton, Case caseCible);
 	boolean deplacerJeton(Plateau plateau, Case caseDepart, Case caseCible);
+	Plateau recherchePlateauPourJoueurEtPartie(int idPartie, int idJoueur);
 }
