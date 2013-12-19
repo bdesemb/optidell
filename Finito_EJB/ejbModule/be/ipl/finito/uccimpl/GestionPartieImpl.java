@@ -101,15 +101,22 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public void debuterPartie(final Partie partie) {
+	public void debuterPartie(Partie partie) {
 		List<Jeton> jetons = jetonDao.lister();
 		Collections.shuffle(jetons);
-		partie.getEtat().debuterPartie(partie);
 		Map<Integer, Jeton> jetonsRestants = partie.getJetonsRestants();
-		for(int i=1;i<=12;i++){
-			jetonsRestants.put(i, jetons.get(i-1));
+		for(int i=0;i<12;i++){
+			jetonsRestants.put(i, jetons.get(i));
 		}
-		partieDao.mettreAJour(partie);
+		partie.setJetonsRestants(jetonsRestants);
+		partie = partieDao.mettreAJour(partie);
+		partie.debuterPartie();
+		partie = partieDao.mettreAJour(partie);
+		for(Plateau plateau : partie.getPlateauEnJeu()){
+			plateau = plateauDao.mettreAJour(plateau);
+			System.out.println(plateau.getId()+" "+plateau.getJetonsEnMain().size());
+		}
+		partie = partieDao.mettreAJour(partie);
 	}
 
 	@Override

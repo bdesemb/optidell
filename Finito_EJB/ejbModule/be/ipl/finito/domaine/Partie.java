@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -39,25 +40,25 @@ public class Partie implements Serializable {
 
 	@Min(1)
 	@Max(20)
-	private int resultatDe=1;
+	private int resultatDe = 1;
 	@Min(0)
 	@Max(12)
-	private int indiceTirage=0;
+	private int indiceTirage = 0;
 
 	@Enumerated(EnumType.STRING)
 	private Etat etat = Etat.EN_ATTENTE;
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(schema = "FINITO", joinColumns = { @JoinColumn(name = "PARTIE_ID") }, inverseJoinColumns = { @JoinColumn(name = "JETON_ID") })
-	@MapKeyColumn(name="position")
-	private Map<Integer,Jeton> jetonRestant = new HashMap<Integer,Jeton>();
+	@MapKeyColumn(name = "position")
+	private Map<Integer, Jeton> jetonRestant = new HashMap<Integer, Jeton>();
 
-	@OneToMany(mappedBy = "partie", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "partie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Plateau> plateauEnJeu = new ArrayList<Plateau>();
 
 	@Transient
 	private int nombreJoueursConnectes;
-	
+
 	/**
 	 * Constructeur vide de Partie utile pour EJB
 	 */
@@ -115,8 +116,12 @@ public class Partie implements Serializable {
 	 * 
 	 * @return la liste des jetons restants
 	 */
-	public Map<Integer, Jeton> getJetonsRestants(){
+	public Map<Integer, Jeton> getJetonsRestants() {
 		return jetonRestant;
+	}
+
+	public void setJetonsRestants(Map<Integer, Jeton> map) {
+		this.jetonRestant = map;
 	}
 
 	/**
@@ -125,7 +130,7 @@ public class Partie implements Serializable {
 	 * @return les plateaux en jeu
 	 */
 	public List<Plateau> getPlateauEnJeu() {
-		
+
 		return plateauEnJeu;
 	}
 
@@ -155,18 +160,18 @@ public class Partie implements Serializable {
 		return etat.isEnCours();
 	}
 
-	public int getNombreJoueursConnectes(){
+	public int getNombreJoueursConnectes() {
 		return nombreJoueursConnectes;
 	}
-	
-	public void incrementJoueursConnectes(){
+
+	public void incrementJoueursConnectes() {
 		nombreJoueursConnectes++;
 	}
-	
-	public void decrementJoueursConnectes(){
+
+	public void decrementJoueursConnectes() {
 		nombreJoueursConnectes--;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -198,12 +203,12 @@ public class Partie implements Serializable {
 			public boolean isEnAttente() {
 				return true;
 			}
-			
-			public void debuterPartie(final Partie partie){
+
+			public void debuterPartie(final Partie partie) {
 				partie.setEtat(EN_COURS);
-				List<Integer> listePositions = new ArrayList<Integer>();
 				for (int i = 0; i < 3; i++) {
 					partie.piocherJeton();
+					partie.incrementerTirage();
 				}
 				partie.lancerDe();
 			}
@@ -212,18 +217,21 @@ public class Partie implements Serializable {
 			public boolean isEnCours() {
 				return true;
 			}
-			
+
 			public Jeton piocherJeton(final Partie partie) {
-				Map<Integer, Jeton> listeJetonsRestants = partie.getJetonsRestants();
+				Map<Integer, Jeton> listeJetonsRestants = partie
+						.getJetonsRestants();
 				List<Plateau> listePlateau = partie.getPlateauEnJeu();
 
-				if(listeJetonsRestants.isEmpty()) {
+				if (listeJetonsRestants.isEmpty()) {
+					System.out.println("J'ai pas de jetons à donner BOLOS");
 					return null;
 				}
-				
+
 				Jeton jeton = listeJetonsRestants.get(partie.getIndiceTirage());
 				
-				for (Plateau plateau :  listePlateau){
+				for (Plateau plateau : listePlateau) {
+					System.out.println("Je donne des jetons");
 					plateau.getJetonsEnMain().add(jeton);
 				}
 				return jeton;
@@ -243,19 +251,20 @@ public class Partie implements Serializable {
 			public void suspendrePartie(final Partie partie) {
 				partie.setEtat(Etat.SUSPENDU);
 			}
-			
+
 		},
 		SUSPENDU {
-			public void reprendreJoueur(final Plateau plateau, final Partie partie) {
+			public void reprendreJoueur(final Plateau plateau,
+					final Partie partie) {
 				plateau.setSuspendu(false);
-				List<Plateau>plateauDeJeu = partie.getPlateauEnJeu();
+				List<Plateau> plateauDeJeu = partie.getPlateauEnJeu();
 				int nbJoueurPret = 0;
-				for (Plateau p : plateauDeJeu){
-					if(p.isSuspendu() == false) {
-						nbJoueurPret ++;
+				for (Plateau p : plateauDeJeu) {
+					if (p.isSuspendu() == false) {
+						nbJoueurPret++;
 					}
 				}
-				if(nbJoueurPret == plateauDeJeu.size()) {
+				if (nbJoueurPret == plateauDeJeu.size()) {
 					partie.setEtat(EN_COURS);
 				}
 			}
@@ -286,16 +295,17 @@ public class Partie implements Serializable {
 
 		public void reprendreJoueur(final Plateau plateau, final Partie partie) {
 			throw new UnsupportedOperationException();
-			
+
 		}
-		public void debuterPartie(final Partie partie){
+
+		public void debuterPartie(final Partie partie) {
 			throw new UnsupportedOperationException();
 		}
 
 	}
 
 	public int lancerDe() {
-		return resultatDe = (int) ((Math.random()*100) % 20)+1;
+		return resultatDe = (int) ((Math.random() * 100) % 20) + 1;
 	}
 
 	public void incrementerTirage() {
@@ -313,5 +323,9 @@ public class Partie implements Serializable {
 
 	public void reprendreJoueur(final Plateau plateau) {
 		etat.reprendreJoueur(plateau, this);
+	}
+
+	public void debuterPartie() {
+		etat.debuterPartie(this);
 	}
 }
