@@ -1,11 +1,13 @@
 package be.ipl.finito.uccimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import be.ipl.finito.dao.CaseDao;
+import be.ipl.finito.dao.JetonDao;
 import be.ipl.finito.dao.PlateauDao;
 import be.ipl.finito.domaine.Case;
 import be.ipl.finito.domaine.Jeton;
@@ -21,6 +23,8 @@ public class GestionPlateauImpl implements GestionPlateau{
 	PlateauDao plateauDao;
 	@EJB
 	CaseDao caseDao;
+	@EJB
+	JetonDao jetonDao;
 	
 	
 	public Plateau creerPlateau(Joueur joueur, Partie partie) {
@@ -71,5 +75,18 @@ public class GestionPlateauImpl implements GestionPlateau{
 		return plateau.getCases();
 	}
 
+	public List<Jeton> recupererMainPlateau(Plateau plateau){
+		List<Jeton> jetons = jetonDao.lister();
+		List<Case> cases = recuperLaListeDeCase(plateau);
+		for(Case c : cases){
+			if(c.getJeton()!=null)
+				jetons.remove(c.getJeton());
+		}
+		Map<Integer, Jeton> jetonsRestants = plateau.getPartie().getJetonsRestants();
+		for(int i = plateau.getPartie().getIndiceTirage();i<12;i++){
+			jetons.remove(jetonsRestants.get(i));
+		}
+		return jetons;
+	}
 	
 }

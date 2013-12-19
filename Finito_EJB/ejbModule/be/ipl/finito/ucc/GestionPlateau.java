@@ -18,4 +18,5 @@ public interface GestionPlateau {
 	boolean deplacerJeton(Plateau plateau, Case caseDepart, Case caseCible);
 	Plateau recherchePlateauPourJoueurEtPartie(int idPartie, int idJoueur);
 	List<Case> recuperLaListeDeCase(Plateau plateau);
+	public List<Jeton> recupererMainPlateau(Plateau plateau);
 }
