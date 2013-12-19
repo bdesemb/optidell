@@ -109,13 +109,12 @@ public class GestionPartieImpl implements GestionPartie {
 			jetonsRestants.put(i, jetons.get(i));
 		}
 		partie.setJetonsRestants(jetonsRestants);
-		partie = partieDao.mettreAJour(partie);
 		partie.debuterPartie();
-		partie = partieDao.mettreAJour(partie);
 		for(Plateau plateau : partie.getPlateauEnJeu()){
 			plateau = plateauDao.mettreAJour(plateau);
 			System.out.println(plateau.getId()+" "+plateau.getJetonsEnMain().size());
 		}
+		partieDao.chargerPlateaux(partie);
 		partie = partieDao.mettreAJour(partie);
 	}
 
