@@ -14,5 +14,4 @@ import be.ipl.finito.domaine.Jeton;
 @Local
 public interface JetonDao extends Dao<Integer, Jeton> {
 	Jeton récupererJeton(int numéro);
-	List<Jeton> lister();
 }
