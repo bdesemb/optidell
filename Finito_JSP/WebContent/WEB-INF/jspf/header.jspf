@@ -1,16 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
+<c:choose>
+	<c:when test="${title-html != null}">
+		<title>Finitooine - ${title-html}</title>
+	</c:when>
+	<c:otherwise>
+		<title>Finitooine</title>
+	</c:otherwise>
+</c:choose>
+
 <title>Bienvenue sur Finitooine</title>
 </head>
 <body>
 
-<c:if test="${message != null}">
-	<div id="erreur">${message}</div>
-</c:if>
-
+	<c:if test="${message != null}">
+		<div id="erreur">${message}</div>
+	</c:if>
+	
+	<c:if test="${ sessionScope.joueur != null}">
+		<div id="login">
+			Salut, ${ sessionScope.joueur.login }
+			<c:url var="deconnexion" value="deconnexion.html" />
+			<a href="deconnexion">Se déconnecter</a>
+		</div>
+	</c:if>

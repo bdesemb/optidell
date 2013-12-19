@@ -41,9 +41,10 @@ public class Inscription extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("nom") == null)
-			
+		if(request.getParameter("nom") == null) {
+			request.setAttribute("title-html", "Inscription");
 			getServletContext().getNamedDispatcher("pageInscription.html").forward(request, response);
+		}
 		else{
 			String nom = request.getParameter("nom");
 			String prenom = request.getParameter("prenom");

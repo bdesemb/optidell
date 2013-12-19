@@ -1,7 +1,3 @@
-<title>Inscription</title>
-</head>
-<body>
-
 <c:if test="${message != null}">
 	<div id="erreur">${message}</div>
 </c:if>
