@@ -15,11 +15,11 @@ Plateau de jeu :
 			<c:forEach var="j" begin="0" end="5">
 				<c:set var="case" value="${cases[position]}" />
 				<c:set var="position" value="${position +1}" />
-				<td><div id="${case.id}" class="div1" ondrop="drop(event)"
+				<td><div id="case_${case.id}" class="div1" ondrop="drop(event)"
 						ondragover="allowDrop(event)">
 						<b>${case.numero}</b>
-					</div></td>
-
+					</div>
+				</td>
 			</c:forEach>
 		</tr>
 	</c:forEach>
@@ -31,7 +31,7 @@ Mes jetons en main :
 <table align="center">
 	<tr>
 		<c:forEach var="jetonsEnMain" items="${jetonsEnMain}">
-			<td><div id="${jetonsEnMain.id}" class="drag" draggable="true"
+			<td><div id="jeton_${jetonsEnMain.id}" class="drag" draggable="true"
 					ondragstart="drag(event)" width="40" height="40">
 					<b>${jetonsEnMain.numero}</b>
 				</div></td>
