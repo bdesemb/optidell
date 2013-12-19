@@ -1,7 +1,5 @@
 package be.ipl.finito.dao;
 
-import java.util.List;
-
 import javax.ejb.Local;
 import be.ipl.finito.domaine.Jeton;
 
@@ -13,5 +11,4 @@ import be.ipl.finito.domaine.Jeton;
  */
 @Local
 public interface JetonDao extends Dao<Integer, Jeton> {
-	Jeton récupererJeton(int numéro);
 }

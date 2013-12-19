@@ -1,6 +1,5 @@
 package be.ipl.finito.daoimpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -17,21 +16,16 @@ import be.ipl.finito.domaine.Jeton;
 @Stateless
 public class JetonDaoImpl extends DaoImpl<Integer, Jeton> implements JetonDao {
 
-	@Override
-	public Jeton récupererJeton(int numéro) {
-		String queryString = "SELECT jeton FROM Jeton jeton WHERE jeton.numero = ?1";
-		Jeton jeton = super.recherche(queryString, numéro);
-		if (jeton == null) {
-			super.enregistrer(new Jeton(numéro));
-		}
-		return jeton;
-	}
 
 	@Override
 	public List<Jeton> lister() {
-		List<Jeton> liste= new ArrayList<Jeton>(12);
-		for (int i = 1; i <= 12; i++) {
-			liste.add(récupererJeton(i));
+		String queryString = "SELECT jeton FROM Jeton jeton";
+		List<Jeton> liste = super.liste(queryString);
+		if(liste.isEmpty()) {
+			for (int i = 0 ; i<12;i++) {
+				super.enregistrer(new Jeton(i+1));
+			}
+			return super.liste(queryString);
 		}
 		return liste;
 	}
