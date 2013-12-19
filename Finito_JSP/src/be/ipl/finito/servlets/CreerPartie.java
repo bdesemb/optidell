@@ -1,8 +1,11 @@
 package be.ipl.finito.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,10 +51,19 @@ public class CreerPartie extends HttpServlet {
 		synchronized (session) {
 			Joueur joueur = (Joueur) session.getAttribute("joueur");
 			Partie partie = gestionPartie.creerPartie(joueur);
-			session.setAttribute("id_partie", partie.getId());
+			session.setAttribute("partie", partie);
+			ServletContext ctx = getServletContext();
+			synchronized (ctx) {
+				List<Partie> liste = (List<Partie>) ctx.getAttribute("partiesEnAttente");
+				if(liste == null){
+					liste = new ArrayList<Partie>();
+					ctx.setAttribute("partiesEnAttente", liste);
+				}
+				liste.add(partie);
+			}
 		}
 		request.setAttribute("title-html", "Partie");
-		getServletContext().getNamedDispatcher("jouerPartie").forward(request, response);
+		getServletContext().getNamedDispatcher("attente.html").forward(request, response);
 	}
 
 }

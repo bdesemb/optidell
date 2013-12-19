@@ -40,12 +40,24 @@
     <jsp-file>/WEB-INF/jsp/index.jsp</jsp-file>
   </servlet>
   <servlet>
+    <servlet-name>pageInscription.html</servlet-name>
+    <jsp-file>/WEB-INF/jsp/inscription.jsp</jsp-file>
+  </servlet>
+  <servlet>
     <servlet-name>lobby.html</servlet-name>
     <jsp-file>/WEB-INF/jsp/lobby.jsp</jsp-file>
   </servlet>
   <servlet>
-    <servlet-name>pageInscription.html</servlet-name>
-    <jsp-file>/WEB-INF/jsp/inscription.jsp</jsp-file>
+    <servlet-name>lobbyMaj.html</servlet-name>
+    <jsp-file>/WEB-INF/jspf/lobby.jspf</jsp-file>
+  </servlet>
+  <servlet>
+    <servlet-name>attente.html</servlet-name>
+    <jsp-file>/WEB-INF/jsp/attente.jsp</jsp-file>
+  </servlet>
+    <servlet>
+    <servlet-name>attenteMaj.html</servlet-name>
+    <jsp-file>/WEB-INF/jspf/attente.jspf</jsp-file>
   </servlet>
   <servlet>
     <servlet-name>pagePlateau.html</servlet-name>

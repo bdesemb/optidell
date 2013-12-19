@@ -1,6 +1,9 @@
 package be.ipl.finito.servlets;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -53,20 +56,33 @@ public class RejoindrePartie extends HttpServlet {
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		if (request.getParameter("etat") != null) {
 			HttpSession session = request.getSession();
-			Partie partie = gestionPartie.recupererPartieAvecID(Integer.parseInt(request.getParameter("radio_partie")));
-			Joueur joueur = null;
-			synchronized (session) {
-				joueur = gestionJoueur.rechercheJoueurViaPseudo((String) session.getAttribute("pseudo"));
-			}
+			final Partie partie = gestionPartie.recupererPartieAvecID(Integer.parseInt(request.getParameter("radio_partie")));
+			Joueur joueur = (Joueur) session.getAttribute("joueur");
 			if (!request.getParameter("etat").equals("suspendue")) {
 				if (gestionPartie.ajouterJoueur(partie, joueur)) {
 					synchronized (session) {
-						session.setAttribute("id_partie", partie.getId());
+						session.setAttribute("partie", partie);
 						int nbrJoueur = gestionPartie.nbrJoueurConnectes(partie);
-						if(nbrJoueur == Util.MAX_JOUEURS)
+						if(nbrJoueur == Util.MAX_JOUEURS) {
 							gestionPartie.debuterPartie(partie);
+						}
 					}
-					getServletContext().getNamedDispatcher("jouerPartie").forward(request, response);
+					Timer timer = new Timer();
+					TimerTask timerTask = new TimerTask() {
+						public void run() {
+							System.out.println("WESH COUSIN, JE RUN "+partie.getPlateauEnJeu().size());
+							if(partie.getPlateauEnJeu().size()>=2){
+								System.out.println("WESH COUSIN, JE LANCE LA PARTIE");
+								gestionPartie.debuterPartie(partie);
+								List<Partie> liste = ((List<Partie>)getServletContext().getAttribute("partiesEnAttente"));
+								liste.remove(partie);
+							} else {
+								// A faire : gestionPartie.annulerPartie();
+							}
+						}
+					};
+					timer.schedule(timerTask, 15000);
+					getServletContext().getNamedDispatcher("attente.html").forward(request, response);
 				}
 
 			} else {
@@ -76,7 +92,7 @@ public class RejoindrePartie extends HttpServlet {
 				}
 				
 				request.setAttribute("title-html", "Partie");
-				getServletContext().getNamedDispatcher("jouerPartie").forward(request, response);
+				getServletContext().getNamedDispatcher("attente.html").forward(request, response);
 			}
 		}else{
 			request.setAttribute("title-html", "Lobby");

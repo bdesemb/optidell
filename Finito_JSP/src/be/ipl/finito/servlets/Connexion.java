@@ -1,9 +1,9 @@
 package be.ipl.finito.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.ejb.EJB;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import be.ipl.finito.domaine.Joueur;
+import be.ipl.finito.domaine.Partie;
 import be.ipl.finito.ucc.GestionJoueur;
 import be.ipl.finito.ucc.GestionPartie;
 
@@ -29,10 +30,21 @@ public class Connexion extends HttpServlet {
 	@EJB
 	private GestionPartie gestionPartie;
 	
+	
+	public Connexion(){
+		super();
+	}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+		if(getServletContext().getAttribute("partiesEnAttente")==null){
+			List<Partie> partiesEventuellementAjouteesParDesTests = gestionPartie.listerPartiesEnAttente();
+			getServletContext().setAttribute("partiesEnAttente", partiesEventuellementAjouteesParDesTests);
+			System.out.println("WESH COUSIN, JE CHECK LES PARTIES"+partiesEventuellementAjouteesParDesTests.size());
+		}
+		
 		String pseudo = request.getParameter("pseudo");
 		String password = request.getParameter("password");
 		Joueur joueur = gestionJoueur.connexion(pseudo, password);
@@ -47,10 +59,6 @@ public class Connexion extends HttpServlet {
 			session.setAttribute("joueur", joueur);
 			session.setAttribute("partiesSuspendues", gestionPartie.listerPartiesEnSuspend(joueur));
 		}
-		ServletContext ctx = request.getServletContext();
-		synchronized(ctx) {
-			ctx.setAttribute("partiesEnAttente", gestionPartie.listerPartiesEnAttente());
-		}
 		request.setAttribute("title-html", "Lobby");
 		session.getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
 	}
@@ -58,7 +66,7 @@ public class Connexion extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		getServletContext().getNamedDispatcher("index.html").forward(request, response);
 	}
 

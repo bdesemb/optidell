@@ -1,10 +1,10 @@
 function refresh() {
 	var $request = $.ajax({
-		url: "refresh.html",
+		url: "attenteMaj.html",
 		type: "post",
 	});
 	$request.done(function (response, textStatus, xhr) {
-		$('#result').html(response);
+		$('#affichage').html(response);
 	});
 	$request.fail(function (xhr, textStatus, errorThrown) {
 		alert(errorThrown);
