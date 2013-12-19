@@ -37,7 +37,7 @@ public class Plateau implements Serializable {
 	@JoinColumn(name = "JOUEUR_ID")
 	private Joueur joueur;
 
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany( cascade = { CascadeType.ALL })
 	@JoinColumn(name = "PLATEAU_ID")
 	private List<Case> cases = new ArrayList<Case>();
 

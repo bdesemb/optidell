@@ -1,5 +1,7 @@
 package be.ipl.finito.ucc;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import be.ipl.finito.domaine.Case;
@@ -15,4 +17,5 @@ public interface GestionPlateau {
 	boolean placerJeton(Plateau plateau,Jeton jeton, Case caseCible);
 	boolean deplacerJeton(Plateau plateau, Case caseDepart, Case caseCible);
 	Plateau recherchePlateauPourJoueurEtPartie(int idPartie, int idJoueur);
+	List<Case> recuperLaListeDeCase(Plateau plateau);
 }

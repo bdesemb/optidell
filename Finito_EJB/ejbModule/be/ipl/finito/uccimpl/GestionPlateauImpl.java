@@ -1,5 +1,7 @@
 package be.ipl.finito.uccimpl;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -61,6 +63,12 @@ public class GestionPlateauImpl implements GestionPlateau{
 	@Override
 	public Plateau recherchePlateauPourJoueurEtPartie(int idPartie, int idJoueur) {
 		return plateauDao.recherchePlateauPourJoueurEtPartie(idPartie, idJoueur);
+	}
+
+	@Override
+	public List<Case> recuperLaListeDeCase(Plateau plateau) {
+		plateau = plateauDao.chargerCases(plateau);
+		return plateau.getCases();
 	}
 
 	
