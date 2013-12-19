@@ -55,6 +55,7 @@ public class Plateau implements Serializable {
 	public Plateau(Joueur joueur, Partie partie){
 		this.joueur = joueur;
 		this.partie = partie;
+		this.suspendu = false;
 	}
 
 	/**
