@@ -1,6 +1,6 @@
 <c:choose>
 	<c:when test="${ sessionScope.joueur != null }">
-		<c:url var="${ lobby }" value="lobby.html" />
+		<c:url var="lobby" value="lobby.html" />
 		<a href="${ lobby }">Rejoindre lobby</a>
 	</c:when>
 	<c:otherwise>
