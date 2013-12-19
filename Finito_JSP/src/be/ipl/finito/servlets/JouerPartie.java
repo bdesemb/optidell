@@ -24,7 +24,7 @@ import be.ipl.finito.ucc.GestionPlateau;
 /**
  * Servlet implementation class joueurPartie
  */
-@WebServlet("/joueurPartie")
+@WebServlet(name = "jouerPartie")
 public class JouerPartie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -48,7 +48,8 @@ public class JouerPartie extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
@@ -56,26 +57,26 @@ public class JouerPartie extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("etat").equals("encours")){
-			HttpSession session =  request.getSession();
-			Joueur joueur  = gestionJoueur.rechercheJoueurViaPseudo((String) session.getAttribute("pseudo"));
-			List<Plateau> plateaux = joueur.getPlateaux();
-			Plateau plateau = null;
-			for(Plateau p : plateaux){
-				if(!p.isSuspendu()){
-					plateau = p;
-				}
-			}
-			List<Case> cases = plateau.getCases();	
-			List<Jeton> jetonsEnMain= plateau.getJetonsEnMain();
-			
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if (request.getParameter("etat").equals("en_attente")) {
+			HttpSession session = request.getSession();
+			Joueur joueur = (Joueur) session.getAttribute("joueur");
+			int idPartie = (Integer) session.getAttribute("id_partie");
+			Plateau plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
+			System.out.println(plateau);
+			List<Case> cases = plateau.getCases();
+			List<Jeton> jetonsEnMain = plateau.getJetonsEnMain();
+
 			session.setAttribute("cases", cases);
 			session.setAttribute("jetonsEnMain", jetonsEnMain);
-			
-			getServletContext().getNamedDispatcher("pagePlateau.html").forward(request, response);
+
+			getServletContext().getNamedDispatcher("pagePlateau.html").forward(
+					request, response);
+		} else {
+			getServletContext().getNamedDispatcher("lobby.html").forward(
+					request, response);
 		}
-		getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
-	
+
 	}
 }

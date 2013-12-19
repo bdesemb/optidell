@@ -62,7 +62,7 @@ public class RejoindrePartie extends HttpServlet {
 					synchronized (session) {
 						session.setAttribute("id_partie", partie.getId());
 					}
-					getServletContext().getNamedDispatcher("jouer.html").forward(request, response);
+					getServletContext().getNamedDispatcher("jouerPartie").forward(request, response);
 				}
 
 			} else {
@@ -70,10 +70,11 @@ public class RejoindrePartie extends HttpServlet {
 				synchronized (session) {
 					session.setAttribute("id_partie", partie.getId());
 				}
-				getServletContext().getNamedDispatcher("jouer.html").forward(request, response);
+				getServletContext().getNamedDispatcher("jouerPartie").forward(request, response);
 			}
+		}else{
+			getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
 		}
-		getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
 	}
 
 }

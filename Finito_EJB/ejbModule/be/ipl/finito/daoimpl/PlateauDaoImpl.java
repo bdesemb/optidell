@@ -23,9 +23,9 @@ public class PlateauDaoImpl extends DaoImpl<Integer, Plateau> implements Plateau
 
 	@Override
 	public Plateau recherchePlateauPourJoueurEtPartie(final int id_partie, final int id_joueur) {
-		String query = "SELECT p FROM Plateau pl"
-				+ "WHERE pl.id_partie = ?1 " 
-				+ "AND pl.id_joueur = ?2";
+		String query = "SELECT pl FROM Plateau pl "
+				+ "WHERE pl.partie.id = ?1 " 
+				+ "AND pl.joueur.id = ?2";
 		return liste(query, id_partie, id_joueur).get(0);
 	}
 

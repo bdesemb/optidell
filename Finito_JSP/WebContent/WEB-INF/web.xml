@@ -43,10 +43,10 @@
     <servlet-name>lobby.html</servlet-name>
     <jsp-file>/WEB-INF/jsp/lobby.jsp</jsp-file>
   </servlet>
-  <servlet>
-    <servlet-name>jouer.html</servlet-name>
-    <jsp-file>/WEB-INF/jsp/jouer.jsp</jsp-file>
-  </servlet>
+<!--   <servlet> -->
+<!--     <servlet-name>jouer.html</servlet-name> -->
+<!--     <jsp-file>/WEB-INF/jsp/plateau.jsp</jsp-file> -->
+<!--   </servlet> -->
   <servlet>
     <servlet-name>pageInscription.html</servlet-name>
     <jsp-file>/WEB-INF/jsp/inscription.jsp</jsp-file>
