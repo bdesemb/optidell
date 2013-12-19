@@ -25,7 +25,7 @@
 	
 	<c:if test="${ sessionScope.joueur != null}">
 		<div id="login">
-			Salut, ${ sessionScope.joueur.login }
+			Connecté: ${ sessionScope.joueur.login }
 			<c:url var="deconnexion" value="deconnexion.html" />
 			<a href="${ deconnexion }">Se déconnecter</a>
 		</div>
