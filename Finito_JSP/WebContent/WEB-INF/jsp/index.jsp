@@ -5,7 +5,6 @@
 		<a href="${ lobby }">Rejoindre lobby</a>
 	</c:when>
 	<c:otherwise>
-	<div id="titre"><h1>Finito</h1></div>
 	<div id="formulaire">
 		<h3>Connexion</h3>
 		<c:url var="connexion" value="connexion.html" />
@@ -21,4 +20,3 @@
 		</div>
 	</c:otherwise>
 </c:choose>
-</div>
