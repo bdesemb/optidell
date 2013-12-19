@@ -55,90 +55,48 @@ public class RejoindrePartie extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-			String etat = request.getParameter("etat");
-			final ServletContext context = getServletContext();
-			final HttpSession session = request.getSession();
-			
-			synchronized (context) {
-				final HashMap<Integer, String> partiesOuvertes = (HashMap<Integer, String>) context.getAttribute("partiesOuvertes");
-				
-				int idPartie = Integer.parseInt(request.getParameter("radio_partie"));
-				Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
-				Joueur joueur = (Joueur) session.getAttribute("joueur");
-				if(etat != null && !etat.equals("suspendue")){
-					partie = gestionPartie.ajouterJoueur(partie,joueur);
-					session.setAttribute("partie", idPartie);
-					int nbrJoueurs = gestionPartie.nbrJoueurConnectes(partie);
-					if(nbrJoueurs == Util.MAX_JOUEURS){
-						gestionPartie.debuterPartie(partie);
-						partiesOuvertes.put(idPartie, partie.getEtat().toString());
-					} else {
-						Timer timer = new Timer();
-						TimerTask timerTask = new TimerTask() {
-							public void run() {
-								Partie partie = gestionPartie.recupererPartieAvecID((Integer)session.getAttribute("partie"));
-								if (partie.getPlateauEnJeu().size() >= 2) {
-									partie = gestionPartie.debuterPartie(partie);
-									System.out.println(partie.getEtat().toString());
-									partiesOuvertes.put(partie.getId(), partie.getEtat().toString());
-								} else {
-									// A faire : gestionPartie.annulerPartie();
-								}
-							}
-						};
-						timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE);
-					}
-					System.out.println(partie.getPlateauEnJeu().size());
-					getServletContext().getNamedDispatcher("attente.html").forward(request, response);
-				} else if(etat != null && etat.equals("suspendue")){
-					gestionPartie.reprendreJoueur(partie, joueur);
-					session.setAttribute("id_partie", partie.getId());
-					request.setAttribute("title-html", "Partie");
-					getServletContext().getNamedDispatcher("attente.html").forward(request, response);
-				}
-			}
-			
-			/*if (!etat.equals("suspendue")) {
+		String etat = request.getParameter("etat");
+		final ServletContext context = getServletContext();
+		final HttpSession session = request.getSession();
+
+		synchronized (context) {
+			final HashMap<Integer, String> partiesOuvertes = (HashMap<Integer, String>) context.getAttribute("partiesOuvertes");
+
+			int idPartie = Integer.parseInt(request.getParameter("radio_partie"));
+			Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
+			Joueur joueur = (Joueur) session.getAttribute("joueur");
+			if (etat != null && !etat.equals("suspendue")) {
 				partie = gestionPartie.ajouterJoueur(partie, joueur);
-				synchronized (session) {
-					session.setAttribute("partie", partie);
-					int nbrJoueur = gestionPartie.nbrJoueurConnectes(partie);
-					if (nbrJoueur == Util.MAX_JOUEURS) {
-						gestionPartie.debuterPartie(partie);
-					}
-				}
-				Timer timer = new Timer();
-				TimerTask timerTask = new TimerTask() {
-					public void run() {
-						System.out.println("WESH COUSIN, JE RUN " + ((Partie)session.getAttribute("partie")).getPlateauEnJeu().size());
-						if (((Partie)session.getAttribute("partie")).getPlateauEnJeu().size() >= 2) {
-							System.out.println("WESH COUSIN, JE LANCE LA PARTIE");
-							gestionPartie.debuterPartie(((Partie)session.getAttribute("partie")));
-							session.setAttribute("partie", gestionPartie.recupererPartieAvecID(((Partie)session.getAttribute("partie")).getId()));
-							List<Partie> liste = ((List<Partie>) getServletContext().getAttribute("partiesEnAttente"));
-							liste.remove((session.getAttribute("partie")));
-						} else {
-							// A faire : gestionPartie.annulerPartie();
+				session.setAttribute("partie", idPartie);
+				int nbrJoueurs = gestionPartie.nbrJoueurConnectes(partie);
+				if (nbrJoueurs == Util.MAX_JOUEURS) {
+					gestionPartie.debuterPartie(partie);
+					partiesOuvertes.put(idPartie, partie.getEtat().toString());
+				} else {
+					Timer timer = new Timer();
+					TimerTask timerTask = new TimerTask() {
+						public void run() {
+							Partie partie = gestionPartie.recupererPartieAvecID((Integer) session.getAttribute("partie"));
+							if (partie.getPlateauEnJeu().size() >= 2) {
+								partie = gestionPartie.debuterPartie(partie);
+								System.out.println(partie.getEtat().toString());
+								partiesOuvertes.put(partie.getId(), partie.getEtat().toString());
+							} else {
+								// A faire : gestionPartie.annulerPartie();
+							}
 						}
-					}
-				};
-				timer.schedule(timerTask, 15000);
+					};
+					timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE);
+				}
 				System.out.println(partie.getPlateauEnJeu().size());
 				getServletContext().getNamedDispatcher("attente.html").forward(request, response);
-
-			} else {
+			} else if (etat != null && etat.equals("suspendue")) {
 				gestionPartie.reprendreJoueur(partie, joueur);
-				synchronized (session) {
-					session.setAttribute("id_partie", partie.getId());
-				}
-
+				session.setAttribute("id_partie", partie.getId());
 				request.setAttribute("title-html", "Partie");
 				getServletContext().getNamedDispatcher("attente.html").forward(request, response);
 			}
-		} else {
-			request.setAttribute("title-html", "Lobby");
-			getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
-		}*/
+		}
 	}
 
 }

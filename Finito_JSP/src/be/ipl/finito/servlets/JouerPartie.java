@@ -22,7 +22,7 @@ import be.ipl.finito.ucc.GestionPlateau;
 /**
  * Servlet implementation class joueurPartie
  */
-@WebServlet(name = "jouerPartie")
+@WebServlet(name = "jouer.html")
 public class JouerPartie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -43,41 +43,30 @@ public class JouerPartie extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("etat").equals("en_attente")) {
-			HttpSession session = request.getSession();
-			Joueur joueur = (Joueur) session.getAttribute("joueur");
-			int idPartie = (Integer) session.getAttribute("id_partie");
-			Plateau plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
-			System.out.println(plateau);
-			List<Case> cases = gestionPlateau.recuperLaListeDeCase(plateau);
-			List<Jeton> jetonsEnMain = gestionPlateau.recupererMainPlateau(plateau);
-			
-			session.setAttribute("cases", cases);
-			session.setAttribute("jetonsEnMain", jetonsEnMain);
-			
-			request.setAttribute("title-html", "Partie");
-			
-			getServletContext().getNamedDispatcher("pagePlateau.html").forward(
-					request, response);
-		} else {
-			request.setAttribute("title-html", "Lobby");
-			getServletContext().getNamedDispatcher("lobby.html").forward(
-					request, response);
-		}
+	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Joueur joueur = (Joueur) session.getAttribute("joueur");
+		int idPartie = (Integer) session.getAttribute("partie");
+		Plateau plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
+		System.out.println(plateau);
+		List<Case> cases = gestionPlateau.recuperLaListeDeCase(plateau);
+		List<Jeton> jetonsEnMain = gestionPlateau.recupererMainPlateau(plateau);
+
+		session.setAttribute("cases", cases);
+		session.setAttribute("jetonsEnMain", jetonsEnMain);
+
+		request.setAttribute("title-html", "Partie");
+
+		getServletContext().getNamedDispatcher("plateau.html").forward(request, response);
 
 	}
 }
