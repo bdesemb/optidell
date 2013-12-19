@@ -295,7 +295,7 @@ public class Partie implements Serializable {
 	}
 
 	public int lancerDe() {
-		return resultatDe = (int) ((Math.random()*100) % 20);
+		return resultatDe = (int) ((Math.random()*100) % 20)+1;
 	}
 
 	public void incrementerTirage() {

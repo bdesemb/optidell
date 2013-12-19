@@ -44,7 +44,7 @@ public class GestionPartieImpl implements GestionPartie {
 		listePlateau.add(plateau);
 		partie.incrementJoueursConnectes();
 		
-		partieDao.mettreAJour(partie);
+		partie = partieDao.mettreAJour(partie);
 		return partie;
 	}
 
@@ -59,7 +59,7 @@ public class GestionPartieImpl implements GestionPartie {
 			listePlateau.add(plateau);
 			partie.incrementJoueursConnectes();
 
-			partieDao.mettreAJour(partie);
+			partie = partieDao.mettreAJour(partie);
 			return true;
 		}
 		return false;

@@ -3,7 +3,9 @@ package be.ipl.finito.util;
 
 public final class Util {
 	public static final int MAX_JOUEURS = 3;
-	public static final int MIN_JOUEURS = 1;
+	public static final int MIN_JOUEURS = 2;
+	public static final int TEMPS_DEBUT_PARTIE = 15;
+	public static final int TEMPS_INACTIVITE = 30;
 	
 	public static void checkObject(Object o) {
 		if (o == null)
