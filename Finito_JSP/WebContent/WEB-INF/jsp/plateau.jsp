@@ -1,8 +1,6 @@
-<<<<<<< .mine Bienvenue dans la partie !
 </br>
-======= Bienvenue dans la partie !
+Bienvenue dans la partie !
 </br>
->>>>>>> .r55
 
 
 <c:set var="cases" value="${cases}" />
