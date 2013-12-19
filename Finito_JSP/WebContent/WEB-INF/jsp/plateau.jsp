@@ -1,30 +1,37 @@
 
-<title>Le plateau de partie</title>
-</head>
-</body>
-Bienvenue dans la partie ! </br>
+Bienvenue dans la partie !
+</br>
 
 
-<c:set var="cases" value="${cases}"/>
-<c:set var="position" value="0"/>
+<c:set var="cases" value="${cases}" />
+<c:set var="position" value="0" />
 Plateau de jeu :
 </br>
-<table>
+<table id="plateau">
 	<c:forEach var="i" begin="0" end="5">
-		<tr> 
+		<tr>
 			<c:forEach var="j" begin="0" end="5">
-				<c:set var="case" value="${cases[position]}"/>
-				<c:set var="position" value="${position +1}"/>
-				<td> ${case.numero} |-> ${cases[position].jeton.numero}</td>
+				<c:set var="case" value="${cases[position]}" />
+				<c:set var="position" value="${position +1}" />
+				<td><div id="${case.id}" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)"><b>${case.numero}</b></div></td>
 			</c:forEach>
 		</tr>
 	</c:forEach>
 </table>
 
 </br>
-Mes jetons en main : 
+Mes jetons en main :
 </br>
-<c:forEach var="jetonsEnMain" items="${jetonsEnMain}">
-	${jetonsEnMain.numero}
-</c:forEach>
+
+<table align="center">
+	<tr>
+		<c:forEach var="jetonsEnMain" items="${jetonsEnMain}">
+			<td><div id="${jetonsEnMain.id}" class="drag" draggable="true"
+					ondragstart="drag(event)" width="40" height="40">
+					<b>${jetonsEnMain.numero}</b>
+				</div></td>
+		</c:forEach>
+	</tr>
+</table>
+
 
