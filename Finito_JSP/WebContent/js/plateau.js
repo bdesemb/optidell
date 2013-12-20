@@ -9,12 +9,14 @@ function drag(ev) {
 function drop(ev) {
 	ev.preventDefault();
 	var data = ev.dataTransfer.getData("Text");
-	ev.target.appendChild(document.getElementById(data));
-	var $jetonJoue = $("#plateau").find($(".drag[draggable='true']"));
-	$('#numeroJeton').val($jetonJoue.text());
-	var $case = $(ev.target);
-	$('#idCase').val($case.attr("id"));
-	$("#form").submit();
+	if($(ev.target).attr("occupe") != "true"){
+		ev.target.appendChild(document.getElementById(data));
+		var $jetonJoue = $("#plateau").find($(".drag[draggable='true']"));
+		$('#numeroJeton').val($jetonJoue.text());
+		var $case = $(ev.target);
+		$('#idCase').val($case.attr("id"));
+		$("#form").submit();
+	}
 }
 
 function refresh() {
@@ -24,7 +26,7 @@ function refresh() {
 	});
 	$request.done(function (response, textStatus, xhr) {
 		if (response.indexOf("form") == -1 && response.indexOf("vainqueur") == -1) {
-			setTimeout(refresh, 3000);
+			setTimeout(refresh, 1000);
 		} 
 		$('#affichage').html(response);
 	});
