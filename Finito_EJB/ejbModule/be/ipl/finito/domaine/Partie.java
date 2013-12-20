@@ -53,7 +53,7 @@ public class Partie implements Serializable {
 	@MapKeyColumn(name = "position")
 	private Map<Integer, Jeton> jetonRestant = new HashMap<Integer, Jeton>();
 
-	@OneToMany(mappedBy = "partie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "partie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Plateau> plateauEnJeu = new ArrayList<Plateau>();
 
 	@Transient
@@ -207,7 +207,6 @@ public class Partie implements Serializable {
 			public void debuterPartie(final Partie partie) {
 				partie.setEtat(EN_COURS);
 				for (int i = 0; i < 3; i++) {
-					partie.piocherJeton();
 					partie.incrementerTirage();
 				}
 				partie.lancerDe();
@@ -225,7 +224,6 @@ public class Partie implements Serializable {
 			public Jeton piocherJeton(final Partie partie) {
 				Map<Integer, Jeton> listeJetonsRestants = partie
 						.getJetonsRestants();
-				List<Plateau> listePlateau = partie.getPlateauEnJeu();
 
 				if (listeJetonsRestants.isEmpty()) {
 					System.out.println("J'ai pas de jetons à donner");
@@ -233,11 +231,6 @@ public class Partie implements Serializable {
 				}
 
 				Jeton jeton = listeJetonsRestants.get(partie.getIndiceTirage());
-				
-				for (Plateau plateau : listePlateau) {
-					System.out.println("Je donne des jetons");
-					plateau.getJetonsEnMain().add(jeton);
-				}
 				return jeton;
 			}
 

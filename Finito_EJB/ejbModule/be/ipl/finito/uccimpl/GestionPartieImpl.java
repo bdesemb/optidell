@@ -54,7 +54,7 @@ public class GestionPartieImpl implements GestionPartie {
 		if (partie.isEnAttente()) {
 			partie = partieDao.chargerPlateaux(partie);
 			Plateau plateau = gestionPlateau.creerPlateau(joueur,partie);
-			
+			partie = partieDao.chargerPlateaux(partie);
 			List<Plateau> listePlateau = partie.getPlateauEnJeu();
 			listePlateau.add(plateau);
 			partie.incrementJoueursConnectes();
@@ -110,10 +110,6 @@ public class GestionPartieImpl implements GestionPartie {
 		}
 		partie.setJetonsRestants(jetonsRestants);
 		partie.debuterPartie();
-		for(Plateau plateau : partie.getPlateauEnJeu()){
-			plateau = plateauDao.mettreAJour(plateau);
-			System.out.println(plateau.getId()+" "+plateau.getJetonsEnMain().size());
-		}
 		partie = partieDao.mettreAJour(partie);
 		return partie;
 	}
@@ -153,6 +149,11 @@ public class GestionPartieImpl implements GestionPartie {
 	@Override
 	public Partie recupererPartieAvecID(final int id) {
 		return partieDao.rechercher(id);
+	}
+	
+	public List<Plateau>listeDePlateauEnJeu(Partie partie){
+		partie = partieDao.chargerPlateaux(partie);
+		return partie.getPlateauEnJeu();
 	}
 
 }
