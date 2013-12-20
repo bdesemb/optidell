@@ -2,6 +2,7 @@ package be.ipl.finito.servlets;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -79,6 +80,9 @@ public class RejoindrePartie extends HttpServlet {
 							Partie partie = gestionPartie.recupererPartieAvecID((Integer) session.getAttribute("partie"));
 							if (partie.getPlateauEnJeu().size() >= 2) {
 								partie = gestionPartie.debuterPartie(partie);
+								List<Partie>partieEnCours = (List<Partie>) context.getAttribute("partiesEnAttente");
+								partieEnCours.remove(partie);
+								context.setAttribute("partiesEnAttente", partieEnCours);
 								System.out.println(partie.getEtat().toString());
 								partiesOuvertes.put(partie.getId(), partie.getEtat().toString());
 							} else {

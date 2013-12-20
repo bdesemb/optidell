@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -24,6 +26,7 @@ import be.ipl.finito.ucc.GestionJeton;
 import be.ipl.finito.ucc.GestionJoueur;
 import be.ipl.finito.ucc.GestionPartie;
 import be.ipl.finito.ucc.GestionPlateau;
+import be.ipl.finito.util.Util;
 
 /**
  * Servlet implementation class joueurPartie
@@ -64,22 +67,39 @@ public class JouerPartie extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		ServletContext context = getServletContext();
-		HashMap<Integer, HashSet<Integer>> mapPartiesJoueurs;
 		synchronized (context) {
-			mapPartiesJoueurs = (HashMap<Integer, HashSet<Integer>>) context.getAttribute("mapPartiesJoueurs");
+			HashMap<Integer, HashSet<Integer>> mapPartiesJoueurs = (HashMap<Integer, HashSet<Integer>>) context.getAttribute("mapPartiesJoueurs");
 			if(mapPartiesJoueurs == null) {
 				mapPartiesJoueurs = new HashMap<Integer, HashSet<Integer>>();
 			}
 			context.setAttribute("mapPartiesJoueurs", mapPartiesJoueurs);
 		}		
 		
+		final HashMap<Integer, HashSet<Integer>> mapPartiesJoueurs =  (HashMap<Integer, HashSet<Integer>>) context.getAttribute("mapPartiesJoueurs");
+		
 		HttpSession session = request.getSession();
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
-		int idPartie = (Integer) session.getAttribute("partie");
+		final int idPartie = (Integer) session.getAttribute("partie");
 		Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
 		Plateau plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
+		
+		Timer timer = new Timer();
+		TimerTask timertask = new TimerTask() {
+			
+			@Override
+			public void run() {
+				Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
+				for(Plateau p : partie.getPlateauEnJeu()){
+					if(!mapPartiesJoueurs.get(idPartie).contains(p.getJoueur().getId())){
+						gestionPartie.suspendreJoueur(partie, p);
+					}
+				}
+			}
+		};
+		
 		
 		if(request.getParameter("numeroJeton")!=null){
 			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton"));
@@ -103,7 +123,9 @@ public class JouerPartie extends HttpServlet {
 				gestionPartie.piocherJeton(partie);
 				partie = gestionPartie.recupererPartieAvecID(idPartie);
 				mapPartiesJoueurs.get(idPartie).clear();
+				timer.schedule(timertask,Util.TEMPS_INACTIVITE);
 			}
+
 		}
 		
 		plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
