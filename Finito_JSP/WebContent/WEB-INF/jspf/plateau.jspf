@@ -5,7 +5,6 @@
 <c:set var="position" value="0" />
 Plateau de jeu :
 </br>
-<div id="refresh" refresh="${rafraichir}"></div>
 <table id="plateau">
 	<c:forEach var="i" begin="0" end="5">
 		<tr>
@@ -55,4 +54,9 @@ Mes jetons en main :
 	<input type="hidden" name="numeroJeton" value="" id="numeroJeton" /> <input
 		type="hidden" name="idCase" value="" id="idCase" />
 </form>
+<c:set var="idJoueur" value="${joueur.id}"/>
+
+<c:if test="${donneesDesParties[id_partie].joueurs[idJoueur]!=null}">
+		<jsp:forward page="jouer.html"></jsp:forward>
+</c:if>
 

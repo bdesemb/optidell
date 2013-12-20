@@ -95,11 +95,9 @@ public class JouerPartie extends HttpServlet {
 		};
 		
 		
-		request.setAttribute("rafraichir", "false");
 		if(request.getParameter("numeroJeton")!=null){
 			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").trim());
 			int idCase = Integer.parseInt(request.getParameter("idCase").replace("case_", "").trim());
-			request.setAttribute("rafraichir", "true");
 			gestionPlateau.placerJeton(plateau, gestionJeton.rechercheJetonPourNumero(numeroJeton), gestionCase.rechercherCasePourId(idCase));
 			System.out.println("taille "+donneesDesParties.get(idPartie).getJoueurs().size()+ " "+gestionPartie.listeDePlateauEnJeu(partie).size());
 			donneesDesParties.get(partie.getId()).getJoueurs().add(joueur.getId());
@@ -113,7 +111,6 @@ public class JouerPartie extends HttpServlet {
 				donneesDesParties.get(idPartie).getJoueurs().clear();
 				//timer.schedule(timertask,Util.TEMPS_INACTIVITE);
 				donneesDesParties.get(partie.getId()).setTimer(timer);
-				request.setAttribute("rafraichir", "false");
 			}
 		}
 		
