@@ -43,7 +43,7 @@ public class GestionPlateauImpl implements GestionPlateau{
 	public boolean placerJeton(Plateau plateau, Jeton jeton, Case caseCible) {
 		if(caseCible.getJeton()==null){
 			caseCible.setJeton(jeton);
-			plateau.getJetonsEnMain().remove(jeton);
+			//plateau.getJetonsEnMain().remove(jeton);
 			caseDao.mettreAJour(caseCible);
 			plateauDao.mettreAJour(plateau);
 			return true;
