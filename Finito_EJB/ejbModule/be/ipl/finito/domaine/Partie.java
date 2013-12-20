@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.persistence.OrderBy;
 
 @SuppressWarnings("serial")
 @Entity
@@ -54,6 +55,7 @@ public class Partie implements Serializable {
 	private Map<Integer, Jeton> jetonRestant = new HashMap<Integer, Jeton>();
 
 	@OneToMany(mappedBy = "partie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OrderBy("id")
 	private List<Plateau> plateauEnJeu = new ArrayList<Plateau>();
 
 	@Transient
