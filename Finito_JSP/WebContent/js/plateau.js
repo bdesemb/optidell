@@ -17,6 +17,7 @@ function drop(ev) {
 		$('#idCase').val($case.attr("id"));
 		$("#form").submit();
 	}
+
 }
 
 function refresh() {
@@ -27,7 +28,7 @@ function refresh() {
 	$request.done(function(response, textStatus, xhr) {
 		if (response.indexOf("vainqueur") == -1) {
 			setTimeout(refresh, 1000);
-		
+
 		}
 		$('#affichage').html(response);
 	});
@@ -38,4 +39,5 @@ function refresh() {
 
 $(function() {
 	refresh();
+	$(".drag").draggable();
 });

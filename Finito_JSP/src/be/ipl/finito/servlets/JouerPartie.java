@@ -122,15 +122,19 @@ public class JouerPartie extends HttpServlet {
 		plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
 		List<Case> cases = gestionPlateau.recuperLaListeDeCase(plateau);
 		List<Jeton> jetonsEnMain = gestionPlateau.recupererMainPlateau(plateau);
+		List<Case> casesLibres = gestionPlateau.recupererLesCasesLibres(plateau, partie.getResultatDe());
+
 
 		getServletContext().setAttribute("de", partie.getResultatDe());
 		session.setAttribute("cases", cases);
 		session.setAttribute("jetonsEnMain", jetonsEnMain);
 		session.setAttribute("id_partie", partie.getId());
+		session.setAttribute("casesLibres", casesLibres);
+
 
 		request.setAttribute("title-html", "Partie");
 		
-
+		
 		getServletContext().getNamedDispatcher("plateau.html").forward(request, response);
 
 	}

@@ -1,5 +1,6 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/plateau.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <title>Bienvenue sur Finitooine</title>
 </head>
 <body>

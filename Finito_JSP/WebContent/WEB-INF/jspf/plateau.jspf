@@ -12,6 +12,7 @@
 </c:choose>
 
 <c:set var="cases" value="${cases}" />
+<c:set var="casesLibres" value="${casesLibres}" />
 <c:set var="position" value="0" />
 Plateau de jeu :
 </br>
@@ -26,7 +27,10 @@ Plateau de jeu :
 						<c:when test="${case.numero == de}">div2</c:when>
 						<c:otherwise>div1</c:otherwise>
 						</c:choose>"
-						ondrop="drop(event)" ondragover="allowDrop(event)" occupe="<c:choose>
+						ondrop="drop(event)" ondragover="<c:choose>
+						<c:when test="${case.numero == de}">allowDrop(event)</c:when>
+						<c:otherwise></c:otherwise>
+						</c:choose>" occupe="<c:choose>
 						<c:when test="${case.jeton != null}">true</c:when>
 						<c:otherwise>false</c:otherwise>
 						</c:choose>">
