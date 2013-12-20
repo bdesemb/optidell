@@ -5,12 +5,12 @@
 <c:set var="position" value="0" />
 Plateau de jeu :
 </br>
+<div id="refresh" refresh="${rafraichir}"></div>
 <table id="plateau">
 	<c:forEach var="i" begin="0" end="5">
 		<tr>
 			<c:forEach var="j" begin="0" end="5">
 				<c:set var="case" value="${cases[position]}" />
-				<c:set var="position" value="${position +1}" />
 				<td><div id="case_${case.id}"
 						class="
 								<c:choose>
@@ -31,6 +31,7 @@ Plateau de jeu :
 						</c:when>
 						</c:choose>
 					</div></td>
+				<c:set var="position" value="${position +1}" />
 			</c:forEach>
 		</tr>
 	</c:forEach>

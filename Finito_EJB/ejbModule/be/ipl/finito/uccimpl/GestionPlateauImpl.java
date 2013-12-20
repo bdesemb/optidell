@@ -1,5 +1,6 @@
 package be.ipl.finito.uccimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -87,6 +88,46 @@ public class GestionPlateauImpl implements GestionPlateau{
 			jetons.remove(jetonsRestants.get(i));
 		}
 		return jetons;
+	}
+
+	@Override
+	public List<Case> recupererLesCasesLibres(Plateau plateau, int de) {
+		List<Case> casesLibres = new ArrayList<Case>();
+		List<Case> toutesLesCases = recuperLaListeDeCase(plateau);
+		int indice = -1;
+		for(int i=0;i<toutesLesCases.size();i++){
+			if(toutesLesCases.get(i).getNumero()==de){
+				indice=i;
+				break;
+			}
+		}
+		
+		if(toutesLesCases.get(indice).getJeton()==null){
+			casesLibres.add(toutesLesCases.get(indice));
+			return casesLibres;
+		}
+		
+		if(de!=20 && toutesLesCases.get(indice+1).getNumero()==de && toutesLesCases.get(indice+1).getJeton()==null){
+			casesLibres.add(toutesLesCases.get(indice+1));
+			return casesLibres;
+		}
+
+		for(int i = indice; i>=0; i--){
+			Case caseActuelle = toutesLesCases.get(i);
+			if(caseActuelle.getJeton() == null){
+				casesLibres.add(caseActuelle);
+				break;
+			}
+				
+		}
+		for(int i = indice; i < toutesLesCases.size(); i++){
+			Case caseActuelle = toutesLesCases.get(i);
+			if(caseActuelle.getJeton() == null){
+				casesLibres.add(caseActuelle);
+				break;
+			}
+		}
+		return casesLibres;
 	}
 	
 }

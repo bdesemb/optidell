@@ -19,4 +19,5 @@ public interface GestionPlateau {
 	Plateau recherchePlateauPourJoueurEtPartie(int idPartie, int idJoueur);
 	List<Case> recuperLaListeDeCase(Plateau plateau);
 	public List<Jeton> recupererMainPlateau(Plateau plateau);
+	List<Case> recupererLesCasesLibres(Plateau plateau, int de);
 }

@@ -86,7 +86,7 @@ public class JouerPartie extends HttpServlet {
 			@Override
 			public void run() {
 				Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
-				for(Plateau p : partie.getPlateauEnJeu()){
+				for(Plateau p : gestionPartie.listeDePlateauEnJeu(partie)){
 					if(!donneesDesParties.get(idPartie).getJoueurs().contains(p.getJoueur().getId())){
 						gestionPartie.suspendreJoueur(partie, p);
 					}
@@ -95,28 +95,26 @@ public class JouerPartie extends HttpServlet {
 		};
 		
 		
+		request.setAttribute("rafraichir", "false");
 		if(request.getParameter("numeroJeton")!=null){
-			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton"));
-			int idCase = Integer.parseInt(request.getParameter("idCase"));
-
+			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").trim());
+			int idCase = Integer.parseInt(request.getParameter("idCase").replace("case_", "").trim());
+			request.setAttribute("rafraichir", "true");
 			gestionPlateau.placerJeton(plateau, gestionJeton.rechercheJetonPourNumero(numeroJeton), gestionCase.rechercherCasePourId(idCase));
-			System.out.println("taille "+donneesDesParties.get(idPartie).getJoueurs().size()+ " "
-			+partie.getPlateauEnJeu().size());
-			for(Plateau p : partie.getPlateauEnJeu()){
-				if(p!=null) {
-					System.out.println(p.getJoueur().getId()+" "+p.getPartie().getId());
-				}
-			}
-			if(donneesDesParties.get(idPartie).getJoueurs().size()==partie.getPlateauEnJeu().size()){
-				System.out.println("Passe un tour");
+			System.out.println("taille "+donneesDesParties.get(idPartie).getJoueurs().size()+ " "+gestionPartie.listeDePlateauEnJeu(partie).size());
+			donneesDesParties.get(partie.getId()).getJoueurs().add(joueur.getId());
+			if(donneesDesParties.get(idPartie).getJoueurs().size()==gestionPartie.listeDePlateauEnJeu(partie).size()){
+				if(donneesDesParties.get(partie.getId()).getTimer()!=null)
+					donneesDesParties.get(partie.getId()).getTimer().cancel();
 				gestionPartie.lancerDe(partie);
 				partie = gestionPartie.recupererPartieAvecID(idPartie);
 				gestionPartie.piocherJeton(partie);
 				partie = gestionPartie.recupererPartieAvecID(idPartie);
 				donneesDesParties.get(idPartie).getJoueurs().clear();
-				timer.schedule(timertask,Util.TEMPS_INACTIVITE);
+				//timer.schedule(timertask,Util.TEMPS_INACTIVITE);
+				donneesDesParties.get(partie.getId()).setTimer(timer);
+				request.setAttribute("rafraichir", "false");
 			}
-
 		}
 		
 		plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
@@ -128,6 +126,7 @@ public class JouerPartie extends HttpServlet {
 		session.setAttribute("jetonsEnMain", jetonsEnMain);
 
 		request.setAttribute("title-html", "Partie");
+		
 
 		getServletContext().getNamedDispatcher("plateau.html").forward(request, response);
 

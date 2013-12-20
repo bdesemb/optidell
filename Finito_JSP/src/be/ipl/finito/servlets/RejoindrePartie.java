@@ -75,7 +75,6 @@ public class RejoindrePartie extends HttpServlet {
 			System.out.println("Avant le if");
 			if (etat != null && !etat.equals("suspendue")) {
 				partie = gestionPartie.ajouterJoueur(partie, joueur);
-				donneesDesParties.get(partie.getId()).getJoueurs().add(joueur.getId());
 
 				session.setAttribute("partie", idPartie);
 				int nbrJoueurs = gestionPartie.nbrJoueurConnectes(partie);
@@ -84,6 +83,7 @@ public class RejoindrePartie extends HttpServlet {
 					partie = gestionPartie.debuterPartie(partie);
 					donneesDesParties.get(idPartie).setEtat(partie.getEtat().toString());
 					donneesDesParties.get(idPartie).getTimer().cancel();
+					donneesDesParties.get(partie.getId()).setTimer(null);
 				}
 				System.out.println("t"+partie.getPlateauEnJeu().size());
 				getServletContext().getNamedDispatcher("attente.html").forward(

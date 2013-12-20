@@ -1,3 +1,5 @@
+var nb = 0;
+
 function allowDrop(ev) {
 	ev.preventDefault();
 }
@@ -12,6 +14,7 @@ function drop(ev) {
 	if($(ev.target).attr("occupe") != "true"){
 		ev.target.appendChild(document.getElementById(data));
 		var $jetonJoue = $("#plateau").find($(".drag[draggable='true']"));
+		alert($jetonJoue.parent().attr('id')+""+$jetonJoue.parent().text());
 		$('#numeroJeton').val($jetonJoue.text());
 		var $case = $(ev.target);
 		$('#idCase').val($case.attr("id"));
@@ -20,19 +23,22 @@ function drop(ev) {
 }
 
 function refresh() {
-	var $request = $.ajax({
-		url: "plateauMaj.html",
-		type: "post",
-	});
-	$request.done(function (response, textStatus, xhr) {
-		if (response.indexOf("form") == -1 && response.indexOf("vainqueur") == -1) {
-			setTimeout(refresh, 1000);
-		} 
-		$('#affichage').html(response);
-	});
-	$request.fail(function (xhr, textStatus, errorThrown) {
-		alert(errorThrown);
-	});
+	if(nb==0 || $("#refresh").attr("refresh") == "true"){
+		var $request = $.ajax({
+			url: "plateauMaj.html",
+			type: "post",
+		});
+		$request.done(function (response, textStatus, xhr) {
+			if (response.indexOf("form") == -1 && response.indexOf("vainqueur") == -1) {
+				setTimeout(refresh, 1000);
+			} 
+			$('#affichage').html(response);
+		});
+		$request.fail(function (xhr, textStatus, errorThrown) {
+			alert(errorThrown);
+		});
+		nb++;
+	}
 }
 
 $(function () {
