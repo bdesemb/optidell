@@ -72,13 +72,12 @@ public class RejoindrePartie extends HttpServlet {
 					.getParameter("radio_partie"));
 			Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
 			Joueur joueur = (Joueur) session.getAttribute("joueur");
-			System.out.println("Avant le if");
 			if (etat != null && !etat.equals("suspendue")) {
 				partie = gestionPartie.ajouterJoueur(partie, joueur);
 
 				session.setAttribute("partie", idPartie);
 				int nbrJoueurs = gestionPartie.nbrJoueurConnectes(partie);
-				System.out.println("Nombre joueurs connectés : "+nbrJoueurs);
+				donneesDesParties.get(partie.getId()).getJoueursNumTours().put(joueur.getId(), 0);
 				if (nbrJoueurs == Util.MAX_JOUEURS) {
 					partie = gestionPartie.debuterPartie(partie);
 					donneesDesParties.get(idPartie).setEtat(partie.getEtat().toString());

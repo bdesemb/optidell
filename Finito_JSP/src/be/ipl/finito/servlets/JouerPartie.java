@@ -95,12 +95,16 @@ public class JouerPartie extends HttpServlet {
 		};
 		
 		
+		if(donneesDesParties.get(partie.getId()).getJoueursNumTours().get(joueur.getId()) < donneesDesParties.get(partie.getId()).getTour())
+			donneesDesParties.get(partie.getId()).getJoueursNumTours().put(joueur.getId(), donneesDesParties.get(partie.getId()).getJoueursNumTours().get(joueur.getId())+1);
+		
 		if(request.getParameter("numeroJeton")!=null){
 			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").trim());
 			int idCase = Integer.parseInt(request.getParameter("idCase").replace("case_", "").trim());
 			gestionPlateau.placerJeton(plateau, gestionJeton.rechercheJetonPourNumero(numeroJeton), gestionCase.rechercherCasePourId(idCase));
 			System.out.println("taille "+donneesDesParties.get(idPartie).getJoueurs().size()+ " "+gestionPartie.listeDePlateauEnJeu(partie).size());
 			donneesDesParties.get(partie.getId()).getJoueurs().add(joueur.getId());
+			System.out.println("Joueur = "+joueur.getId() +" Tour partie = "+donneesDesParties.get(partie.getId()).getTour()+ " et tour joueur = "+donneesDesParties.get(partie.getId()).getJoueursNumTours().get(joueur.getId()));
 			if(donneesDesParties.get(idPartie).getJoueurs().size()==gestionPartie.listeDePlateauEnJeu(partie).size()){
 				if(donneesDesParties.get(partie.getId()).getTimer()!=null)
 					donneesDesParties.get(partie.getId()).getTimer().cancel();
@@ -111,6 +115,7 @@ public class JouerPartie extends HttpServlet {
 				donneesDesParties.get(idPartie).getJoueurs().clear();
 				//timer.schedule(timertask,Util.TEMPS_INACTIVITE);
 				donneesDesParties.get(partie.getId()).setTimer(timer);
+				donneesDesParties.get(partie.getId()).setTour(donneesDesParties.get(partie.getId()).getTour()+1);
 			}
 		}
 		
@@ -121,6 +126,7 @@ public class JouerPartie extends HttpServlet {
 		getServletContext().setAttribute("de", partie.getResultatDe());
 		session.setAttribute("cases", cases);
 		session.setAttribute("jetonsEnMain", jetonsEnMain);
+		session.setAttribute("id_partie", partie.getId());
 
 		request.setAttribute("title-html", "Partie");
 		

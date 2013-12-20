@@ -28,6 +28,7 @@ function refresh() {
 	$request.done(function(response, textStatus, xhr) {
 		if (response.indexOf("vainqueur") == -1) {
 			setTimeout(refresh, 1000);
+		
 		}
 		$('#affichage').html(response);
 	});

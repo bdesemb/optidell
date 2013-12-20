@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:set var="id_joueur" value="${joueur.id}"/>
+<c:set var="nb_tour_partie" value="${donneesDesParties[id_partie].tour}" />
+<c:set var="nb_tour_joueur" value="${donneesDesParties[id_partie].joueursNumTours[id_joueur]}" />
+<c:choose>
+<c:when test="${nb_tour_partie != nb_tour_joueur}">
+		<jsp:forward page="jouer.html"></jsp:forward>
+</c:when>
+</c:choose>
+
 <c:set var="cases" value="${cases}" />
 <c:set var="position" value="0" />
 Plateau de jeu :
@@ -54,9 +64,3 @@ Mes jetons en main :
 	<input type="hidden" name="numeroJeton" value="" id="numeroJeton" /> <input
 		type="hidden" name="idCase" value="" id="idCase" />
 </form>
-<c:set var="idJoueur" value="${joueur.id}"/>
-
-<c:if test="${donneesDesParties[id_partie].joueurs[idJoueur]!=null}">
-		<jsp:forward page="jouer.html"></jsp:forward>
-</c:if>
-

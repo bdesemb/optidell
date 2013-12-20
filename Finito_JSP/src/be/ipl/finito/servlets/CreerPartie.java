@@ -71,12 +71,13 @@ public class CreerPartie extends HttpServlet {
 
 			final HashMap<Integer, DonneesDUnePartie> donneesDesParties = (HashMap<Integer, DonneesDUnePartie>) context
 					.getAttribute("donneesDesParties");
-			Joueur joueur = (Joueur) session.getAttribute("joueur");
+			final Joueur joueur = (Joueur) session.getAttribute("joueur");
 			Partie partie = gestionPartie.creerPartie(joueur);
 
 			session.setAttribute("partie", partie.getId());
 			donneesDesParties.put(partie.getId(),
 					new DonneesDUnePartie(partie.getId()));
+			donneesDesParties.get(partie.getId()).getJoueursNumTours().put(joueur.getId(), 0);
 			List<Partie> liste = (List<Partie>) context
 					.getAttribute("partiesEnAttente");
 			if (liste == null) {
@@ -107,7 +108,7 @@ public class CreerPartie extends HttpServlet {
 					}
 				}
 			};
-			timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE*6);
+			timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE*2);
 			donneesDesParties.get(partie.getId()).setTimer(timer);
 		}
 		request.setAttribute("title-html", "Partie");
