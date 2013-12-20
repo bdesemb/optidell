@@ -45,16 +45,22 @@ public class CreerPartie extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(final HttpServletRequest request,
+			final HttpServletResponse response) throws ServletException,
+			IOException {
 		doPost(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(final HttpServletRequest request,
+			final HttpServletResponse response) throws ServletException,
+			IOException {
 		final ServletContext context = getServletContext();
 		final HttpSession session = request.getSession();
 		synchronized (context) {
@@ -63,58 +69,52 @@ public class CreerPartie extends HttpServlet {
 				context.setAttribute("donneesDesParties", donneesDesParties);
 			}
 
-			final HashMap<Integer, DonneesDUnePartie> donneesDesParties = (HashMap<Integer, DonneesDUnePartie>) context.getAttribute("donneesDesParties");
+			final HashMap<Integer, DonneesDUnePartie> donneesDesParties = (HashMap<Integer, DonneesDUnePartie>) context
+					.getAttribute("donneesDesParties");
 			Joueur joueur = (Joueur) session.getAttribute("joueur");
 			Partie partie = gestionPartie.creerPartie(joueur);
-			
+
 			session.setAttribute("partie", partie.getId());
-			donneesDesParties.put(partie.getId(), new DonneesDUnePartie(partie.getId()));
-			List<Partie> liste = (List<Partie>) context.getAttribute("partiesEnAttente");
+			donneesDesParties.put(partie.getId(),
+					new DonneesDUnePartie(partie.getId()));
+			List<Partie> liste = (List<Partie>) context
+					.getAttribute("partiesEnAttente");
 			if (liste == null) {
 				liste = new ArrayList<Partie>();
 			}
 			liste.add(partie);
 			context.setAttribute("partiesEnAttente", liste);
-			System.out.println(partie.getPlateauEnJeu().size());
-			
-			synchronized (context) {
-				HashMap<Integer, HashSet<Integer>> mapPartiesJoueurs = (HashMap<Integer, HashSet<Integer>>) context.getAttribute("mapPartiesJoueurs");
-				if(mapPartiesJoueurs == null) {
-					mapPartiesJoueurs = new HashMap<Integer, HashSet<Integer>>();
-				}
-				
-				mapPartiesJoueurs.put(partie.getId(), new HashSet<Integer>());
-				mapPartiesJoueurs.get(partie.getId()).add(joueur.getId());
-				context.setAttribute("mapPartiesJoueurs", mapPartiesJoueurs);
-				
-				Timer timer = new Timer();
-				TimerTask timerTask = new TimerTask() {
-					public void run() {
-						Partie partie = gestionPartie
-								.recupererPartieAvecID((Integer) session
-										.getAttribute("partie"));
-						if (partie.getPlateauEnJeu().size() >= Util.MIN_JOUEURS) {
-							partie = gestionPartie.debuterPartie(partie);
-							List<Partie> partieEnCours = (List<Partie>) context
-									.getAttribute("partiesEnAttente");
-							partieEnCours.remove(partie);
-							context.setAttribute("partiesEnAttente",
-									partieEnCours);
-							System.out.println(partie.getEtat().toString());
-							donneesDesParties.get(partie.getId()).setEtat(partie
-									.getEtat().toString());
-						} else {
-							// A faire : gestionPartie.annulerPartie();
-						}
+			System.out.println("Création d'une partie : "+partie.getPlateauEnJeu().size());
+			// Création du timer et de son job
+			Timer timer = new Timer();
+			TimerTask timerTask = new TimerTask() {
+				public void run() {
+					Partie partie = gestionPartie
+							.recupererPartieAvecID((Integer) session
+									.getAttribute("partie"));
+					System.out.println("Dans timer "
+							+ partie.getPlateauEnJeu().size());
+					if (partie.getPlateauEnJeu().size() >= Util.MIN_JOUEURS) {
+						partie = gestionPartie.debuterPartie(partie);
+						List<Partie> partieEnCours = (List<Partie>) context
+								.getAttribute("partiesEnAttente");
+						partieEnCours.remove(partie);
+						context.setAttribute("partiesEnAttente", partieEnCours);
+						System.out.println(partie.getEtat().toString());
+						donneesDesParties.get(partie.getId()).setEtat(
+								partie.getEtat().toString());
+					} else {
+						System.out.println("Dans timer (else)");
+						// A faire : gestionPartie.annulerPartie();
 					}
-				};
-				timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE);
-				donneesDesParties.get(partie.getId()).setTimer(timer);
-			}	
-			
+				}
+			};
+			timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE*6);
+			donneesDesParties.get(partie.getId()).setTimer(timer);
 		}
 		request.setAttribute("title-html", "Partie");
-		getServletContext().getNamedDispatcher("attente.html").forward(request, response);
+		getServletContext().getNamedDispatcher("attente.html").forward(request,
+				response);
 	}
 
 }
