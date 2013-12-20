@@ -21,6 +21,7 @@ import be.ipl.finito.domaine.Jeton;
 import be.ipl.finito.domaine.Joueur;
 import be.ipl.finito.domaine.Partie;
 import be.ipl.finito.domaine.Plateau;
+import be.ipl.finito.modeles.DonneesDUnePartie;
 import be.ipl.finito.ucc.GestionCase;
 import be.ipl.finito.ucc.GestionJeton;
 import be.ipl.finito.ucc.GestionJoueur;
@@ -69,16 +70,9 @@ public class JouerPartie extends HttpServlet {
 	 */
 
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-		ServletContext context = getServletContext();
-		synchronized (context) {
-			HashMap<Integer, HashSet<Integer>> mapPartiesJoueurs = (HashMap<Integer, HashSet<Integer>>) context.getAttribute("mapPartiesJoueurs");
-			if(mapPartiesJoueurs == null) {
-				mapPartiesJoueurs = new HashMap<Integer, HashSet<Integer>>();
-			}
-			context.setAttribute("mapPartiesJoueurs", mapPartiesJoueurs);
-		}		
+		ServletContext context = getServletContext();	
 		
-		final HashMap<Integer, HashSet<Integer>> mapPartiesJoueurs =  (HashMap<Integer, HashSet<Integer>>) context.getAttribute("mapPartiesJoueurs");
+		final HashMap<Integer, DonneesDUnePartie> donneesDesParties =  (HashMap<Integer, DonneesDUnePartie>) context.getAttribute("donneesDesParties");
 		
 		HttpSession session = request.getSession();
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
@@ -93,7 +87,7 @@ public class JouerPartie extends HttpServlet {
 			public void run() {
 				Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
 				for(Plateau p : partie.getPlateauEnJeu()){
-					if(!mapPartiesJoueurs.get(idPartie).contains(p.getJoueur().getId())){
+					if(!donneesDesParties.get(idPartie).getJoueurs().contains(p.getJoueur().getId())){
 						gestionPartie.suspendreJoueur(partie, p);
 					}
 				}
@@ -104,25 +98,22 @@ public class JouerPartie extends HttpServlet {
 		if(request.getParameter("numeroJeton")!=null){
 			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton"));
 			int idCase = Integer.parseInt(request.getParameter("idCase"));
-			if(mapPartiesJoueurs.get(idPartie)==null) {
-				mapPartiesJoueurs.put(idPartie, new HashSet<Integer>());
-			}
-			mapPartiesJoueurs.get(idPartie).add(joueur.getId());
+
 			gestionPlateau.placerJeton(plateau, gestionJeton.rechercheJetonPourNumero(numeroJeton), gestionCase.rechercherCasePourId(idCase));
-			System.out.println("taille "+mapPartiesJoueurs.get(idPartie).size()+ " "
+			System.out.println("taille "+donneesDesParties.get(idPartie).getJoueurs().size()+ " "
 			+partie.getPlateauEnJeu().size());
 			for(Plateau p : partie.getPlateauEnJeu()){
 				if(p!=null) {
 					System.out.println(p.getJoueur().getId()+" "+p.getPartie().getId());
 				}
 			}
-			if(mapPartiesJoueurs.get(idPartie).size()==partie.getPlateauEnJeu().size()){
+			if(donneesDesParties.get(idPartie).getJoueurs().size()==partie.getPlateauEnJeu().size()){
 				System.out.println("Passe un tour");
 				gestionPartie.lancerDe(partie);
 				partie = gestionPartie.recupererPartieAvecID(idPartie);
 				gestionPartie.piocherJeton(partie);
 				partie = gestionPartie.recupererPartieAvecID(idPartie);
-				mapPartiesJoueurs.get(idPartie).clear();
+				donneesDesParties.get(idPartie).getJoueurs().clear();
 				timer.schedule(timertask,Util.TEMPS_INACTIVITE);
 			}
 

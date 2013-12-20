@@ -212,6 +212,10 @@ public class Partie implements Serializable {
 				}
 				partie.lancerDe();
 			}
+			
+			public void suspendrePartie(Partie partie){
+				partie.setEtat(FINI);
+			}
 		},
 		EN_COURS {
 			public boolean isEnCours() {
@@ -224,7 +228,7 @@ public class Partie implements Serializable {
 				List<Plateau> listePlateau = partie.getPlateauEnJeu();
 
 				if (listeJetonsRestants.isEmpty()) {
-					System.out.println("J'ai pas de jetons à donner BOLOS");
+					System.out.println("J'ai pas de jetons à donner");
 					return null;
 				}
 
@@ -268,6 +272,8 @@ public class Partie implements Serializable {
 					partie.setEtat(EN_COURS);
 				}
 			}
+			
+			
 		},
 		FINI {
 

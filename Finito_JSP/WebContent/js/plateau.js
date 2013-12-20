@@ -24,7 +24,7 @@ function refresh() {
 	});
 	$request.done(function (response, textStatus, xhr) {
 		if (response.indexOf("form") == -1 && response.indexOf("vainqueur") == -1) {
-			setTimeout(refresh, 1000);
+			setTimeout(refresh, 3000);
 		} 
 		$('#affichage').html(response);
 	});
