@@ -12,7 +12,6 @@ function drop(ev) {
 	if ($(ev.target).attr("occupe") != "true") {
 		ev.target.appendChild(document.getElementById(data));
 		var $jetonJoue = $("#plateau").find($(".drag[draggable='true']"));
-		alert($jetonJoue.parent().attr('id') + "" + $jetonJoue.parent().text());
 		$('#numeroJeton').val($jetonJoue.text());
 		var $case = $(ev.target);
 		$('#idCase').val($case.attr("id"));
