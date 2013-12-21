@@ -21,11 +21,12 @@ body {
 #page_table {
 	height: 93%;
 	width: 100%;
+	margin-bottom : 65px;
 }
 
 #page_td {
 	height: 93%;
-	padding: 0;
+	padding: 100px;
 	vertical-align: middle;
 }
 
@@ -116,13 +117,11 @@ a:before {
 }*/
 
 #liste_suspendues{
-	width:100%;
-	margin-left:100px;
+	width:80%;
 }
 
 #liste_attentes{
-	width:100%;
-	margin-margin:100px;
+	width:80%;
 }
 
 #barre_attente {

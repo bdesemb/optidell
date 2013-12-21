@@ -2,6 +2,11 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <h3>Partie(s) en attente</h3>
+<form action="creerPartie.html" method="post">
+	<input type="hidden" name="etat" value="en_attente" /> <input
+		type="submit" value="Créer une partie" />
+</form>
+
 <form action="rejoindrePartie.html" method="post">
 
 	<table id="table_lobby">
@@ -26,8 +31,5 @@
 		type="submit" value="Rejoindre" />
 
 </form>
-<form action="creerPartie.html" method="post">
-	<input type="hidden" name="etat" value="en_attente" /> <input
-		type="submit" value="Créer une partie" />
-</form>
+
 <br />
