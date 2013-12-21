@@ -116,12 +116,12 @@ a:before {
 }*/
 
 #liste_suspendues{
-	width:80%;
+	width:100%;
 	margin-left:100px;
 }
 
 #liste_attentes{
-	width:80%;
+	width:100%;
 	margin-margin:100px;
 }
 
@@ -171,12 +171,13 @@ a:before {
     color: #669;
     border-top: 1px solid #fff;
     background: #e8edff url('../ressources/images/fondTrooper.jpg') repeat-x;
-    opacity:0.9;
+    opacity:0.8;
     color: white;
 }
 
 #table_lobby a:hover {
     text-decoration:underline;
+}    
 
 /* Pour les animations */
 @keyframes progressionAttente {
