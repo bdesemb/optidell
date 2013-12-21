@@ -99,14 +99,6 @@ public interface GestionPartie {
 	List<Partie> listerPartiesEnSuspend(Joueur joueur);
 
 	/**
-	 * Renvoie le nombre de joueurs connectés à une partie
-	 * 
-	 * @param partie
-	 * @return le nombre de joueurs connectés
-	 */
-	int rechercherNombreJoueursConnectes(Partie partie);
-
-	/**
 	 * Renvoie la partie via son id
 	 * 
 	 * @param id

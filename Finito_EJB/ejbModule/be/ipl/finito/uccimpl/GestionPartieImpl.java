@@ -128,19 +128,6 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public int getNombresJoueursConnectes(Partie partie) {
-		partie = partieDao.chargerPlateaux(partie);
-		List<Plateau> plateauEnJeu = partie.getPlateauEnJeu();
-		int nbConnectes = 0;
-		for (Plateau p : plateauEnJeu) {
-			if (!p.isSuspendu()) {
-				nbConnectes++;
-			}
-		}
-		return nbConnectes;
-	}
-
-	@Override
 	public Partie rechercherPartie(final int id) {
 		return partieDao.rechercher(id);
 	}
