@@ -151,8 +151,8 @@ public class GestionPlateauImpl implements GestionPlateau{
 
 	@Override
 	public int calculerScore(final Plateau plateau) {
-	    int meilleureSuite = 1;
-		int suiteCourante = 1;
+	    int meilleureSuite = 0;
+		int suiteCourante = 0;
 		Case casePrecedente = null;
 		List<Case>listeDeCases = listerCases(plateau);
 		for(int i=0;i<listeDeCases.size();i++){
@@ -161,11 +161,11 @@ public class GestionPlateauImpl implements GestionPlateau{
 				if(casePrecedente != null && casePrecedente.getJeton().getNumero()>caseCourante.getJeton().getNumero()){
 					suiteCourante=0;
 				}
+				casePrecedente=caseCourante;
+				suiteCourante++;
 				if(meilleureSuite < suiteCourante) {
 					meilleureSuite = suiteCourante;
 				}
-				casePrecedente=caseCourante;
-				suiteCourante++;
 			}
 		}
 		return meilleureSuite;
