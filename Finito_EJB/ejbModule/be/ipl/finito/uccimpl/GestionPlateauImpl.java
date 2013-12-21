@@ -156,7 +156,7 @@ public class GestionPlateauImpl implements GestionPlateau{
 		Case casePrecedente = null;
 		List<Case>listeDeCases = listerCases(plateau);
 		for(int i=0;i<listeDeCases.size();i++){
-			if(listeDeCases.get(i)!=null) {
+			if(listeDeCases.get(i).getJeton()!=null) {
 				Case caseCourante = listeDeCases.get(i);
 				if(casePrecedente != null && casePrecedente.getJeton().getNumero()>caseCourante.getJeton().getNumero()){
 					if(meilleureSuite < suiteCourante) {
