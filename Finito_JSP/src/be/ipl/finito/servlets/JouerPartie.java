@@ -93,7 +93,9 @@ public class JouerPartie extends HttpServlet {
 				}
 			}
 		};
-		
+		if(partie.getEtat() == Partie.Etat.FINI){
+		    //Il faut forward vers la page de fin de partie
+		}
 		
 		if(donneesDeLaPartie.getJoueursNumTours().get(joueur.getId()) < donneesDesParties.get(partie.getId()).getTour()) {
 			donneesDeLaPartie.getJoueursNumTours().put(joueur.getId(), donneesDesParties.get(partie.getId()).getJoueursNumTours().get(joueur.getId())+1);
@@ -113,6 +115,16 @@ public class JouerPartie extends HttpServlet {
 				if(donneesDeLaPartie.getTimer()!=null) {
 					donneesDeLaPartie.getTimer().cancel();
 				}
+				
+				if(gestionPlateau.listerJetonsEnMain(plateau).size() == 0){
+				    List<Plateau> listePlateau = gestionPartie.listerPlateauxEnJeu(partie);
+				    for (Plateau p : listePlateau){
+					if(p.calculerScore() == 12){
+					    gestionPartie.finirPartie(partie);
+					}
+				    }
+				}
+				
 				gestionPartie.lancerDe(partie);
 				partie = gestionPartie.rechercherPartie(idPartie);
 				if(partie.getIndiceTirage()!=12){
