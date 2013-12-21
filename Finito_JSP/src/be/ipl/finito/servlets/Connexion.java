@@ -1,7 +1,7 @@
 package be.ipl.finito.servlets;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.HashSet;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -40,9 +40,8 @@ public class Connexion extends HttpServlet {
 	 */
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		if(getServletContext().getAttribute("partiesEnAttente")==null){
-			List<Partie> partiesEventuellementAjouteesParDesTests = gestionPartie.listerPartiesEnAttente();
+			HashSet<Partie> partiesEventuellementAjouteesParDesTests = new HashSet(gestionPartie.listerPartiesEnAttente());
 			getServletContext().setAttribute("partiesEnAttente", partiesEventuellementAjouteesParDesTests);
-			System.out.println("WESH COUSIN, JE CHECK LES PARTIES"+partiesEventuellementAjouteesParDesTests.size());
 		}
 		
 		String pseudo = request.getParameter("pseudo");

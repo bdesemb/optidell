@@ -24,7 +24,7 @@ public class GestionPartieImpl implements GestionPartie {
 
 	@EJB
 	PlateauDao plateauDao;
-	
+
 	@EJB
 	JetonDao jetonDao;
 
@@ -36,33 +36,27 @@ public class GestionPartieImpl implements GestionPartie {
 
 		Partie partie = new Partie();
 		partie = partieDao.enregistrer(partie);
-		Plateau plateau = gestionPlateau.creerPlateau(joueur,partie);
+		Plateau plateau = gestionPlateau.creerPlateau(joueur, partie);
 		partie = partieDao.chargerPlateaux(partie);
 
 		List<Plateau> listePlateau = partie.getPlateauEnJeu();
-
 		listePlateau.add(plateau);
-		partie.incrementJoueursConnectes();
-		
+
 		partie = partieDao.mettreAJour(partie);
 		return partie;
 	}
 
 	@Override
 	public Partie ajouterJoueur(Partie partie, final Joueur joueur) {
-
-		if (partie.isEnAttente()) {
-			partie = partieDao.chargerPlateaux(partie);
-			Plateau plateau = gestionPlateau.creerPlateau(joueur,partie);
-			partie = partieDao.chargerPlateaux(partie);
-			List<Plateau> listePlateau = partie.getPlateauEnJeu();
-			listePlateau.add(plateau);
-			partie.incrementJoueursConnectes();
-
-			partie = partieDao.mettreAJour(partie);
-			return partie;
-		}
-		return null;
+		partie = partieDao.chargerPlateaux(partie);
+		Plateau plateau = gestionPlateau.creerPlateau(joueur, partie);
+		partie = partieDao.chargerPlateaux(partie);
+		
+		List<Plateau> listePlateau = partie.getPlateauEnJeu();
+		listePlateau.add(plateau);
+		
+		partie = partieDao.mettreAJour(partie);
+		return partie;
 	}
 
 	@Override
@@ -71,6 +65,7 @@ public class GestionPartieImpl implements GestionPartie {
 		partie = partieDao.chargerJetons(partie);
 		partie = partieDao.chargerPlateaux(partie);
 		Jeton jeton = partie.piocherJeton();
+		partie.incrementerTirage();
 		partieDao.mettreAJour(partie);
 		return jeton;
 	}
@@ -80,7 +75,6 @@ public class GestionPartieImpl implements GestionPartie {
 			return -1;
 		}
 		int resultat = partie.lancerDe();
-		partie.incrementerTirage();
 		partieDao.mettreAJour(partie);
 		return resultat;
 	}
@@ -88,7 +82,7 @@ public class GestionPartieImpl implements GestionPartie {
 	public void suspendreJoueur(final Partie partie, final Plateau plateau) {
 		partie.getEtat().suspendrePartie(partie);
 		plateau.setSuspendu(true);
-		partie.decrementJoueursConnectes();
+		
 		plateauDao.mettreAJour(plateau);
 		partieDao.mettreAJour(partie);
 	}
@@ -105,7 +99,7 @@ public class GestionPartieImpl implements GestionPartie {
 		List<Jeton> jetons = jetonDao.lister();
 		Collections.shuffle(jetons);
 		Map<Integer, Jeton> jetonsRestants = partie.getJetonsRestants();
-		for(int i=0;i<12;i++){
+		for (int i = 0; i < 12; i++) {
 			jetonsRestants.put(i, jetons.get(i));
 		}
 		partie.setJetonsRestants(jetonsRestants);
@@ -134,13 +128,13 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public int rechercherNombreJoueursConnectes(Partie partie) {
+	public int getNombresJoueursConnectes(Partie partie) {
 		partie = partieDao.chargerPlateaux(partie);
-		List<Plateau>plateauEnJeu = partie.getPlateauEnJeu();
+		List<Plateau> plateauEnJeu = partie.getPlateauEnJeu();
 		int nbConnectes = 0;
-		for(Plateau p : plateauEnJeu){
-			if(!p.isSuspendu()) {
-				nbConnectes ++;
+		for (Plateau p : plateauEnJeu) {
+			if (!p.isSuspendu()) {
+				nbConnectes++;
 			}
 		}
 		return nbConnectes;
@@ -150,8 +144,8 @@ public class GestionPartieImpl implements GestionPartie {
 	public Partie rechercherPartie(final int id) {
 		return partieDao.rechercher(id);
 	}
-	
-	public List<Plateau>listerPlateauxEnJeu(Partie partie){
+
+	public List<Plateau> listerPlateauxEnJeu(Partie partie){
 		partie = partieDao.chargerPlateaux(partie);
 		return partie.getPlateauEnJeu();
 	}

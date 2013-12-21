@@ -1,9 +1,8 @@
 package be.ipl.finito.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -61,28 +60,29 @@ public class CreerPartie extends HttpServlet {
 			IOException {
 		final ServletContext context = getServletContext();
 		final HttpSession session = request.getSession();
+		
 		synchronized (context) {
 			if (context.getAttribute("donneesDesParties") == null) {
 				HashMap<Integer, DonneesDUnePartie> donneesDesParties = new HashMap<Integer, DonneesDUnePartie>();
 				context.setAttribute("donneesDesParties", donneesDesParties);
 			}
-
 			final HashMap<Integer, DonneesDUnePartie> donneesDesParties = (HashMap<Integer, DonneesDUnePartie>) context
 					.getAttribute("donneesDesParties");
+			
 			final Joueur joueur = (Joueur) session.getAttribute("joueur");
 			Partie partie = gestionPartie.creerPartie(joueur);
-			
 			session.setAttribute("id_partie", partie.getId());
 			final DonneesDUnePartie donneesDeLaPartie = new DonneesDUnePartie(partie.getId());
 			donneesDesParties.put(partie.getId(),donneesDeLaPartie);
 			donneesDeLaPartie.getJoueursNumTours().put(joueur.getId(), 0);
-			List<Partie> liste = (List<Partie>) context
+			
+			HashSet<Partie> set = (HashSet<Partie>) context
 					.getAttribute("partiesEnAttente");
-			if (liste == null) {
-				liste = new ArrayList<Partie>();
+			if (set == null) {
+				set = new HashSet<Partie>();
+				context.setAttribute("partiesEnAttente", set);
 			}
-			liste.add(partie);
-			context.setAttribute("partiesEnAttente", liste);
+			set.add(partie);
 			
 			// Création du timer et de son job
 			Timer timer = new Timer();
@@ -93,10 +93,10 @@ public class CreerPartie extends HttpServlet {
 									.getAttribute("id_partie"));
 					if (gestionPartie.listerPlateauxEnJeu(partie).size() >= Util.MIN_JOUEURS) {
 						partie = gestionPartie.debuterPartie(partie);
-						List<Partie> partiesEnAttente = (List<Partie>) context
+						HashSet<Partie> partiesEnAttente = (HashSet<Partie>) context
 								.getAttribute("partiesEnAttente");
 						partiesEnAttente.remove(partie);
-						context.setAttribute("partiesEnAttente", partiesEnAttente);
+						//context.setAttribute("partiesEnAttente", partiesEnAttente);
 						donneesDeLaPartie.setEtat(
 								partie.getEtat().toString());
 						donneesDeLaPartie.setTimer(null);
@@ -107,7 +107,7 @@ public class CreerPartie extends HttpServlet {
 					}
 				}
 			};
-			timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE*2);
+			timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE*6);
 			donneesDeLaPartie.setTimer(timer);
 		}
 		request.setAttribute("title-html", "Partie");

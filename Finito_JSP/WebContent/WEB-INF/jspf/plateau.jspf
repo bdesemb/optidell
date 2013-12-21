@@ -14,10 +14,9 @@
 <c:set var="cases" value="${cases}" />
 <c:set var="casesLibres" value="${casesLibres}" />
 <c:set var="de" value="${donneesDesParties[id_partie].resultatDe}" />
-De = ${de}
 <c:set var="position" value="0" />
 Plateau de jeu :
-</br>
+<br/>
 <table id="plateau">
 	<c:forEach var="i" begin="0" end="5">
 		<tr>

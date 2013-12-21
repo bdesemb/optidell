@@ -31,7 +31,7 @@ public class RejoindrePartie extends HttpServlet {
 	private GestionPartie gestionPartie;
 
 	@EJB
-	private GestionJoueur gestionJoueur;
+	private GestionJoueur gestinJoueur;
 
 	@EJB
 	private GestionPlateau gestionPlateau;
@@ -74,13 +74,11 @@ public class RejoindrePartie extends HttpServlet {
 			Joueur joueur = (Joueur) session.getAttribute("joueur");
 			DonneesDUnePartie donneesDeLaPartie = donneesDesParties.get(idPartie);
 			
-			if (etat != null && !etat.equals("suspendue")) {
+			if (partie!= null && etat != null && !etat.equals("suspendue")) {
 				partie = gestionPartie.ajouterJoueur(partie, joueur);
-
 				session.setAttribute("id_partie", idPartie);
-				int nbrJoueurs = gestionPartie.rechercherNombreJoueursConnectes(partie);
-				donneesDesParties.get(partie.getId()).getJoueursNumTours().put(joueur.getId(), 0);
-				if (nbrJoueurs == Util.MAX_JOUEURS) {
+				donneesDeLaPartie.getJoueursNumTours().put(joueur.getId(), 0);
+				if (donneesDeLaPartie.getJoueursNumTours().size() == Util.MAX_JOUEURS) {
 					partie = gestionPartie.debuterPartie(partie);
 					donneesDeLaPartie.setEtat(partie.getEtat().toString());
 					donneesDeLaPartie.setResultatDe(partie.getResultatDe());

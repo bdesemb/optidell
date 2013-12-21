@@ -109,8 +109,10 @@ public class JouerPartie extends HttpServlet {
 				}
 				gestionPartie.lancerDe(partie);
 				partie = gestionPartie.rechercherPartie(idPartie);
-				gestionPartie.piocherJeton(partie);
-				partie = gestionPartie.rechercherPartie(idPartie);
+				if(partie.getIndiceTirage()!=12){
+					gestionPartie.piocherJeton(partie);
+					partie = gestionPartie.rechercherPartie(idPartie);
+				}
 				donneesDeLaPartie.getJoueurs().clear();
 				//timer.schedule(timertask,Util.TEMPS_INACTIVITE);
 				donneesDeLaPartie.setTimer(timer);

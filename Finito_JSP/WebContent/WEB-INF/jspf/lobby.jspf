@@ -7,7 +7,7 @@
 		<input type="radio" name="radio_partie" value="${partie.id}"
 			id="${partie.id}" />
 		<label for="${partie.id}">"${partie.id}"
-			${partie.nombreJoueursConnectes}</label>
+			${donneesDesParties[partie.id].joueursNumTours.size}</label>
 		<br />
 	</c:forEach>
 	<input type="hidden" name="etat" value="en_attente" /> <input

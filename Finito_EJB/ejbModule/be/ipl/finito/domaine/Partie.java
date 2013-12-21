@@ -19,11 +19,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.persistence.OrderBy;
 
 @SuppressWarnings("serial")
 @Entity
@@ -57,9 +56,6 @@ public class Partie implements Serializable {
 	@OneToMany(mappedBy = "partie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@OrderBy("id")
 	private List<Plateau> plateauEnJeu = new ArrayList<Plateau>();
-
-	@Transient
-	private int nombreJoueursConnectes;
 
 	/**
 	 * Constructeur vide de Partie utile pour EJB
@@ -122,7 +118,7 @@ public class Partie implements Serializable {
 		return jetonRestant;
 	}
 
-	public void setJetonsRestants(Map<Integer, Jeton> map) {
+	public void setJetonsRestants(final Map<Integer, Jeton> map) {
 		this.jetonRestant = map;
 	}
 
@@ -169,27 +165,6 @@ public class Partie implements Serializable {
 		return etat.isEnCours();
 	}
 
-	/**
-	 * Renvoie le nombre de joueurs connectés à une partie
-	 * @return
-	 */
-	public int getNombreJoueursConnectes() {
-		return nombreJoueursConnectes;
-	}
-
-	/**
-	 * Incrémente de 1 le nombre de joueur connecté
-	 */
-	public void incrementJoueursConnectes() {
-		nombreJoueursConnectes++;
-	}
-	/**
-	 * Décrémente de 1 le nombre de joueur connecté
-	 */
-	public void decrementJoueursConnectes() {
-		nombreJoueursConnectes--;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -230,7 +205,7 @@ public class Partie implements Serializable {
 				partie.lancerDe();
 			}
 			
-			public void suspendrePartie(Partie partie){
+			public void suspendrePartie(final Partie partie){
 				partie.setEtat(FINI);
 			}
 		},
