@@ -116,7 +116,6 @@ public class JouerPartie extends HttpServlet {
 				if(donneesDeLaPartie.getTimer()!=null) {
 					donneesDeLaPartie.getTimer().cancel();
 				}
-				
 				// Verifie les scores à la fin de chaque tour pour voir si un joueur à gagner
 				if(gestionPlateau.listerJetonsEnMain(plateau).size() == 0){
 				    List<Plateau> listePlateau = gestionPartie.listerPlateauxEnJeu(partie);
@@ -149,11 +148,11 @@ public class JouerPartie extends HttpServlet {
 		session.setAttribute("cases", cases);
 		session.setAttribute("jetonsEnMain", jetonsEnMain);
 		session.setAttribute("casesLibres", casesLibres);
-		if(donneesDeLaPartie.getJoueurs().contains(joueur)){
-			session.setAttribute("dejaJoue", true);
+		if(!donneesDeLaPartie.getJoueurs().contains(joueur.getId())){
+			session.setAttribute("pasEncoreJoue", "true");
 		}
 		else{
-			session.setAttribute("dejaJoue", false);
+			session.setAttribute("pasEncoreJoue", "false");
 		}
 
 		request.setAttribute("title-html", "Partie");

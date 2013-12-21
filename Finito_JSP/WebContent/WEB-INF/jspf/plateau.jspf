@@ -15,7 +15,6 @@
 <c:set var="casesLibres" value="${casesLibres}" />
 <c:set var="de" value="${donneesDesParties[id_partie].resultatDe}" />
 <c:set var="position" value="0" />
-<c:set var="dejaJoue" value="${dejaJoue}" />
 
 Plateau de jeu :
 <br/>
@@ -62,10 +61,7 @@ Mes jetons en main :
 	<tr>
 		<c:forEach var="jetonsEnMain" items="${jetonsEnMain}">
 			<td><div id="jeton_${jetonsEnMain.id}" class="drag"
-					draggable="<c:choose>
-						<c:when test="${dejaJoue}">false</c:when>
-						<c:otherwise>true</c:otherwise>
-						</c:choose>" ondragstart="drag(event)" width="40" height="40">
+					draggable="${pasEncoreJoue}" ondragstart="drag(event)" width="40" height="40">
 					<b>${jetonsEnMain.numero}</b>
 				</div></td>
 		</c:forEach>
