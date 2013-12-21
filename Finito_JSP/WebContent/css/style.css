@@ -116,14 +116,12 @@ a:before {
 }*/
 
 #liste_suspendues{
-	float:right;
-	width:40%;
+	width:80%;
 	margin-left:100px;
 }
 
 #liste_attentes{
-	float:left;
-	width:40%;
+	width:80%;
 	margin-margin:100px;
 }
 
@@ -148,6 +146,37 @@ a:before {
 	font-family: "Star Wars";
 	src: url('../ressources/polices/Starjout.ttf');
 }
+
+#table_lobby {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 12px;
+    margin: 10px 0;
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+#th_lobby {
+    font-size: 13px;
+    font-weight: normal;
+    padding: 8px;
+    background: #b9c9fe url('../ressources/images/fondTable.jpg') repeat-x;
+    opacity:0.6;
+    border-top: 2px solid #d3ddff;
+    border-bottom: 1px solid #fff;
+    color: white;
+}
+#td_lobby {
+    padding: 8px;
+    border-bottom: 1px solid #fff;
+    color: #669;
+    border-top: 1px solid #fff;
+    background: #e8edff url('../ressources/images/fondTrooper.jpg') repeat-x;
+    opacity:0.9;
+    color: white;
+}
+
+#table_lobby a:hover {
+    text-decoration:underline;
 
 /* Pour les animations */
 @keyframes progressionAttente {

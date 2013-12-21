@@ -75,7 +75,8 @@ public class CreerPartie extends HttpServlet {
 			final DonneesDUnePartie donneesDeLaPartie = new DonneesDUnePartie(partie.getId());
 			donneesDesParties.put(partie.getId(),donneesDeLaPartie);
 			donneesDeLaPartie.getJoueursNumTours().put(joueur.getId(), 0);
-			
+			donneesDeLaPartie.setNomPartie("Partie de " + joueur.getLogin());
+			donneesDeLaPartie.setNombreJoueurs(gestionPartie.rechercherNombreJoueursConnectes(partie));
 			HashSet<Partie> set = (HashSet<Partie>) context
 					.getAttribute("partiesEnAttente");
 			if (set == null) {

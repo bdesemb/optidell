@@ -22,12 +22,12 @@
 	<div id="liste_suspendues">
 		<h3>Partie(s) suspendues</h3>
 		<form action="rejoindrePartie.html" method="post">
-			<table>
+			<table id="table_lobby">
 				<thead>
 					<tr>
-						<td>Nom de la partie</td>
-						<td>Nombre joueurs</td>
-						<td>Sélectionner</td>
+						<th id="th_lobby">Nom de la partie</th>
+						<th id="th_lobby">Nombre joueurs</th>
+						<th id="th_lobby">Sélectionner</th>
 					</tr>
 				</thead>
 				<tbody>

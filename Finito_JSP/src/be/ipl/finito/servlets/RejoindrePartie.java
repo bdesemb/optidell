@@ -76,6 +76,7 @@ public class RejoindrePartie extends HttpServlet {
 			
 			if (partie!= null && etat != null && !etat.equals("suspendue")) {
 				partie = gestionPartie.ajouterJoueur(partie, joueur);
+				donneesDeLaPartie.setNombreJoueurs(gestionPartie.rechercherNombreJoueursConnectes(partie));
 				session.setAttribute("id_partie", idPartie);
 				donneesDeLaPartie.getJoueursNumTours().put(joueur.getId(), 0);
 				if (donneesDeLaPartie.getJoueursNumTours().size() == Util.MAX_JOUEURS) {
@@ -89,6 +90,7 @@ public class RejoindrePartie extends HttpServlet {
 						request, response);
 			} else if (etat != null && etat.equals("suspendue")) {
 				gestionPartie.reprendreJoueur(partie, joueur);
+				donneesDeLaPartie.setNombreJoueurs(gestionPartie.rechercherNombreJoueursConnectes(partie));
 				session.setAttribute("id_partie", partie.getId());
 				request.setAttribute("title-html", "Partie");
 				getServletContext().getNamedDispatcher("attente.html").forward(

@@ -15,6 +15,8 @@ public class DonneesDUnePartie {
 	private int tour;
 	private Set<Integer> joueurs;
 	private Map<Integer, Integer> joueursNumTours;
+	private String nomPartie;
+	private int nombreJoueurs;
 	
 	public DonneesDUnePartie(final int id) {
 		super();
@@ -78,4 +80,34 @@ public class DonneesDUnePartie {
 	public void setJoueursNumTours(final Map<Integer, Integer> joueursNumTours) {
 		this.joueursNumTours = joueursNumTours;
 	}
+
+	/**
+	 * @return the nomPartie
+	 */
+	public final String getNomPartie() {
+	    return nomPartie;
+	}
+
+	/**
+	 * @param nomPartie the nomPartie to set
+	 */
+	public final void setNomPartie(String nomPartie) {
+	    this.nomPartie = nomPartie;
+	}
+
+	/**
+	 * @return the nombreJoueurs
+	 */
+	public final int getNombreJoueurs() {
+	    return nombreJoueurs;
+	}
+
+	/**
+	 * @param nombreJoueurs the nombreJoueurs to set
+	 */
+	public final void setNombreJoueurs(int nombreJoueurs) {
+	    this.nombreJoueurs = nombreJoueurs;
+	}
+	
+	
 }
