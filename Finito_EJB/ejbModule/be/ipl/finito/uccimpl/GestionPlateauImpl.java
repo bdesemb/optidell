@@ -28,20 +28,21 @@ public class GestionPlateauImpl implements GestionPlateau{
 	JetonDao jetonDao;
 	
 	
-	public Plateau creerPlateau(Joueur joueur, Partie partie) {
+	public Plateau creerPlateau(final Joueur joueur, final Partie partie) {
 		Plateau plateau = new Plateau(joueur,partie);
 		plateauDao.enregistrer(plateau);
 		plateauDao.chargerCases(plateau);
 		for(int i=1;i<=20;i++){
-			if(i>=3 && i<=18)
+			if(i>=3 && i<=18) {
 				plateau.getCases().add(new Case(i));
+			}
 			plateau.getCases().add(new Case(i));
 		}
 		plateauDao.mettreAJour(plateau);
 		return plateau;
 	}
 
-	public boolean placerJeton(Plateau plateau, Jeton jeton, Case caseCible) {
+	public boolean placerJeton(final Plateau plateau, final Jeton jeton, final Case caseCible) {
 		if(caseCible.getJeton()==null){
 			caseCible.setJeton(jeton);
 			//plateau.getJetonsEnMain().remove(jeton);
@@ -53,7 +54,7 @@ public class GestionPlateauImpl implements GestionPlateau{
 		return false;
 	}
 
-	public boolean deplacerJeton(Plateau plateau, Case caseSource, Case caseDestination) {
+	public boolean deplacerJeton(final Plateau plateau, final Case caseSource, final Case caseDestination) {
 		if(caseDestination.getJeton()==null){
 			Jeton jeton = caseSource.getJeton();
 			caseSource.setJeton(null);
@@ -66,7 +67,7 @@ public class GestionPlateauImpl implements GestionPlateau{
 	}
 
 	@Override
-	public Plateau rechercherPlateau(int idPartie, int idJoueur) {
+	public Plateau rechercherPlateau(final int idPartie, final int idJoueur) {
 		return plateauDao.recherchePlateauPourJoueurEtPartie(idPartie, idJoueur);
 	}
 
@@ -76,12 +77,13 @@ public class GestionPlateauImpl implements GestionPlateau{
 		return plateau.getCases();
 	}
 
-	public List<Jeton> listerJetonsEnMain(Plateau plateau){
+	public List<Jeton> listerJetonsEnMain(final Plateau plateau){
 		List<Jeton> jetons = jetonDao.lister();
 		List<Case> cases = listerCases(plateau);
 		for(Case c : cases){
-			if(c.getJeton()!=null)
+			if(c.getJeton()!=null) {
 				jetons.remove(c.getJeton());
+			}
 		}
 		Map<Integer, Jeton> jetonsRestants = plateau.getPartie().getJetonsRestants();
 		for(int i = plateau.getPartie().getIndiceTirage();i<12;i++){
@@ -91,7 +93,7 @@ public class GestionPlateauImpl implements GestionPlateau{
 	}
 
 	@Override
-	public List<Case> listerCasesLibres(Plateau plateau, int de) {
+	public List<Case> listerCasesLibres(final Plateau plateau, final int de) {
 		List<Case> casesLibres = new ArrayList<Case>();
 		List<Case> toutesLesCases = listerCases(plateau);
 		int indice = -1;
@@ -136,18 +138,19 @@ public class GestionPlateauImpl implements GestionPlateau{
 	}
 
 	@Override
-	public Case recupererLaCaseContentantLeJeton(Plateau plateau,
-		int numeroJeton) {
+	public Case recupererLaCaseContentantLeJeton(final Plateau plateau,
+		final int numeroJeton) {
 	    List<Case>listeDeCase = listerCases(plateau);
 	    for(Case c : listeDeCase){
-		if(c.getJeton().getNumero() == numeroJeton)
-		    return c;
+		if(c.getJeton().getNumero() == numeroJeton) {
+			return c;
+		}
 	    }
 	    return null;
 	}
 
 	@Override
-	public int calculerScore(Plateau plateau) {
+	public int calculerScore(final Plateau plateau) {
 	    int meilleureSuite = 0;
 		int suiteCourante = 0;
 		Case casePrecedente = null;
@@ -155,9 +158,10 @@ public class GestionPlateauImpl implements GestionPlateau{
 		for(int i=0;i<listeDeCases.size();i++){
 			if(listeDeCases.get(i)!=null) {
 				Case caseCourante = listeDeCases.get(i);
-				if(casePrecedente != null && casePrecedente.getNumero()>caseCourante.getNumero()){
-					if(meilleureSuite < suiteCourante)
+				if(casePrecedente != null && casePrecedente.getJeton().getNumero()>caseCourante.getJeton().getNumero()){
+					if(meilleureSuite < suiteCourante) {
 						meilleureSuite = suiteCourante;
+					}
 					suiteCourante=0;
 				}
 				casePrecedente=caseCourante;
