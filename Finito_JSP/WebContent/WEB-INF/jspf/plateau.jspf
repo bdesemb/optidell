@@ -24,8 +24,7 @@ Plateau de jeu :
 			<c:forEach var="j" begin="0" end="5">
 				<c:set var="case" value="${cases[position]}" />
 				<td><div id="case_${case.id}"
-						class="
-								<c:choose>
+						class="<c:choose>
 						<c:when test="${case.id == casesLibres[0].id || case.id == casesLibres[1].id}">div2</c:when>
 						<c:otherwise>div1</c:otherwise>
 						</c:choose>"
@@ -53,7 +52,7 @@ Plateau de jeu :
 </table>
 
 <br/>
-<p>Le resulat du de :
+<p>Le resulat du dé :
 ${de}</p>
 Mes jetons en main :
 <br/>

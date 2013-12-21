@@ -13,21 +13,12 @@
 			<c:url var="deconnexion" value="deconnexion.html" />
 		</div>
 	</c:if>
-	<c:set var="id_joueur" value="${joueur.id}"/>
 	<table id="page_table">
 		<tr>
 			<td id="page_td"><div id="contenu">
 					<div id="affichage_plateau"></div>
-					<c:set var="trouve" value="non"/>
-					<c:forEach var="id_joueur_verif" items="${donneesDesParties[id_partie].joueurs}">
 					<c:choose>
-						<c:when test="${id_joueur_verif==id_joueur}">
-							<c:set var="trouve" value="oui"/>
-						</c:when>
-					</c:choose>
-					</c:forEach>
-					<c:choose>
-						<c:when test="${trouve=='non'}">
+						<c:when test="${pasEncoreJoue=='true'}">
 						Temps restant : <br>
 						<div id="barre_temps"></div>
 						</c:when>

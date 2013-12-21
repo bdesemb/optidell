@@ -1,6 +1,7 @@
 package be.ipl.finito.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -143,17 +144,18 @@ public class JouerPartie extends HttpServlet {
 		plateau = gestionPlateau.rechercherPlateau(idPartie, joueur.getId());
 		List<Case> cases = gestionPlateau.listerCases(plateau);
 		List<Jeton> jetonsEnMain = gestionPlateau.listerJetonsEnMain(plateau);
-		List<Case> casesLibres = gestionPlateau.listerCasesLibres(plateau, partie.getResultatDe());
+		List<Case> casesLibres = new ArrayList();
 
-		session.setAttribute("cases", cases);
-		session.setAttribute("jetonsEnMain", jetonsEnMain);
-		session.setAttribute("casesLibres", casesLibres);
 		if(!donneesDeLaPartie.getJoueurs().contains(joueur.getId())){
 			session.setAttribute("pasEncoreJoue", "true");
+			casesLibres = gestionPlateau.listerCasesLibres(plateau, partie.getResultatDe());
 		}
 		else{
 			session.setAttribute("pasEncoreJoue", "false");
 		}
+		session.setAttribute("cases", cases);
+		session.setAttribute("jetonsEnMain", jetonsEnMain);
+		session.setAttribute("casesLibres", casesLibres);
 
 		request.setAttribute("title-html", "Partie");
 		
