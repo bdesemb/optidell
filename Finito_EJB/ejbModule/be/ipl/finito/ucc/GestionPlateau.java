@@ -82,4 +82,12 @@ public interface GestionPlateau {
 	 * @return la liste des cases libres
 	 */
 	List<Case> listerCasesLibres(Plateau plateau, int de);
+	
+	/**
+	 * Renvoi la case qui contient le jeton en question
+	 * @param plateau , plateau sur lequel on recherche la case
+	 * @param numeroJeton, le numero du jeton que l'on cherche
+	 * @return la case contenant le jeton
+	 */
+	Case recupererLaCaseContentantLeJeton(Plateau plateau, int numeroJeton);
 }

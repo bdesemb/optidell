@@ -102,7 +102,12 @@ public class JouerPartie extends HttpServlet {
 		if(request.getParameter("numeroJeton")!=null){
 			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").trim());
 			int idCase = Integer.parseInt(request.getParameter("idCase").replace("case_", "").trim());
-			gestionPlateau.placerJeton(plateau, gestionJeton.rechercherJeton(numeroJeton), gestionCase.rechercherCase(idCase));
+			if(gestionPlateau.listerJetonsEnMain(plateau).size() == 0){
+			    Case caseSource = gestionPlateau.recupererLaCaseContentantLeJeton(plateau, numeroJeton);
+			    gestionPlateau.deplacerJeton(plateau, caseSource, gestionCase.rechercherCase(idCase));
+			}else{
+			    gestionPlateau.placerJeton(plateau, gestionJeton.rechercherJeton(numeroJeton), gestionCase.rechercherCase(idCase));
+			}
 			donneesDeLaPartie.getJoueurs().add(joueur.getId());
 			if(donneesDeLaPartie.getJoueurs().size()==gestionPartie.listerPlateauxEnJeu(partie).size()){
 				if(donneesDeLaPartie.getTimer()!=null) {
@@ -134,6 +139,7 @@ public class JouerPartie extends HttpServlet {
 
 		request.setAttribute("title-html", "Partie");
 		
-		getServletContext().getNamedDispatcher("plateau.html").forward(request, response);
-	}
+	getServletContext().getNamedDispatcher("plateau.html").forward(request,
+		response);
+    }
 }

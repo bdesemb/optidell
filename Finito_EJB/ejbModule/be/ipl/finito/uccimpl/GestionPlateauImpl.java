@@ -134,5 +134,16 @@ public class GestionPlateauImpl implements GestionPlateau{
 		}
 		return casesLibres;
 	}
+
+	@Override
+	public Case recupererLaCaseContentantLeJeton(Plateau plateau,
+		int numeroJeton) {
+	    List<Case>listeDeCase = listerCases(plateau);
+	    for(Case c : listeDeCase){
+		if(c.getJeton().getNumero() == numeroJeton)
+		    return c;
+	    }
+	    return null;
+	}
 	
 }
