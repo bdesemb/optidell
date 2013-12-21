@@ -4,7 +4,9 @@ function refresh() {
 		type: "post",
 	});
 	$request.done(function (response, textStatus, xhr) {
-		$('#affichage').html(response);
+		$('#affichage_attente').html(response);
+		/*if($('#forward').length>0)
+			self.location = "jouer.html";*/
 	});
 	$request.fail(function (xhr, textStatus, errorThrown) {
 		alert(errorThrown);
@@ -13,5 +15,5 @@ function refresh() {
 
 $(function () {
 	refresh();
-	t = setInterval(refresh, 5000);
+	t = setInterval(refresh, 3000);
 });

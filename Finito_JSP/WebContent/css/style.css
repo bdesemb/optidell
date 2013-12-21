@@ -127,7 +127,45 @@ a:before {
 	margin-margin:100px;
 }
 
+#barre_attente {
+	width: 500px;
+	height: 5px;
+    background-color: white;
+    animation: progressionAttente 15s;
+    -webkit-animation: progressionAttente 15s;
+}
+
+#barre_temps {
+	width: 0px;
+	height: 5px;
+    background-color: green;
+    animation: progressionTempsRestant 30s;
+    -webkit-animation: progressionTempsRestant 30s;
+}
+
+/* Pour la police personnalisée */
 @FONT-FACE {
 	font-family: "Star Wars";
 	src: url('../ressources/polices/Starjout.ttf');
+}
+
+/* Pour les animations */
+@keyframes progressionAttente {
+	from {width: 0px; background: rgba(255,255,255,0.4); }
+	to {width: 500px; background: rgba(255,255,255,0.8); }
+}
+
+@-webkit-keyframes progressionAttente {
+	from {width: 0px; background: rgba(255,255,255,0.4); }
+	to {width: 500px; background: rgba(255,255,255,0.8); }
+}
+
+@keyframes progressionTempsRestant {
+	from {width: 500px; background-color: rgba(255,255,255,0.5);}
+	to {width: 0px; background-color: rgba(255,255,255,0.9);}
+}
+
+@-webkit-keyframes progressionTempsRestant {
+	from {width: 500px; background-color: rgba(255,255,255,0.5);}
+	to {width: 0px; background-color: rgba(255,255,255,0.9);}
 }

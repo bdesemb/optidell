@@ -30,7 +30,7 @@ function refresh() {
 			setTimeout(refresh, 1000);
 
 		}
-		$('#affichage').html(response);
+		$('#affichage_plateau').html(response);
 	});
 	$request.fail(function(xhr, textStatus, errorThrown) {
 		alert(errorThrown);

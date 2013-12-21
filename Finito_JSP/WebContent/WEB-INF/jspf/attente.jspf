@@ -9,6 +9,7 @@
 		<p> En attente des autres joueurs ... </p>
 	</c:when>
 	<c:otherwise>
-		<jsp:forward page="jouer.html"></jsp:forward>
+		<!--<form id="forward" action="jouer.html" method="get"></form>-->
+		<jsp:forward page="plateau.html"></jsp:forward>
 	</c:otherwise>
 </c:choose>
