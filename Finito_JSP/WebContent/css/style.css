@@ -6,11 +6,16 @@ html {
 body {
 	height: 100%;
 	background-color: black;
-	background-image: url("../ressources/images/Tatooine.jpg");
+	background-image: url("../ressources/images/darth-vader-2.jpg");
 	background-repeat: no-repeat;
+	background-position: center;
 	color: white;
 	margin: 0;
 	padding: 0;
+	-webkit-bakground-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 #page_table {
@@ -32,9 +37,30 @@ body {
 }
 
 a {
-	color: yellow;
+    display: inline-block;
+    position: relative;
+    padding-left: 6px;
+    /* Font styles */
+    text-decoration: none;
+    color: #6AB3EC;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.9);
 }
-
+ 
+a:hover {
+    color: #3C9CE7;
+}
+ 
+a:before {
+    content: "\25BA";
+    font-size: 80%;
+    display: inline-block;
+    padding-right: 3px;
+    pointer-events: none;
+}
+ 
+a:before {
+    color: #6880B7;
+}
 
 #contenu {
 	width: 500px;
@@ -48,14 +74,31 @@ a {
 	color: #D1AD66;
 }
 
-/* #formulaire {
-	background: rgba(225, 192, 128, 0.7);
+.depth {
+    display: block;
+    border: 1px solid rgba(255,255,255,0.6);
+    background: linear-gradient(#eee, #fff);
+    transition: all 0.3s ease-out;
+    box-shadow: 
+        inset 0 1px 4px rgba(0,0,0,0.4);
+    padding: 5px;
+    color: #555;
+}
+ 
+.depth:focus {
+    outline: none;
+    background-position: 0 -1.7em;
+}
+
+ #formulaire {
+	background: rgba(35, 44, 77, 0.8);
 	border: 1px solid black rgba(147, 184, 189, 0.8);
-	box-shadow: 0pt 2px 5px rgba(105, 108, 109, 0.7),
-				0px 0px 8px 5px rgba(208, 223, 220, 0.4) inset;
+	box-shadow: 0pt 2px 5px rgba(7, 11, 23, 0.7),
+				0px 0px 8px 5px rgba(7, 11, 23, 0.4) inset;
 	border-radius: 5px;
-	color: #6B4E15;
-} */
+	color: #6977A5;
+	padding-bottom: 15px;
+} 
 
 /* .bouton {
 	width:30%;
