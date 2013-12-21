@@ -68,8 +68,6 @@ public class JouerPartie extends HttpServlet {
 	 */
 
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-		response.reset();
-		
 		ServletContext context = getServletContext();	
 		
 		final HashMap<Integer, DonneesDUnePartie> donneesDesParties =  (HashMap<Integer, DonneesDUnePartie>) context.getAttribute("donneesDesParties");

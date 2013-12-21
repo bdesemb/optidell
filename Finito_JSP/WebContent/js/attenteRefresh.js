@@ -5,8 +5,9 @@ function refresh() {
 	});
 	$request.done(function (response, textStatus, xhr) {
 		$('#affichage_attente').html(response);
-		/*if($('#forward').length>0)
-			self.location = "jouer.html";*/
+		if($('#forward').length>0){
+			window.location.href="jouer.html";
+		}
 	});
 	$request.fail(function (xhr, textStatus, errorThrown) {
 		alert(errorThrown);
