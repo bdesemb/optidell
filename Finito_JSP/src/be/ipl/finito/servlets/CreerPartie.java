@@ -3,13 +3,11 @@ package be.ipl.finito.servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.ejb.EJB;
-import javax.print.DocFlavor;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -73,11 +71,11 @@ public class CreerPartie extends HttpServlet {
 					.getAttribute("donneesDesParties");
 			final Joueur joueur = (Joueur) session.getAttribute("joueur");
 			Partie partie = gestionPartie.creerPartie(joueur);
-
-			session.setAttribute("partie", partie.getId());
-			donneesDesParties.put(partie.getId(),
-					new DonneesDUnePartie(partie.getId()));
-			donneesDesParties.get(partie.getId()).getJoueursNumTours().put(joueur.getId(), 0);
+			
+			session.setAttribute("id_partie", partie.getId());
+			final DonneesDUnePartie donneesDeLaPartie = new DonneesDUnePartie(partie.getId());
+			donneesDesParties.put(partie.getId(),donneesDeLaPartie);
+			donneesDeLaPartie.getJoueursNumTours().put(joueur.getId(), 0);
 			List<Partie> liste = (List<Partie>) context
 					.getAttribute("partiesEnAttente");
 			if (liste == null) {
@@ -85,23 +83,24 @@ public class CreerPartie extends HttpServlet {
 			}
 			liste.add(partie);
 			context.setAttribute("partiesEnAttente", liste);
-			System.out.println("Création d'une partie : "+gestionPartie.listeDesPlateauxEnJeu(partie).size());
+			
 			// Création du timer et de son job
 			Timer timer = new Timer();
 			TimerTask timerTask = new TimerTask() {
 				public void run() {
 					Partie partie = gestionPartie
 							.recupererPartieAvecID((Integer) session
-									.getAttribute("partie"));
+									.getAttribute("id_partie"));
 					if (gestionPartie.listeDesPlateauxEnJeu(partie).size() >= Util.MIN_JOUEURS) {
 						partie = gestionPartie.debuterPartie(partie);
-						List<Partie> partieEnCours = (List<Partie>) context
+						List<Partie> partiesEnAttente = (List<Partie>) context
 								.getAttribute("partiesEnAttente");
-						partieEnCours.remove(partie);
-						context.setAttribute("partiesEnAttente", partieEnCours);
-						donneesDesParties.get(partie.getId()).setEtat(
+						partiesEnAttente.remove(partie);
+						context.setAttribute("partiesEnAttente", partiesEnAttente);
+						donneesDeLaPartie.setEtat(
 								partie.getEtat().toString());
-						donneesDesParties.get(partie.getId()).setTimer(null);
+						donneesDeLaPartie.setTimer(null);
+						donneesDeLaPartie.setResultatDe(partie.getResultatDe());
 					} else {
 						System.out.println("Dans timer (else)");
 						// A faire : gestionPartie.annulerPartie();
@@ -109,7 +108,7 @@ public class CreerPartie extends HttpServlet {
 				}
 			};
 			timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE*2);
-			donneesDesParties.get(partie.getId()).setTimer(timer);
+			donneesDeLaPartie.setTimer(timer);
 		}
 		request.setAttribute("title-html", "Partie");
 		getServletContext().getNamedDispatcher("attente.html").forward(request,

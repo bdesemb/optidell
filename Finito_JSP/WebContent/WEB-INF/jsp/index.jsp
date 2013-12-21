@@ -27,13 +27,13 @@
 								<c:url var="connexion" value="connexion.html" />
 								<form method="post" action="${connexion}">
 									<label for="pseudo">Votre pseudo :</label>
-									<input type="text" id="pseudo" name="pseudo" /> <br> 
+									<input type="text" id="pseudo" name="pseudo" class=".depth"/> <br> 
 									<label for="password">Votre mot de passe :</label>
-									<input type="password" id="password" name="password" /> <br> <br>
-									<input class="bouton" type="submit" value="Connexion" />
+									<input type="password" id="password" name="password" class=".depth"/> <br> <br>
+									<input class="" type="submit" value="Connexion" />
 								</form>
 								<c:url var="inscription" value="inscription.html" />
-								<a href="${inscription}">S'inscrire</a>
+								<a href="${inscription}" class="inline-link-2">S'inscrire</a>
 							</div>
 						</c:otherwise>
 					</c:choose>

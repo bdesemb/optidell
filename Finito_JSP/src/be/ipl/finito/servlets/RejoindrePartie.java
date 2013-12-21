@@ -72,23 +72,24 @@ public class RejoindrePartie extends HttpServlet {
 					.getParameter("radio_partie"));
 			Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
 			Joueur joueur = (Joueur) session.getAttribute("joueur");
+			DonneesDUnePartie donneesDeLaPartie = donneesDesParties.get(idPartie);
+			
 			if (etat != null && !etat.equals("suspendue")) {
 				partie = gestionPartie.ajouterJoueur(partie, joueur);
 
-				session.setAttribute("partie", idPartie);
+				session.setAttribute("id_partie", idPartie);
 				int nbrJoueurs = gestionPartie.nbrJoueurConnectes(partie);
 				donneesDesParties.get(partie.getId()).getJoueursNumTours().put(joueur.getId(), 0);
 				if (nbrJoueurs == Util.MAX_JOUEURS) {
 					partie = gestionPartie.debuterPartie(partie);
-					donneesDesParties.get(idPartie).setEtat(partie.getEtat().toString());
-					donneesDesParties.get(idPartie).getTimer().cancel();
-					donneesDesParties.get(partie.getId()).setTimer(null);
+					donneesDeLaPartie.setEtat(partie.getEtat().toString());
+					donneesDeLaPartie.setResultatDe(partie.getResultatDe());
+					donneesDeLaPartie.getTimer().cancel();
+					donneesDeLaPartie.setTimer(null);
 				}
-				System.out.println("t"+partie.getPlateauEnJeu().size());
 				getServletContext().getNamedDispatcher("attente.html").forward(
 						request, response);
 			} else if (etat != null && etat.equals("suspendue")) {
-				System.out.println("Je suis dans le if chelou");
 				gestionPartie.reprendreJoueur(partie, joueur);
 				session.setAttribute("id_partie", partie.getId());
 				request.setAttribute("title-html", "Partie");

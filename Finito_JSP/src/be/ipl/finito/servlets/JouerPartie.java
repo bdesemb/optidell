@@ -2,7 +2,6 @@ package be.ipl.finito.servlets;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,7 +26,6 @@ import be.ipl.finito.ucc.GestionJeton;
 import be.ipl.finito.ucc.GestionJoueur;
 import be.ipl.finito.ucc.GestionPartie;
 import be.ipl.finito.ucc.GestionPlateau;
-import be.ipl.finito.util.Util;
 
 /**
  * Servlet implementation class joueurPartie
@@ -76,9 +74,10 @@ public class JouerPartie extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
-		final int idPartie = (Integer) session.getAttribute("partie");
+		final int idPartie = (Integer) session.getAttribute("id_partie");
 		Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
 		Plateau plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
+		DonneesDUnePartie donneesDeLaPartie = donneesDesParties.get(partie.getId());
 		
 		Timer timer = new Timer();
 		TimerTask timertask = new TimerTask() {
@@ -95,27 +94,28 @@ public class JouerPartie extends HttpServlet {
 		};
 		
 		
-		if(donneesDesParties.get(partie.getId()).getJoueursNumTours().get(joueur.getId()) < donneesDesParties.get(partie.getId()).getTour())
-			donneesDesParties.get(partie.getId()).getJoueursNumTours().put(joueur.getId(), donneesDesParties.get(partie.getId()).getJoueursNumTours().get(joueur.getId())+1);
+		if(donneesDeLaPartie.getJoueursNumTours().get(joueur.getId()) < donneesDesParties.get(partie.getId()).getTour()) {
+			donneesDeLaPartie.getJoueursNumTours().put(joueur.getId(), donneesDesParties.get(partie.getId()).getJoueursNumTours().get(joueur.getId())+1);
+		}
 		
 		if(request.getParameter("numeroJeton")!=null){
 			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").trim());
 			int idCase = Integer.parseInt(request.getParameter("idCase").replace("case_", "").trim());
 			gestionPlateau.placerJeton(plateau, gestionJeton.rechercheJetonPourNumero(numeroJeton), gestionCase.rechercherCasePourId(idCase));
-			System.out.println("taille "+donneesDesParties.get(idPartie).getJoueurs().size()+ " "+gestionPartie.listeDesPlateauxEnJeu(partie).size());
-			donneesDesParties.get(partie.getId()).getJoueurs().add(joueur.getId());
-			System.out.println("Joueur = "+joueur.getId() +" Tour partie = "+donneesDesParties.get(partie.getId()).getTour()+ " et tour joueur = "+donneesDesParties.get(partie.getId()).getJoueursNumTours().get(joueur.getId()));
-			if(donneesDesParties.get(idPartie).getJoueurs().size()==gestionPartie.listeDesPlateauxEnJeu(partie).size()){
-				if(donneesDesParties.get(partie.getId()).getTimer()!=null)
-					donneesDesParties.get(partie.getId()).getTimer().cancel();
+			donneesDeLaPartie.getJoueurs().add(joueur.getId());
+			if(donneesDeLaPartie.getJoueurs().size()==gestionPartie.listeDesPlateauxEnJeu(partie).size()){
+				if(donneesDeLaPartie.getTimer()!=null) {
+					donneesDeLaPartie.getTimer().cancel();
+				}
 				gestionPartie.lancerDe(partie);
 				partie = gestionPartie.recupererPartieAvecID(idPartie);
 				gestionPartie.piocherJeton(partie);
 				partie = gestionPartie.recupererPartieAvecID(idPartie);
-				donneesDesParties.get(idPartie).getJoueurs().clear();
+				donneesDeLaPartie.getJoueurs().clear();
 				//timer.schedule(timertask,Util.TEMPS_INACTIVITE);
-				donneesDesParties.get(partie.getId()).setTimer(timer);
-				donneesDesParties.get(partie.getId()).setTour(donneesDesParties.get(partie.getId()).getTour()+1);
+				donneesDeLaPartie.setTimer(timer);
+				donneesDeLaPartie.setTour(donneesDesParties.get(partie.getId()).getTour()+1);
+				donneesDeLaPartie.setResultatDe(partie.getResultatDe());
 			}
 		}
 		
@@ -124,11 +124,8 @@ public class JouerPartie extends HttpServlet {
 		List<Jeton> jetonsEnMain = gestionPlateau.recupererMainPlateau(plateau);
 		List<Case> casesLibres = gestionPlateau.recupererLesCasesLibres(plateau, partie.getResultatDe());
 
-
-		getServletContext().setAttribute("de", partie.getResultatDe());
 		session.setAttribute("cases", cases);
 		session.setAttribute("jetonsEnMain", jetonsEnMain);
-		session.setAttribute("id_partie", partie.getId());
 		session.setAttribute("casesLibres", casesLibres);
 
 

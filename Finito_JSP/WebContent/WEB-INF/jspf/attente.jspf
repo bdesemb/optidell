@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="idPartie" value="${partie}"/>
 <c:choose>
-	<c:when test='${donneesDesParties[idPartie].etat=="FINI"}'>
+	<c:when test='${donneesDesParties[id_partie].etat=="FINI"}'>
 		<p> Partie annulée ! </p>
 	</c:when>
-	<c:when test='${donneesDesParties[idPartie].etat!="EN_COURS"}'>
+	<c:when test='${donneesDesParties[id_partie].etat!="EN_COURS"}'>
 		<p> En attente des autres joueurs ... </p>
 	</c:when>
 	<c:otherwise>
