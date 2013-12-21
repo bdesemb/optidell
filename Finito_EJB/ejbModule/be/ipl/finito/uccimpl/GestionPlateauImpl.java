@@ -104,11 +104,16 @@ public class GestionPlateauImpl implements GestionPlateau{
 		
 		if(toutesLesCases.get(indice).getJeton()==null){
 			casesLibres.add(toutesLesCases.get(indice));
+			if(de!=20 && toutesLesCases.get(indice+1).getNumero()==de && toutesLesCases.get(indice+1).getJeton()==null){
+				casesLibres.add(toutesLesCases.get(indice+1));
+			}
 			return casesLibres;
 		}
-		
 		if(de!=20 && toutesLesCases.get(indice+1).getNumero()==de && toutesLesCases.get(indice+1).getJeton()==null){
 			casesLibres.add(toutesLesCases.get(indice+1));
+			if(toutesLesCases.get(indice).getNumero()==de && toutesLesCases.get(indice).getJeton()==null){
+				casesLibres.add(toutesLesCases.get(indice));
+			}
 			return casesLibres;
 		}
 

@@ -12,9 +12,9 @@
 	padding: 5px;
 	border: 2px solid #aaaaaa;
 	color: red;
-	background-color: white;
+	background-color: gray;
 	opacity: 0.8;
-	filter: alpha(opacity = 80);
+	filter: alpha(opacity = 60);
 }
 
 .div2 {
@@ -23,7 +23,7 @@
 	padding: 5px;
 	border: 2px solid #aaaaaa;
 	color: red;
-	background-color: gray;
+	background-color: white;
 	opacity: 0.8;
 	filter: alpha(opacity = 80);
 }
@@ -33,7 +33,7 @@
 	height: 25px;
 	padding: 2px;
 	color: blue;
-	background-image: url("../ressources/images/cerclejeton.jpg");
+	background-image: url("../ressources/images/cerclejeton2.png");
 	margin: auto;
 	text-align: center;
 }

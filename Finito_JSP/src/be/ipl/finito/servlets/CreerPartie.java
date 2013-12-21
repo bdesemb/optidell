@@ -107,7 +107,7 @@ public class CreerPartie extends HttpServlet {
 					}
 				}
 			};
-			timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE*6);
+			timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE*2);
 			donneesDeLaPartie.setTimer(timer);
 		}
 		request.setAttribute("title-html", "Partie");

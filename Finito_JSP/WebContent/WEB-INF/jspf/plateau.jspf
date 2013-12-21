@@ -25,11 +25,11 @@ Plateau de jeu :
 				<td><div id="case_${case.id}"
 						class="
 								<c:choose>
-						<c:when test="${case.numero == de}">div2</c:when>
+						<c:when test="${case.id == casesLibres[0].id || case.id == casesLibres[1].id}">div2</c:when>
 						<c:otherwise>div1</c:otherwise>
 						</c:choose>"
 						ondrop="drop(event)" ondragover="<c:choose>
-						<c:when test="${case.numero == de}">allowDrop(event)</c:when>
+						<c:when test="${case.id == casesLibres[0].id || case.id == casesLibres[1].id}">allowDrop(event)</c:when>
 						<c:otherwise></c:otherwise>
 						</c:choose>" occupe="<c:choose>
 						<c:when test="${case.jeton != null}">true</c:when>
