@@ -47,7 +47,7 @@ public class TerminerPartie extends HttpServlet {
 		List<Plateau> plateauxDeLaPartie = gestionPartie.listerPlateauxEnJeu(gestionPartie.rechercherPartie(idPartie));
 		Vector<JoueurFinDePartie> joueursDeLaPartie = new Vector<JoueurFinDePartie>(3);
 		for (Plateau p : plateauxDeLaPartie) {
-			JoueurFinDePartie joueur = new JoueurFinDePartie(p.getJoueur(), p.calculerScore());
+			JoueurFinDePartie joueur = new JoueurFinDePartie(p.getJoueur(), gestionPlateau.calculerScore(p));
 			List<Case> casesDuJoueur = p.getCases();
 			for(Case c : casesDuJoueur) {
 				int cpt = 0;
