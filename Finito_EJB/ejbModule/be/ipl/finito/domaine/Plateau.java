@@ -142,29 +142,5 @@ public class Plateau implements Serializable {
 			return false;
 		return true;
 	}
-	
-
-	/**
-	 * Méthode qui calcule le score du plateau, c'est à dire la longueur de la meilleure suite
-	 * @return le score
-	 */
-	public int calculerScore() {
-		int meilleureSuite = 0;
-		int suiteCourante = 0;
-		Case casePrecedente = null;
-		for(int i=0;i<cases.size();i++){
-			if(cases.get(i)!=null) {
-				Case caseCourante = cases.get(i);
-				if(casePrecedente != null && casePrecedente.getNumero()>caseCourante.getNumero()){
-					if(meilleureSuite < suiteCourante)
-						meilleureSuite = suiteCourante;
-					suiteCourante=0;
-				}
-				casePrecedente=caseCourante;
-				suiteCourante++;
-			}
-		}
-		return meilleureSuite;
-	}
 
 }
