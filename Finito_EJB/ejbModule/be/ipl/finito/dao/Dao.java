@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface Dao<K, E> extends Serializable {
 	/**
-	 * Rechercher une entité
+	 * Recherche une entité
 	 * 
 	 * @param id
 	 *            Id de l'entité
@@ -24,7 +24,7 @@ public interface Dao<K, E> extends Serializable {
 	E rechercher(K id);
 
 	/**
-	 * Enregistrer une entité
+	 * Enregistre une entité
 	 * 
 	 * @param entité
 	 * @return Entite enregistré
@@ -32,7 +32,7 @@ public interface Dao<K, E> extends Serializable {
 	E enregistrer(E entité);
 
 	/**
-	 * Mettre à jour une entité
+	 * Met à jour une entité
 	 * 
 	 * @param entité
 	 * @return Entite mise à jour
@@ -40,7 +40,7 @@ public interface Dao<K, E> extends Serializable {
 	E mettreAJour(E entité);
 
 	/**
-	 * Recharger une entité
+	 * Recharge une entité
 	 * 
 	 * @param id
 	 * @return Entite rechargée
@@ -48,14 +48,14 @@ public interface Dao<K, E> extends Serializable {
 	E recharger(K id);
 
 	/**
-	 * Supprimer une entité
+	 * Supprime une entité
 	 * 
 	 * @param id
 	 */
 	void supprimer(K id);
 
 	/**
-	 * Retourner une liste d'entité
+	 * Retourne une liste d'entité
 	 * 
 	 * @return la liste d'entité
 	 */

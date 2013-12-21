@@ -53,7 +53,11 @@ public class Plateau implements Serializable {
 	protected Plateau() {
 		super();
 	}
-	
+	/**
+	 * Constructeur de Plateau
+	 * @param joueur joueur ayant créée la partie
+	 * @param partie
+	 */
 	public Plateau(Joueur joueur, Partie partie){
 		this.joueur = joueur;
 		this.partie = partie;
@@ -104,11 +108,17 @@ public class Plateau implements Serializable {
 	public List<Jeton> getJetonsEnMain() {
 		return jetonsEnMain;
 	}
-
+	/**
+	 * getter de suspendu
+	 * @return la valeur de suspendu
+	 */
 	public boolean isSuspendu() {
 		return suspendu;
 	}
-
+	/**
+	 * Setter de suspendu 
+	 * @param suspendu
+	 */
 	public void setSuspendu(boolean suspendu) {
 		this.suspendu = suspendu;
 	}

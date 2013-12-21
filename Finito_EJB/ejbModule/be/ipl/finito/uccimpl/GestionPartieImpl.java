@@ -151,7 +151,7 @@ public class GestionPartieImpl implements GestionPartie {
 		return partieDao.rechercher(id);
 	}
 	
-	public List<Plateau>listeDePlateauEnJeu(Partie partie){
+	public List<Plateau>listeDesPlateauxEnJeu(Partie partie){
 		partie = partieDao.chargerPlateaux(partie);
 		return partie.getPlateauEnJeu();
 	}

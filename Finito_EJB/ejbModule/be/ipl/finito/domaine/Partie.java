@@ -154,22 +154,38 @@ public class Partie implements Serializable {
 		this.indiceTirage = indiceTirage;
 	}
 
+	/**
+	 * Renvoie "true" si l'état de la partie est en attente ou "false" si la partie n'est pas en attente
+	 * @return true ou false en fonction de la valeur de l'état enAttente;
+	 */
 	public boolean isEnAttente() {
 		return etat.isEnAttente();
 	}
-
+	/**
+	 * Renvoie "true" si l'état de la partie est en cours ou "false" si la partie n'est pas en cours
+	 * @return true ou false en fonction de la valeur de l'état enCours;
+	 */
 	public boolean isEnCours() {
 		return etat.isEnCours();
 	}
 
+	/**
+	 * Renvoie le nombre de joueurs connectés à une partie
+	 * @return
+	 */
 	public int getNombreJoueursConnectes() {
 		return nombreJoueursConnectes;
 	}
 
+	/**
+	 * Incrémente de 1 le nombre de joueur connecté
+	 */
 	public void incrementJoueursConnectes() {
 		nombreJoueursConnectes++;
 	}
-
+	/**
+	 * Décrémente de 1 le nombre de joueur connecté
+	 */
 	public void decrementJoueursConnectes() {
 		nombreJoueursConnectes--;
 	}
@@ -273,11 +289,17 @@ public class Partie implements Serializable {
 		FINI {
 
 		};
-
+		/**
+		 * Renvoie "true" si l'état de la partie est en attente ou "false" si la partie n'est pas en attente
+		 * @return false quelque soit l'état sauf si une implémentation est faites pour un état spécifique
+		 */
 		public boolean isEnAttente() {
 			return false;
 		}
-
+		/**
+		 * Renvoie "true" si l'état de la partie est en cours ou "false" si la partie n'est pas en cours
+		 * @return false quelque soit l'état sauf si une implémentation est faites pour un état spécifique
+		 */
 		public boolean isEnCours() {
 			return false;
 		}
@@ -285,47 +307,76 @@ public class Partie implements Serializable {
 		public void suspendrePartie(final Partie partie) {
 			throw new UnsupportedOperationException();
 		}
-
+		/**
+		 * Finit la partie en retournant la table des scores
+		 * @return la table des scores
+		 */
 		public int[] finirPartie(final Partie partie) {
 			throw new UnsupportedOperationException();
 		}
-
+		/**
+		 * Pioche un jeton dans la liste des jetons restant
+		 * @return le jeton pioché
+		 */
 		public Jeton piocherJeton(final Partie partie) {
 			throw new UnsupportedOperationException();
 		}
-
+		/**
+		 * Reprend un joueur dans une partie
+		 * @param plateau
+		 */
 		public void reprendreJoueur(final Plateau plateau, final Partie partie) {
 			throw new UnsupportedOperationException();
 
 		}
-
+		/**
+		 *  Débute la partie
+		 */
 		public void debuterPartie(final Partie partie) {
 			throw new UnsupportedOperationException();
 		}
 
 	}
-
+	/**
+	 * Retourne la valeur d'un dé généré aléatoirement
+	 * @return la valeur d'un dé généré aléatoirement
+	 */
 	public int lancerDe() {
 		return resultatDe = (int) ((Math.random() * 100) % 20) + 1;
 	}
 
+	/**
+	 * Incrémente de 1 l'indice de tirage
+	 */
 	public void incrementerTirage() {
 		indiceTirage++;
 	}
 
+	/**
+	 * Finit la partie en retournant la table des scores
+	 * @return la table des scores
+	 */
 	public int[] finirPartie() {
 		int[] score = etat.finirPartie(this);
 		return score;
 	}
-
+	/**
+	 * Pioche un jeton dans la liste des jetons restant
+	 * @return le jeton pioché
+	 */
 	public Jeton piocherJeton() {
 		return etat.piocherJeton(this);
 	}
-
+	/**
+	 * Reprend un joueur dans une partie
+	 * @param plateau
+	 */
 	public void reprendreJoueur(final Plateau plateau) {
 		etat.reprendreJoueur(plateau, this);
 	}
-
+	/**
+	 *  Débute la partie
+	 */
 	public void debuterPartie() {
 		etat.debuterPartie(this);
 	}

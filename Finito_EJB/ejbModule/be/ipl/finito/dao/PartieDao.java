@@ -17,14 +17,14 @@ import be.ipl.finito.domaine.Partie;
 public interface PartieDao extends Dao<Integer, Partie> {
 
 	/**
-	 * Renvoyer la liste des parties en attente
+	 * Renvoie la liste des parties en attente
 	 * 
 	 * @return la liste des parties en attente
 	 */
 	List<Partie> listePartiesEnAttente();
 
 	/**
-	 * Renvoyer la liste des parties suspendues
+	 * Renvoie la liste des parties suspendues (partie dont au moins un joueur est parti)
 	 * 
 	 * @param joueur
 	 * @return la liste des parties suspendues
@@ -32,7 +32,7 @@ public interface PartieDao extends Dao<Integer, Partie> {
 	List<Partie> listePartiesSuspendues(Joueur joueur);
 
 	/**
-	 * Charger les plateaux pour une partie
+	 * Charge les plateaux pour une partie
 	 * 
 	 * @param partie
 	 * @return la partie
@@ -40,7 +40,7 @@ public interface PartieDao extends Dao<Integer, Partie> {
 	Partie chargerPlateaux(Partie partie);
 
 	/**
-	 * Charger les jetons pour une partie
+	 * Charge les jetons pour une partie
 	 * 
 	 * @param partie
 	 * @return la partie

@@ -89,7 +89,7 @@ public class TestNG_Finito {
 		Partie partie = gestionParties.listerPartiesEnAttente().get(0);
 		gestionParties.ajouterJoueur(partie, joueurs[1]);
 		partieEnCours = partie;
-		List<Plateau> liste = gestionParties.listeDePlateauEnJeu(partieEnCours);
+		List<Plateau> liste = gestionParties.listeDesPlateauxEnJeu(partieEnCours);
 		assertEquals(liste.get(1).getJoueur(), joueurs[1]);
 	}
 
@@ -104,40 +104,40 @@ public class TestNG_Finito {
 
 	@Test(priority = 6)
 	public void testJouerJetonSurUnPlateau() {
-		Plateau p = gestionParties.listeDePlateauEnJeu(partieEnCours).get(1);
-		List<Jeton> main = gestionPlateaux.recupererMainPlateau(gestionParties.listeDePlateauEnJeu(partieEnCours)
+		Plateau p = gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1);
+		List<Jeton> main = gestionPlateaux.recupererMainPlateau(gestionParties.listeDesPlateauxEnJeu(partieEnCours)
 				.get(0));
-		List<Case> casesDuPlateau = gestionPlateaux.recuperLaListeDeCase(p);
+		List<Case> casesDuPlateau = gestionPlateaux.recupererLaListeDesCases(p);
 		assertEquals(true, gestionPlateaux.placerJeton(p, main.get(0), casesDuPlateau.get(20)));
-		assertEquals(main.get(0), gestionPlateaux.recuperLaListeDeCase(p).get(20).getJeton());
+		assertEquals(main.get(0), gestionPlateaux.recupererLaListeDesCases(p).get(20).getJeton());
 	}
 
 	@Test(priority = 7)
 	public void testNbrPlateaux() {
-		List<Plateau> liste = gestionParties.listeDePlateauEnJeu(partieEnCours);
+		List<Plateau> liste = gestionParties.listeDesPlateauxEnJeu(partieEnCours);
 		int nbrPlateaux = liste.size();
 		assertEquals(2, nbrPlateaux);
 	}
 
 	@Test(priority = 7)
 	public void testDeplacerJetonSurUnPlateau() {
-		Plateau p = gestionParties.listeDePlateauEnJeu(partieEnCours).get(1);
-		Case c = gestionPlateaux.recuperLaListeDeCase(p).get(20);
+		Plateau p = gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1);
+		Case c = gestionPlateaux.recupererLaListeDesCases(p).get(20);
 		seulJetonPlace = c.getJeton();
-		Case c2 = gestionPlateaux.recuperLaListeDeCase(p).get(21);
+		Case c2 = gestionPlateaux.recupererLaListeDesCases(p).get(21);
 		assertEquals(true, gestionPlateaux.deplacerJeton(p, c, c2));
-		assertEquals(seulJetonPlace, gestionPlateaux.recuperLaListeDeCase(p).get(21).getJeton());
-		assertEquals(null, gestionPlateaux.recuperLaListeDeCase(p).get(20).getJeton());
+		assertEquals(seulJetonPlace, gestionPlateaux.recupererLaListeDesCases(p).get(21).getJeton());
+		assertEquals(null, gestionPlateaux.recupererLaListeDesCases(p).get(20).getJeton());
 	}
 
 	@Test(priority = 8)
 	public void testSuspendreUnePartie() {
 		// On suspend le plateau du joueurs 1 dans la table joueurs
-		Plateau p = gestionParties.listeDePlateauEnJeu(partieEnCours).get(1);
+		Plateau p = gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1);
 		gestionParties.suspendreJoueur(partieEnCours, p);
 		partieEnCours = gestionParties.recupererPartieAvecID(partieEnCours.getId());
 		assertEquals(Partie.Etat.SUSPENDU, partieEnCours.getEtat());
-		assertEquals(true, gestionParties.listeDePlateauEnJeu(partieEnCours).get(1).isSuspendu());
+		assertEquals(true, gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1).isSuspendu());
 		assertEquals(1, gestionParties.listerPartiesEnSuspend(joueurs[1]).size());
 		assertEquals(1, gestionParties.nbrJoueurConnectes(partieEnCours));
 	}
@@ -149,10 +149,10 @@ public class TestNG_Finito {
 		assertEquals(0, gestionParties.listerPartiesEnSuspend(joueurs[1]).size());
 		assertEquals(2, gestionParties.nbrJoueurConnectes(partieEnCours));
 		assertEquals(Partie.Etat.EN_COURS, partieEnCours.getEtat());
-		assertEquals(false, gestionParties.listeDePlateauEnJeu(partieEnCours).get(1).isSuspendu());
+		assertEquals(false, gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1).isSuspendu());
 		
-		Plateau p = gestionParties.listeDePlateauEnJeu(partieEnCours).get(1);
-		assertEquals(seulJetonPlace, gestionPlateaux.recuperLaListeDeCase(p).get(21).getJeton());
+		Plateau p = gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1);
+		assertEquals(seulJetonPlace, gestionPlateaux.recupererLaListeDesCases(p).get(21).getJeton());
 	}
 
 }

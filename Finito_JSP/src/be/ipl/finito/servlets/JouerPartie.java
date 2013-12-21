@@ -86,7 +86,7 @@ public class JouerPartie extends HttpServlet {
 			@Override
 			public void run() {
 				Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
-				for(Plateau p : gestionPartie.listeDePlateauEnJeu(partie)){
+				for(Plateau p : gestionPartie.listeDesPlateauxEnJeu(partie)){
 					if(!donneesDesParties.get(idPartie).getJoueurs().contains(p.getJoueur().getId())){
 						gestionPartie.suspendreJoueur(partie, p);
 					}
@@ -102,10 +102,10 @@ public class JouerPartie extends HttpServlet {
 			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").trim());
 			int idCase = Integer.parseInt(request.getParameter("idCase").replace("case_", "").trim());
 			gestionPlateau.placerJeton(plateau, gestionJeton.rechercheJetonPourNumero(numeroJeton), gestionCase.rechercherCasePourId(idCase));
-			System.out.println("taille "+donneesDesParties.get(idPartie).getJoueurs().size()+ " "+gestionPartie.listeDePlateauEnJeu(partie).size());
+			System.out.println("taille "+donneesDesParties.get(idPartie).getJoueurs().size()+ " "+gestionPartie.listeDesPlateauxEnJeu(partie).size());
 			donneesDesParties.get(partie.getId()).getJoueurs().add(joueur.getId());
 			System.out.println("Joueur = "+joueur.getId() +" Tour partie = "+donneesDesParties.get(partie.getId()).getTour()+ " et tour joueur = "+donneesDesParties.get(partie.getId()).getJoueursNumTours().get(joueur.getId()));
-			if(donneesDesParties.get(idPartie).getJoueurs().size()==gestionPartie.listeDePlateauEnJeu(partie).size()){
+			if(donneesDesParties.get(idPartie).getJoueurs().size()==gestionPartie.listeDesPlateauxEnJeu(partie).size()){
 				if(donneesDesParties.get(partie.getId()).getTimer()!=null)
 					donneesDesParties.get(partie.getId()).getTimer().cancel();
 				gestionPartie.lancerDe(partie);
@@ -120,7 +120,7 @@ public class JouerPartie extends HttpServlet {
 		}
 		
 		plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
-		List<Case> cases = gestionPlateau.recuperLaListeDeCase(plateau);
+		List<Case> cases = gestionPlateau.recupererLaListeDesCases(plateau);
 		List<Jeton> jetonsEnMain = gestionPlateau.recupererMainPlateau(plateau);
 		List<Case> casesLibres = gestionPlateau.recupererLesCasesLibres(plateau, partie.getResultatDe());
 

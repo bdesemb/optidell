@@ -10,14 +10,76 @@ import be.ipl.finito.domaine.Joueur;
 import be.ipl.finito.domaine.Partie;
 import be.ipl.finito.domaine.Plateau;
 
+/**
+ * Cas d'utilisation pour la gestion des cases
+ * 
+ * @author Deconinck Guillaume, Marinx Denis, De Beule Anthony, Desemberg Benoit
+ */
 @Remote
 public interface GestionPlateau {
 
+	/**
+	 * Crée un plateau d'un joueur pour une partie
+	 * 
+	 * @param joueur
+	 * @param partie
+	 * @return le plateau
+	 */
 	Plateau creerPlateau(Joueur joueur, Partie partie);
-	boolean placerJeton(Plateau plateau,Jeton jeton, Case caseCible);
-	boolean deplacerJeton(Plateau plateau, Case caseDepart, Case caseCible);
+
+	/**
+	 * Place un jeton dans une case d'un plateau
+	 * 
+	 * @param plateau
+	 * @param jeton
+	 * @param caseCible
+	 * @return true si le placement du jeton s'est bien effectué
+	 */
+	boolean placerJeton(Plateau plateau, Jeton jeton, Case caseCible);
+
+	/**
+	 * Déplace dans un plateau un jeton d'une case "source" vers une case
+	 * "destination"
+	 * 
+	 * @param plateau
+	 * @param caseSource
+	 * @param caseDestination
+	 * @return true si le déplacement du jeton s'est bien effectué
+	 */
+	boolean deplacerJeton(Plateau plateau, Case caseSource, Case caseDestination);
+
+	/**
+	 * Recherche un plateau à partir de l'id de la partie et de l'id du joueur
+	 * 
+	 * @param idPartie
+	 * @param idJoueur
+	 * @return le plateau
+	 */
 	Plateau recherchePlateauPourJoueurEtPartie(int idPartie, int idJoueur);
-	List<Case> recuperLaListeDeCase(Plateau plateau);
+
+	/**
+	 * Renvoie la liste des cases pour un plateau
+	 * 
+	 * @param plateau
+	 * @return la liste des cases pour un plateau
+	 */
+	List<Case> recupererLaListeDesCases(Plateau plateau);
+
+	/**
+	 * Renvoie la liste des jetons en main d'un joueur via son plateau
+	 * 
+	 * @param plateau
+	 * @return la liste des jetons en main
+	 */
 	public List<Jeton> recupererMainPlateau(Plateau plateau);
+
+	/**
+	 * Renvoie la liste des cases libres d'un plateau de joueur en fonction du
+	 * numéro de dé
+	 * 
+	 * @param plateau
+	 * @param de
+	 * @return la liste des cases libres
+	 */
 	List<Case> recupererLesCasesLibres(Plateau plateau, int de);
 }

@@ -85,7 +85,7 @@ public class CreerPartie extends HttpServlet {
 			}
 			liste.add(partie);
 			context.setAttribute("partiesEnAttente", liste);
-			System.out.println("Création d'une partie : "+gestionPartie.listeDePlateauEnJeu(partie).size());
+			System.out.println("Création d'une partie : "+gestionPartie.listeDesPlateauxEnJeu(partie).size());
 			// Création du timer et de son job
 			Timer timer = new Timer();
 			TimerTask timerTask = new TimerTask() {
@@ -93,7 +93,7 @@ public class CreerPartie extends HttpServlet {
 					Partie partie = gestionPartie
 							.recupererPartieAvecID((Integer) session
 									.getAttribute("partie"));
-					if (gestionPartie.listeDePlateauEnJeu(partie).size() >= Util.MIN_JOUEURS) {
+					if (gestionPartie.listeDesPlateauxEnJeu(partie).size() >= Util.MIN_JOUEURS) {
 						partie = gestionPartie.debuterPartie(partie);
 						List<Partie> partieEnCours = (List<Partie>) context
 								.getAttribute("partiesEnAttente");

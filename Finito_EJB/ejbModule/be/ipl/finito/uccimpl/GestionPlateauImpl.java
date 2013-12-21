@@ -53,13 +53,13 @@ public class GestionPlateauImpl implements GestionPlateau{
 		return false;
 	}
 
-	public boolean deplacerJeton(Plateau plateau, Case caseDepart, Case caseCible) {
-		if(caseCible.getJeton()==null){
-			Jeton jeton = caseDepart.getJeton();
-			caseDepart.setJeton(null);
-			caseCible.setJeton(jeton);
-			caseDao.mettreAJour(caseCible);
-			caseDao.mettreAJour(caseDepart);
+	public boolean deplacerJeton(Plateau plateau, Case caseSource, Case caseDestination) {
+		if(caseDestination.getJeton()==null){
+			Jeton jeton = caseSource.getJeton();
+			caseSource.setJeton(null);
+			caseDestination.setJeton(jeton);
+			caseDao.mettreAJour(caseDestination);
+			caseDao.mettreAJour(caseSource);
 			return true;
 		}
 		return false;
@@ -71,14 +71,14 @@ public class GestionPlateauImpl implements GestionPlateau{
 	}
 
 	@Override
-	public List<Case> recuperLaListeDeCase(Plateau plateau) {
+	public List<Case> recupererLaListeDesCases(Plateau plateau) {
 		plateau = plateauDao.chargerCases(plateau);
 		return plateau.getCases();
 	}
 
 	public List<Jeton> recupererMainPlateau(Plateau plateau){
 		List<Jeton> jetons = jetonDao.lister();
-		List<Case> cases = recuperLaListeDeCase(plateau);
+		List<Case> cases = recupererLaListeDesCases(plateau);
 		for(Case c : cases){
 			if(c.getJeton()!=null)
 				jetons.remove(c.getJeton());
@@ -93,7 +93,7 @@ public class GestionPlateauImpl implements GestionPlateau{
 	@Override
 	public List<Case> recupererLesCasesLibres(Plateau plateau, int de) {
 		List<Case> casesLibres = new ArrayList<Case>();
-		List<Case> toutesLesCases = recuperLaListeDeCase(plateau);
+		List<Case> toutesLesCases = recupererLaListeDesCases(plateau);
 		int indice = -1;
 		for(int i=0;i<toutesLesCases.size();i++){
 			if(toutesLesCases.get(i).getNumero()==de){

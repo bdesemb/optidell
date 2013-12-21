@@ -12,13 +12,20 @@ import be.ipl.finito.domaine.Joueur;
  */
 @Local
 public interface JoueurDao extends Dao<Integer, Joueur> {
-	
+
 	/**
-	 * Charger les plateaux pour un joueur
+	 * Charge les plateaux pour un joueur
+	 * 
 	 * @param joueur
-	 * @return le joueur
+	 * @return le joueur dont les plateaux on été chargés
 	 */
 	Joueur chargerPlateaux(Joueur joueur);
-	
+
+	/**
+	 * Recherche le joueur via son pseudo
+	 * 
+	 * @param pseudo
+	 * @return le joueur via son pseudo
+	 */
 	Joueur rechercherJoueurViaPseudo(String pseudo);
 }
