@@ -139,7 +139,7 @@ public class TestNG_Finito {
 		assertEquals(Partie.Etat.SUSPENDU, partieEnCours.getEtat());
 		assertEquals(true, gestionParties.listerPlateauxEnJeu(partieEnCours).get(1).isSuspendu());
 		assertEquals(1, gestionParties.listerPartiesEnSuspend(joueurs[1]).size());
-		assertEquals(1, gestionParties.getNombreJoueursConnectes(partieEnCours));
+		assertEquals(1, gestionParties.rechercherNombreJoueursConnectes(partieEnCours));
 	}
 
 	@Test(priority = 9)
@@ -147,7 +147,7 @@ public class TestNG_Finito {
 		gestionParties.reprendreJoueur(gestionParties.rechercherPartie(partieEnCours.getId()), joueurs[1]);
 		partieEnCours = gestionParties.rechercherPartie(partieEnCours.getId());
 		assertEquals(0, gestionParties.listerPartiesEnSuspend(joueurs[1]).size());
-		assertEquals(2, gestionParties.getNombreJoueursConnectes(partieEnCours));
+		assertEquals(2, gestionParties.rechercherNombreJoueursConnectes(partieEnCours));
 		assertEquals(Partie.Etat.EN_COURS, partieEnCours.getEtat());
 		assertEquals(false, gestionParties.listerPlateauxEnJeu(partieEnCours).get(1).isSuspendu());
 		
