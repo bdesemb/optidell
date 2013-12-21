@@ -135,11 +135,15 @@ public class JouerPartie extends HttpServlet {
 		session.setAttribute("cases", cases);
 		session.setAttribute("jetonsEnMain", jetonsEnMain);
 		session.setAttribute("casesLibres", casesLibres);
-
+		if(donneesDeLaPartie.getJoueurs().contains(joueur)){
+			session.setAttribute("dejaJoue", true);
+		}
+		else{
+			session.setAttribute("dejaJoue", false);
+		}
 
 		request.setAttribute("title-html", "Partie");
 		
-	getServletContext().getNamedDispatcher("plateau.html").forward(request,
-		response);
-    }
+		getServletContext().getNamedDispatcher("plateau.html").forward(request, response);
+	}
 }
