@@ -152,7 +152,7 @@ public class GestionPlateauImpl implements GestionPlateau{
 	@Override
 	public int calculerScore(final Plateau plateau) {
 	    int meilleureSuite = 0;
-		int suiteCourante = 0;
+		int suiteCourante = 1;
 		Case casePrecedente = null;
 		List<Case>listeDeCases = listerCases(plateau);
 		for(int i=0;i<listeDeCases.size();i++){
