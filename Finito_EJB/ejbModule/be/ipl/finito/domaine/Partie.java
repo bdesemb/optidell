@@ -227,15 +227,8 @@ public class Partie implements Serializable {
 				return jeton;
 			}
 
-			public int[] finirPartie(final Partie partie) {
-				List<Plateau> listePlateau = partie.getPlateauEnJeu();
-				int[] score = new int[listePlateau.size()];
-
-				for (int i = 0; i < listePlateau.size(); i++) {
-					score[i] = listePlateau.get(i).calculerScore();
-				}
+			public void finirPartie(final Partie partie) {
 				partie.setEtat(FINI);
-				return score;
 			}
 
 			public void suspendrePartie(final Partie partie) {
@@ -286,7 +279,7 @@ public class Partie implements Serializable {
 		 * Finit la partie en retournant la table des scores
 		 * @return la table des scores
 		 */
-		public int[] finirPartie(final Partie partie) {
+		public void finirPartie(final Partie partie) {
 			throw new UnsupportedOperationException();
 		}
 		/**
@@ -331,9 +324,8 @@ public class Partie implements Serializable {
 	 * Finit la partie en retournant la table des scores
 	 * @return la table des scores
 	 */
-	public int[] finirPartie() {
-		int[] score = etat.finirPartie(this);
-		return score;
+	public void finirPartie() {
+		etat.finirPartie(this);
 	}
 	/**
 	 * Pioche un jeton dans la liste des jetons restant

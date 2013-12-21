@@ -90,4 +90,11 @@ public interface GestionPlateau {
 	 * @return la case contenant le jeton
 	 */
 	Case recupererLaCaseContentantLeJeton(Plateau plateau, int numeroJeton);
+	
+	/**
+	 * Permet de calculer un score pour un plateau donné
+	 * @param plateau
+	 * @return le score du plateau
+	 */
+	int calculerScore(Plateau plateau);
 }

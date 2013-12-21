@@ -145,5 +145,26 @@ public class GestionPlateauImpl implements GestionPlateau{
 	    }
 	    return null;
 	}
+
+	@Override
+	public int calculerScore(Plateau plateau) {
+	    int meilleureSuite = 0;
+		int suiteCourante = 0;
+		Case casePrecedente = null;
+		List<Case>listeDeCases = listerCases(plateau);
+		for(int i=0;i<listeDeCases.size();i++){
+			if(listeDeCases.get(i)!=null) {
+				Case caseCourante = listeDeCases.get(i);
+				if(casePrecedente != null && casePrecedente.getNumero()>caseCourante.getNumero()){
+					if(meilleureSuite < suiteCourante)
+						meilleureSuite = suiteCourante;
+					suiteCourante=0;
+				}
+				casePrecedente=caseCourante;
+				suiteCourante++;
+			}
+		}
+		return meilleureSuite;
+	}
 	
 }

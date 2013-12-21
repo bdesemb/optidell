@@ -121,7 +121,7 @@ public class JouerPartie extends HttpServlet {
 				if(gestionPlateau.listerJetonsEnMain(plateau).size() == 0){
 				    List<Plateau> listePlateau = gestionPartie.listerPlateauxEnJeu(partie);
 				    for (Plateau p : listePlateau){
-					if(p.calculerScore() == 12){
+					if(gestionPlateau.calculerScore(p) == 12){
 					    gestionPartie.finirPartie(partie);
 					}
 				    }

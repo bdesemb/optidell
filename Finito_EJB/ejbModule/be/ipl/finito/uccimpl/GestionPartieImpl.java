@@ -89,7 +89,11 @@ public class GestionPartieImpl implements GestionPartie {
 
 	public int[] finirPartie(Partie partie) {
 		partie = partieDao.chargerPlateaux(partie);
-		int[] score = partie.finirPartie();
+		List<Plateau> listeDePlateau = partie.getPlateauEnJeu();
+		int[] score = new int[listeDePlateau.size()];
+		for(int i = 0; i<listeDePlateau.size(); i++){
+		    score[i] = listeDePlateau.get(i).calculerScore();
+		}
 		partieDao.mettreAJour(partie);
 		return score;
 	}
