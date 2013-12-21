@@ -51,11 +51,11 @@ Plateau de jeu :
 	</c:forEach>
 </table>
 
-</br>
+<br/>
 <p>Le resulat du de :
 ${de}</p>
 Mes jetons en main :
-</br>
+<br/>
 <table align="center">
 	<tr>
 		<c:forEach var="jetonsEnMain" items="${jetonsEnMain}">

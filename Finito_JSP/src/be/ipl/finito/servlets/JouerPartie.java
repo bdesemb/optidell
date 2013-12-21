@@ -72,8 +72,9 @@ public class JouerPartie extends HttpServlet {
 		
 		final HashMap<Integer, DonneesDUnePartie> donneesDesParties =  (HashMap<Integer, DonneesDUnePartie>) context.getAttribute("donneesDesParties");
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
+		System.out.println(joueur+" "+(joueur!=null?joueur.getLogin():"")+ " " +session);
 		final int idPartie = (Integer) session.getAttribute("id_partie");
 		Partie partie = gestionPartie.rechercherPartie(idPartie);
 		Plateau plateau = gestionPlateau.rechercherPlateau(idPartie, joueur.getId());

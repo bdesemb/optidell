@@ -9,8 +9,6 @@
 		<p> En attente des autres joueurs ... </p>
 	</c:when>
 	<c:otherwise>
-	TRALALALALALALA
 		<form id="forward" action="jouer.html" method="get"></form>
-
 	</c:otherwise>
 </c:choose>
