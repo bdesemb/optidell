@@ -35,7 +35,7 @@ Plateau de jeu :
 						<c:when test="${case.jeton != null}">true</c:when>
 						<c:otherwise>false</c:otherwise>
 						</c:choose>">
-						<b>${case.numero}</b>
+						${case.numero}
 						<c:choose>
 						<c:when test="${case.jeton != null}">
 						<div id="jeton_${case.jeton.id}" class="drag" draggable="false"
@@ -52,6 +52,8 @@ Plateau de jeu :
 </table>
 
 </br>
+<p>Le resulat du de :
+${de}</p>
 Mes jetons en main :
 </br>
 <table align="center">

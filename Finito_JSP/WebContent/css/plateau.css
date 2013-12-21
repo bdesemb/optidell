@@ -29,11 +29,10 @@
 }
 
 .drag {
-	width: 25px;
-	height: 25px;
-	padding: 2px;
+	width: 24px;
+	height: 24px;
 	color: blue;
-	background-image: url("../ressources/images/cerclejeton2.png");
+	background-image: url("../ressources/images/cerclejeton4.png");
 	margin: auto;
-	text-align: center;
+	text-align:center;
 }
