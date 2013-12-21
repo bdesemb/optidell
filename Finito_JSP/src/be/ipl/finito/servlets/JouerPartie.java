@@ -104,6 +104,7 @@ public class JouerPartie extends HttpServlet {
 		if(request.getParameter("numeroJeton")!=null){
 			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").trim());
 			int idCase = Integer.parseInt(request.getParameter("idCase").replace("case_", "").trim());
+			// Verfie si on est dans la phase 1 ou 2
 			if(gestionPlateau.listerJetonsEnMain(plateau).size() == 0){
 			    Case caseSource = gestionPlateau.recupererLaCaseContentantLeJeton(plateau, numeroJeton);
 			    gestionPlateau.deplacerJeton(plateau, caseSource, gestionCase.rechercherCase(idCase));
@@ -116,6 +117,7 @@ public class JouerPartie extends HttpServlet {
 					donneesDeLaPartie.getTimer().cancel();
 				}
 				
+				// Verifie les scores à la fin de chaque tour pour voir si un joueur à gagner
 				if(gestionPlateau.listerJetonsEnMain(plateau).size() == 0){
 				    List<Plateau> listePlateau = gestionPartie.listerPlateauxEnJeu(partie);
 				    for (Plateau p : listePlateau){
