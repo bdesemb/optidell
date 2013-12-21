@@ -136,5 +136,16 @@ public class GestionPartieImpl implements GestionPartie {
 		partie = partieDao.chargerPlateaux(partie);
 		return partie.getPlateauEnJeu();
 	}
+	
+	public int rechercherNombreJoueursConnectes(Partie partieEnCours){
+		List<Plateau> plateauxEnJeu = listerPlateauxEnJeu(partieEnCours);
+		int nbJoueursConnectes = plateauxEnJeu.size();
+		for(Plateau p : plateauxEnJeu){
+			if(p.isSuspendu()){
+				nbJoueursConnectes--;
+			}
+		}
+		return nbJoueursConnectes;
+	}
 
 }

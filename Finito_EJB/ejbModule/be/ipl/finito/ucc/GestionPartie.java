@@ -113,4 +113,12 @@ public interface GestionPartie {
 	 * @return la liste des plateaux en jeu
 	 */
 	List<Plateau> listerPlateauxEnJeu(Partie partie);
+
+	/**
+	 * Rechercher le nombre de joueurs connectes pour une partie
+	 * @param partieEnCours
+	 * @return le nombre de joueurs connectes pour une partie
+	 */
+	int rechercherNombreJoueursConnectes(Partie partieEnCours);
+
 }
