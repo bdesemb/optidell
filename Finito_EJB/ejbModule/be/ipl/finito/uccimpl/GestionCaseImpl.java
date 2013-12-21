@@ -21,26 +21,26 @@ public class GestionCaseImpl implements GestionCase{
     }
 
     @Override
-    public boolean placerJeton(final Case caseLue, final Jeton jeton) {
-	if(caseLue.getJeton() != null) {
+    public boolean placerJeton(final Case caseDestination, final Jeton jeton) {
+	if(caseDestination.getJeton() != null) {
 		return false;
 	}
-	caseLue.setJeton(jeton);
-	caseDao.mettreAJour(caseLue);
+	caseDestination.setJeton(jeton);
+	caseDao.mettreAJour(caseDestination);
 	return true;
     }
 
     @Override
-    public boolean retirerJeton(final Case caseLue,final Jeton jeton) {
-	if(caseLue.getJeton() == null) {
+    public boolean retirerJeton(final Case caseDestination,final Jeton jeton) {
+	if(caseDestination.getJeton() == null) {
 		return false;
 	}
-	caseLue.setJeton(null);
-	caseDao.mettreAJour(caseLue);
+	caseDestination.setJeton(null);
+	caseDao.mettreAJour(caseDestination);
 	return true;
     }
 
-	public Case rechercherCasePourId(final int id) {
+	public Case rechercherCase(final int id) {
 		return caseDao.rechercher(id);
 	}
 

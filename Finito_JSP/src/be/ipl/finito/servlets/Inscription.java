@@ -50,7 +50,7 @@ public class Inscription extends HttpServlet {
 			String prenom = request.getParameter("prenom");
 			String email = request.getParameter("mail");
 			String login = request.getParameter("pseudo");
-			if(gestionJoueur.rechercheJoueurViaPseudo(login) != null){
+			if(gestionJoueur.rechercherJoueur(login) != null){
 				String message = "Le pseudo est déja présent";
 				request.setAttribute("message", message);
 				request.setAttribute("title-html", "Inscription");

@@ -104,7 +104,7 @@ public interface GestionPartie {
 	 * @param partie
 	 * @return le nombre de joueurs connectés
 	 */
-	int nbrJoueurConnectes(Partie partie);
+	int getNombresJoueursConnectes(Partie partie);
 
 	/**
 	 * Renvoie la partie via son id
@@ -112,7 +112,7 @@ public interface GestionPartie {
 	 * @param id
 	 * @return la partie
 	 */
-	Partie recupererPartieAvecID(int id);
+	Partie rechercherPartie(int id);
 
 	/**
 	 * Renvoie la liste des plateaux en jeu pour une partie
@@ -120,5 +120,5 @@ public interface GestionPartie {
 	 * @param partie
 	 * @return la liste des plateaux en jeu
 	 */
-	List<Plateau> listeDesPlateauxEnJeu(Partie partie);
+	List<Plateau> listerPlateauxEnJeu(Partie partie);
 }

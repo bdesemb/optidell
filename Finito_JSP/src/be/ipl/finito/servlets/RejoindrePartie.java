@@ -70,7 +70,7 @@ public class RejoindrePartie extends HttpServlet {
 			
 			int idPartie = Integer.parseInt(request
 					.getParameter("radio_partie"));
-			Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
+			Partie partie = gestionPartie.rechercherPartie(idPartie);
 			Joueur joueur = (Joueur) session.getAttribute("joueur");
 			DonneesDUnePartie donneesDeLaPartie = donneesDesParties.get(idPartie);
 			
@@ -78,7 +78,7 @@ public class RejoindrePartie extends HttpServlet {
 				partie = gestionPartie.ajouterJoueur(partie, joueur);
 
 				session.setAttribute("id_partie", idPartie);
-				int nbrJoueurs = gestionPartie.nbrJoueurConnectes(partie);
+				int nbrJoueurs = gestionPartie.getNombresJoueursConnectes(partie);
 				donneesDesParties.get(partie.getId()).getJoueursNumTours().put(joueur.getId(), 0);
 				if (nbrJoueurs == Util.MAX_JOUEURS) {
 					partie = gestionPartie.debuterPartie(partie);

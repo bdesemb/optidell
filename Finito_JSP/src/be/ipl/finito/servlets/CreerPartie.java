@@ -89,9 +89,9 @@ public class CreerPartie extends HttpServlet {
 			TimerTask timerTask = new TimerTask() {
 				public void run() {
 					Partie partie = gestionPartie
-							.recupererPartieAvecID((Integer) session
+							.rechercherPartie((Integer) session
 									.getAttribute("id_partie"));
-					if (gestionPartie.listeDesPlateauxEnJeu(partie).size() >= Util.MIN_JOUEURS) {
+					if (gestionPartie.listerPlateauxEnJeu(partie).size() >= Util.MIN_JOUEURS) {
 						partie = gestionPartie.debuterPartie(partie);
 						List<Partie> partiesEnAttente = (List<Partie>) context
 								.getAttribute("partiesEnAttente");

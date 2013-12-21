@@ -37,8 +37,8 @@ public class Deconnexion extends HttpServlet {
 		if(session.getAttribute("id_partie") != null) {
 			int idPartie = (Integer)session.getAttribute("id_partie");
 			int idJoueur = ((Joueur)session.getAttribute("joueur")).getId();
-			Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
-			gestionPartie.suspendreJoueur(partie, gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, idJoueur));
+			Partie partie = gestionPartie.rechercherPartie(idPartie);
+			gestionPartie.suspendreJoueur(partie, gestionPlateau.rechercherPlateau(idPartie, idJoueur));
 		}
 		session.invalidate();
 		getServletContext().getNamedDispatcher("index.html").forward(request, response);

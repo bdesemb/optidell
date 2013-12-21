@@ -17,6 +17,6 @@ public interface GestionJeton {
 	 * @param numero
 	 * @return le jeton
 	 */
-	Jeton rechercheJetonPourNumero(int numero);
+	Jeton rechercherJeton(int numero);
 
 }

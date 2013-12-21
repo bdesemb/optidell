@@ -12,7 +12,7 @@ public class GestionJetonImpl implements GestionJeton{
     @EJB 
     private JetonDao jetonDao;
 
-	public Jeton rechercheJetonPourNumero(final int id) {
+	public Jeton rechercherJeton(final int id) {
 		return jetonDao.rechercher(id);
 	}
     

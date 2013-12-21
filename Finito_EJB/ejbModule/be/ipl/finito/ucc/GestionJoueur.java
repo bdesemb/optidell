@@ -38,7 +38,7 @@ public interface GestionJoueur {
 	 * 
 	 * @return la liste de tous les joueurs
 	 */
-	List<Joueur> listeJoueur();
+	List<Joueur> listerJoueurs();
 
 	/**
 	 * Recheche un joueur via son pseudo
@@ -46,5 +46,5 @@ public interface GestionJoueur {
 	 * @param pseudo
 	 * @return le joueur
 	 */
-	Joueur rechercheJoueurViaPseudo(String pseudo);
+	Joueur rechercherJoueur(String pseudo);
 }

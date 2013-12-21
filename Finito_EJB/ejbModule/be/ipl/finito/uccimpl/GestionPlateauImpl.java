@@ -66,19 +66,19 @@ public class GestionPlateauImpl implements GestionPlateau{
 	}
 
 	@Override
-	public Plateau recherchePlateauPourJoueurEtPartie(int idPartie, int idJoueur) {
+	public Plateau rechercherPlateau(int idPartie, int idJoueur) {
 		return plateauDao.recherchePlateauPourJoueurEtPartie(idPartie, idJoueur);
 	}
 
 	@Override
-	public List<Case> recupererLaListeDesCases(Plateau plateau) {
+	public List<Case> listerCases(Plateau plateau) {
 		plateau = plateauDao.chargerCases(plateau);
 		return plateau.getCases();
 	}
 
-	public List<Jeton> recupererMainPlateau(Plateau plateau){
+	public List<Jeton> listerJetonsEnMain(Plateau plateau){
 		List<Jeton> jetons = jetonDao.lister();
-		List<Case> cases = recupererLaListeDesCases(plateau);
+		List<Case> cases = listerCases(plateau);
 		for(Case c : cases){
 			if(c.getJeton()!=null)
 				jetons.remove(c.getJeton());
@@ -91,9 +91,9 @@ public class GestionPlateauImpl implements GestionPlateau{
 	}
 
 	@Override
-	public List<Case> recupererLesCasesLibres(Plateau plateau, int de) {
+	public List<Case> listerCasesLibres(Plateau plateau, int de) {
 		List<Case> casesLibres = new ArrayList<Case>();
-		List<Case> toutesLesCases = recupererLaListeDesCases(plateau);
+		List<Case> toutesLesCases = listerCases(plateau);
 		int indice = -1;
 		for(int i=0;i<toutesLesCases.size();i++){
 			if(toutesLesCases.get(i).getNumero()==de){

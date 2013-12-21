@@ -134,7 +134,7 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public int nbrJoueurConnectes(Partie partie) {
+	public int getNombresJoueursConnectes(Partie partie) {
 		partie = partieDao.chargerPlateaux(partie);
 		List<Plateau>plateauEnJeu = partie.getPlateauEnJeu();
 		int nbConnectes = 0;
@@ -147,11 +147,11 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public Partie recupererPartieAvecID(final int id) {
+	public Partie rechercherPartie(final int id) {
 		return partieDao.rechercher(id);
 	}
 	
-	public List<Plateau>listeDesPlateauxEnJeu(Partie partie){
+	public List<Plateau>listerPlateauxEnJeu(Partie partie){
 		partie = partieDao.chargerPlateaux(partie);
 		return partie.getPlateauEnJeu();
 	}

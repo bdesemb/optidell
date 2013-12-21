@@ -32,10 +32,10 @@ public interface GestionPlateau {
 	 * 
 	 * @param plateau
 	 * @param jeton
-	 * @param caseCible
+	 * @param caseDestination
 	 * @return true si le placement du jeton s'est bien effectué
 	 */
-	boolean placerJeton(Plateau plateau, Jeton jeton, Case caseCible);
+	boolean placerJeton(Plateau plateau, Jeton jeton, Case caseDestination);
 
 	/**
 	 * Déplace dans un plateau un jeton d'une case "source" vers une case
@@ -55,7 +55,7 @@ public interface GestionPlateau {
 	 * @param idJoueur
 	 * @return le plateau
 	 */
-	Plateau recherchePlateauPourJoueurEtPartie(int idPartie, int idJoueur);
+	Plateau rechercherPlateau(int idPartie, int idJoueur);
 
 	/**
 	 * Renvoie la liste des cases pour un plateau
@@ -63,7 +63,7 @@ public interface GestionPlateau {
 	 * @param plateau
 	 * @return la liste des cases pour un plateau
 	 */
-	List<Case> recupererLaListeDesCases(Plateau plateau);
+	List<Case> listerCases(Plateau plateau);
 
 	/**
 	 * Renvoie la liste des jetons en main d'un joueur via son plateau
@@ -71,7 +71,7 @@ public interface GestionPlateau {
 	 * @param plateau
 	 * @return la liste des jetons en main
 	 */
-	public List<Jeton> recupererMainPlateau(Plateau plateau);
+	public List<Jeton> listerJetonsEnMain(Plateau plateau);
 
 	/**
 	 * Renvoie la liste des cases libres d'un plateau de joueur en fonction du
@@ -81,5 +81,5 @@ public interface GestionPlateau {
 	 * @param de
 	 * @return la liste des cases libres
 	 */
-	List<Case> recupererLesCasesLibres(Plateau plateau, int de);
+	List<Case> listerCasesLibres(Plateau plateau, int de);
 }

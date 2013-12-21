@@ -31,12 +31,12 @@ public class GestionJoueurImpl implements GestionJoueur {
 	}
 
 	@Override 
-	public List<Joueur> listeJoueur() {
+	public List<Joueur> listerJoueurs() {
 		return joueurDao.lister();
 	}
 
 	@Override
-	public Joueur rechercheJoueurViaPseudo(String pseudo) {
+	public Joueur rechercherJoueur(String pseudo) {
 		return joueurDao.rechercherJoueurViaPseudo(pseudo);
 	}
 

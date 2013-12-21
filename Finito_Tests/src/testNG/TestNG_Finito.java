@@ -60,7 +60,7 @@ public class TestNG_Finito {
 			joueurs[i] = gestionJoueurs.inscription(nomsJoueurs[i], prenomsJoueurs[i], emailJoueurs[i],
 					loginsJoueurs[i], motDePasseJoueurs[i]);
 		}
-		List<Joueur> listeJoueurs = gestionJoueurs.listeJoueur();
+		List<Joueur> listeJoueurs = gestionJoueurs.listerJoueurs();
 		for (int i = 0; i < nomsJoueurs.length; i++) {
 			assertEquals(i + 1, listeJoueurs.get(i).getId());
 			assertEquals(nomsJoueurs[i], listeJoueurs.get(i).getNom());
@@ -89,7 +89,7 @@ public class TestNG_Finito {
 		Partie partie = gestionParties.listerPartiesEnAttente().get(0);
 		gestionParties.ajouterJoueur(partie, joueurs[1]);
 		partieEnCours = partie;
-		List<Plateau> liste = gestionParties.listeDesPlateauxEnJeu(partieEnCours);
+		List<Plateau> liste = gestionParties.listerPlateauxEnJeu(partieEnCours);
 		assertEquals(liste.get(1).getJoueur(), joueurs[1]);
 	}
 
@@ -97,62 +97,62 @@ public class TestNG_Finito {
 	public void testDebuterPartie() {
 		partieEnCours = gestionParties.listerPartiesEnAttente().get(0);
 		gestionParties.debuterPartie(partieEnCours);
-		partieEnCours = gestionParties.recupererPartieAvecID(partieEnCours.getId());
+		partieEnCours = gestionParties.rechercherPartie(partieEnCours.getId());
 		assertEquals(true, partieEnCours.isEnCours());
 		assertEquals(partieEnCours.getJetonsRestants().size(), 12);
 	}
 
 	@Test(priority = 6)
 	public void testJouerJetonSurUnPlateau() {
-		Plateau p = gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1);
-		List<Jeton> main = gestionPlateaux.recupererMainPlateau(gestionParties.listeDesPlateauxEnJeu(partieEnCours)
+		Plateau p = gestionParties.listerPlateauxEnJeu(partieEnCours).get(1);
+		List<Jeton> main = gestionPlateaux.listerJetonsEnMain(gestionParties.listerPlateauxEnJeu(partieEnCours)
 				.get(0));
-		List<Case> casesDuPlateau = gestionPlateaux.recupererLaListeDesCases(p);
+		List<Case> casesDuPlateau = gestionPlateaux.listerCases(p);
 		assertEquals(true, gestionPlateaux.placerJeton(p, main.get(0), casesDuPlateau.get(20)));
-		assertEquals(main.get(0), gestionPlateaux.recupererLaListeDesCases(p).get(20).getJeton());
+		assertEquals(main.get(0), gestionPlateaux.listerCases(p).get(20).getJeton());
 	}
 
 	@Test(priority = 7)
 	public void testNbrPlateaux() {
-		List<Plateau> liste = gestionParties.listeDesPlateauxEnJeu(partieEnCours);
+		List<Plateau> liste = gestionParties.listerPlateauxEnJeu(partieEnCours);
 		int nbrPlateaux = liste.size();
 		assertEquals(2, nbrPlateaux);
 	}
 
 	@Test(priority = 7)
 	public void testDeplacerJetonSurUnPlateau() {
-		Plateau p = gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1);
-		Case c = gestionPlateaux.recupererLaListeDesCases(p).get(20);
+		Plateau p = gestionParties.listerPlateauxEnJeu(partieEnCours).get(1);
+		Case c = gestionPlateaux.listerCases(p).get(20);
 		seulJetonPlace = c.getJeton();
-		Case c2 = gestionPlateaux.recupererLaListeDesCases(p).get(21);
+		Case c2 = gestionPlateaux.listerCases(p).get(21);
 		assertEquals(true, gestionPlateaux.deplacerJeton(p, c, c2));
-		assertEquals(seulJetonPlace, gestionPlateaux.recupererLaListeDesCases(p).get(21).getJeton());
-		assertEquals(null, gestionPlateaux.recupererLaListeDesCases(p).get(20).getJeton());
+		assertEquals(seulJetonPlace, gestionPlateaux.listerCases(p).get(21).getJeton());
+		assertEquals(null, gestionPlateaux.listerCases(p).get(20).getJeton());
 	}
 
 	@Test(priority = 8)
 	public void testSuspendreUnePartie() {
 		// On suspend le plateau du joueurs 1 dans la table joueurs
-		Plateau p = gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1);
+		Plateau p = gestionParties.listerPlateauxEnJeu(partieEnCours).get(1);
 		gestionParties.suspendreJoueur(partieEnCours, p);
-		partieEnCours = gestionParties.recupererPartieAvecID(partieEnCours.getId());
+		partieEnCours = gestionParties.rechercherPartie(partieEnCours.getId());
 		assertEquals(Partie.Etat.SUSPENDU, partieEnCours.getEtat());
-		assertEquals(true, gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1).isSuspendu());
+		assertEquals(true, gestionParties.listerPlateauxEnJeu(partieEnCours).get(1).isSuspendu());
 		assertEquals(1, gestionParties.listerPartiesEnSuspend(joueurs[1]).size());
-		assertEquals(1, gestionParties.nbrJoueurConnectes(partieEnCours));
+		assertEquals(1, gestionParties.getNombresJoueursConnectes(partieEnCours));
 	}
 
 	@Test(priority = 9)
 	public void testReprendreUnJoueur() {
-		gestionParties.reprendreJoueur(gestionParties.recupererPartieAvecID(partieEnCours.getId()), joueurs[1]);
-		partieEnCours = gestionParties.recupererPartieAvecID(partieEnCours.getId());
+		gestionParties.reprendreJoueur(gestionParties.rechercherPartie(partieEnCours.getId()), joueurs[1]);
+		partieEnCours = gestionParties.rechercherPartie(partieEnCours.getId());
 		assertEquals(0, gestionParties.listerPartiesEnSuspend(joueurs[1]).size());
-		assertEquals(2, gestionParties.nbrJoueurConnectes(partieEnCours));
+		assertEquals(2, gestionParties.getNombresJoueursConnectes(partieEnCours));
 		assertEquals(Partie.Etat.EN_COURS, partieEnCours.getEtat());
-		assertEquals(false, gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1).isSuspendu());
+		assertEquals(false, gestionParties.listerPlateauxEnJeu(partieEnCours).get(1).isSuspendu());
 		
-		Plateau p = gestionParties.listeDesPlateauxEnJeu(partieEnCours).get(1);
-		assertEquals(seulJetonPlace, gestionPlateaux.recupererLaListeDesCases(p).get(21).getJeton());
+		Plateau p = gestionParties.listerPlateauxEnJeu(partieEnCours).get(1);
+		assertEquals(seulJetonPlace, gestionPlateaux.listerCases(p).get(21).getJeton());
 	}
 
 }

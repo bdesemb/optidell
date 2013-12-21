@@ -75,8 +75,8 @@ public class JouerPartie extends HttpServlet {
 		HttpSession session = request.getSession();
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
 		final int idPartie = (Integer) session.getAttribute("id_partie");
-		Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
-		Plateau plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
+		Partie partie = gestionPartie.rechercherPartie(idPartie);
+		Plateau plateau = gestionPlateau.rechercherPlateau(idPartie, joueur.getId());
 		DonneesDUnePartie donneesDeLaPartie = donneesDesParties.get(partie.getId());
 		
 		Timer timer = new Timer();
@@ -84,8 +84,8 @@ public class JouerPartie extends HttpServlet {
 			
 			@Override
 			public void run() {
-				Partie partie = gestionPartie.recupererPartieAvecID(idPartie);
-				for(Plateau p : gestionPartie.listeDesPlateauxEnJeu(partie)){
+				Partie partie = gestionPartie.rechercherPartie(idPartie);
+				for(Plateau p : gestionPartie.listerPlateauxEnJeu(partie)){
 					if(!donneesDesParties.get(idPartie).getJoueurs().contains(p.getJoueur().getId())){
 						gestionPartie.suspendreJoueur(partie, p);
 					}
@@ -101,16 +101,16 @@ public class JouerPartie extends HttpServlet {
 		if(request.getParameter("numeroJeton")!=null){
 			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").trim());
 			int idCase = Integer.parseInt(request.getParameter("idCase").replace("case_", "").trim());
-			gestionPlateau.placerJeton(plateau, gestionJeton.rechercheJetonPourNumero(numeroJeton), gestionCase.rechercherCasePourId(idCase));
+			gestionPlateau.placerJeton(plateau, gestionJeton.rechercherJeton(numeroJeton), gestionCase.rechercherCase(idCase));
 			donneesDeLaPartie.getJoueurs().add(joueur.getId());
-			if(donneesDeLaPartie.getJoueurs().size()==gestionPartie.listeDesPlateauxEnJeu(partie).size()){
+			if(donneesDeLaPartie.getJoueurs().size()==gestionPartie.listerPlateauxEnJeu(partie).size()){
 				if(donneesDeLaPartie.getTimer()!=null) {
 					donneesDeLaPartie.getTimer().cancel();
 				}
 				gestionPartie.lancerDe(partie);
-				partie = gestionPartie.recupererPartieAvecID(idPartie);
+				partie = gestionPartie.rechercherPartie(idPartie);
 				gestionPartie.piocherJeton(partie);
-				partie = gestionPartie.recupererPartieAvecID(idPartie);
+				partie = gestionPartie.rechercherPartie(idPartie);
 				donneesDeLaPartie.getJoueurs().clear();
 				//timer.schedule(timertask,Util.TEMPS_INACTIVITE);
 				donneesDeLaPartie.setTimer(timer);
@@ -119,10 +119,10 @@ public class JouerPartie extends HttpServlet {
 			}
 		}
 		
-		plateau = gestionPlateau.recherchePlateauPourJoueurEtPartie(idPartie, joueur.getId());
-		List<Case> cases = gestionPlateau.recupererLaListeDesCases(plateau);
-		List<Jeton> jetonsEnMain = gestionPlateau.recupererMainPlateau(plateau);
-		List<Case> casesLibres = gestionPlateau.recupererLesCasesLibres(plateau, partie.getResultatDe());
+		plateau = gestionPlateau.rechercherPlateau(idPartie, joueur.getId());
+		List<Case> cases = gestionPlateau.listerCases(plateau);
+		List<Jeton> jetonsEnMain = gestionPlateau.listerJetonsEnMain(plateau);
+		List<Case> casesLibres = gestionPlateau.listerCasesLibres(plateau, partie.getResultatDe());
 
 		session.setAttribute("cases", cases);
 		session.setAttribute("jetonsEnMain", jetonsEnMain);
