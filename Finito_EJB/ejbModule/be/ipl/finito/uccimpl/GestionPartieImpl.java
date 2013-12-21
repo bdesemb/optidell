@@ -134,7 +134,7 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public int getNombresJoueursConnectes(Partie partie) {
+	public int getNombreJoueursConnectes(Partie partie) {
 		partie = partieDao.chargerPlateaux(partie);
 		List<Plateau>plateauEnJeu = partie.getPlateauEnJeu();
 		int nbConnectes = 0;

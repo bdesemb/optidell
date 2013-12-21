@@ -104,7 +104,7 @@ public interface GestionPartie {
 	 * @param partie
 	 * @return le nombre de joueurs connectés
 	 */
-	int getNombresJoueursConnectes(Partie partie);
+	int getNombreJoueursConnectes(Partie partie);
 
 	/**
 	 * Renvoie la partie via son id

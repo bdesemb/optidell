@@ -78,7 +78,7 @@ public class RejoindrePartie extends HttpServlet {
 				partie = gestionPartie.ajouterJoueur(partie, joueur);
 
 				session.setAttribute("id_partie", idPartie);
-				int nbrJoueurs = gestionPartie.getNombresJoueursConnectes(partie);
+				int nbrJoueurs = gestionPartie.getNombreJoueursConnectes(partie);
 				donneesDesParties.get(partie.getId()).getJoueursNumTours().put(joueur.getId(), 0);
 				if (nbrJoueurs == Util.MAX_JOUEURS) {
 					partie = gestionPartie.debuterPartie(partie);
