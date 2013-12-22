@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashSet;
 
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,50 +17,54 @@ import be.ipl.finito.domaine.Partie;
 import be.ipl.finito.ucc.GestionJoueur;
 import be.ipl.finito.ucc.GestionPartie;
 
-
 /**
  * Servlet implementation class Login
  */
-@WebServlet(name="connexion.html")
+@WebServlet(name = "connexion.html")
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	@EJB
 	private GestionJoueur gestionJoueur;
-	
+
 	@EJB
 	private GestionPartie gestionPartie;
-	
-	
-	public Connexion(){
+
+	public Connexion() {
 		super();
 	}
-	
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-		if(getServletContext().getAttribute("partiesEnAttente")==null){
-			HashSet<Partie> partiesEventuellementAjouteesParDesTests = new HashSet(gestionPartie.listerPartiesEnAttente());
-			getServletContext().setAttribute("partiesEnAttente", partiesEventuellementAjouteesParDesTests);
+		HttpSession session = request.getSession();
+		ServletContext context = getServletContext();
+		synchronized (context) {
+			if (getServletContext().getAttribute("partiesEnAttente") == null) {
+				HashSet<Partie> partiesEventuellementAjouteesParDesTests = new HashSet(gestionPartie.listerPartiesEnAttente());
+				getServletContext().setAttribute("partiesEnAttente", partiesEventuellementAjouteesParDesTests);
+			}
 		}
-		
-		String pseudo = request.getParameter("pseudo");
-		String password = request.getParameter("password");
-		Joueur joueur = gestionJoueur.connexion(pseudo, password);
-		if (joueur == null) {
-			String message = "L'association pseudo/mot de passe n'est pas valide";
-			request.setAttribute("message", message);
-			getServletContext().getNamedDispatcher("index.html").forward(request, response);
-			return;
-		}
-		HttpSession session = request.getSession();		
-		synchronized (session) {
-			session.setAttribute("joueur", joueur);
-			session.setAttribute("partiesSuspendues", gestionPartie.listerPartiesEnSuspend(joueur));
+		Joueur joueur = (Joueur) session.getAttribute("joueur");
+		if (request.getParameter("pseudo") != null) {
+			String pseudo = request.getParameter("pseudo");
+			String password = request.getParameter("password");
+			joueur = gestionJoueur.connexion(pseudo, password);
+			if (joueur != null) {
+				session.setAttribute("joueur", joueur);
+			} else {
+				String message = "L'association pseudo/mot de passe n'est pas valide";
+				request.setAttribute("message", message);
+			}
 		}
 		request.setAttribute("title-html", "Lobby");
-		session.getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
+		if(joueur!=null) {
+			session.setAttribute("partiesSuspendues", gestionPartie.listerPartiesEnSuspend(joueur));
+			getServletContext().getNamedDispatcher("lobby.html").forward(request, response);
+		} else {
+			getServletContext().getNamedDispatcher("index.html").forward(request, response);
+		}
 	}
 
 	/**

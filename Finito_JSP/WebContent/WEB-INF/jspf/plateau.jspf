@@ -6,15 +6,23 @@
 <c:set var="nb_tour_partie" value="${donneesDesParties[id_partie].tour}" />
 <c:set var="nb_tour_joueur" value="${donneesDesParties[id_partie].joueursNumTours[id_joueur]}" />
 <c:set var="etat" value="${donneesDesParties[id_partie].etat}" />
+<!-- Conditions pour sortir du plateau -->
+<!-- Si le tour du joueur n'est pas le courant, il faut qu'il se mette à jour et aille chercher sa main -->
 <c:choose>
 <c:when test="${etat=='FINI'}">
-	<div id="forward"> LE FORWARD EST BIEN RAJOUTE</div>
+	<div id="forwardFini"></div>
+</c:when>
+<c:when test="${suspendu=='OUI'}">
+	<div id="forwardLobby"></div>
+</c:when>
+<c:when test="${etat=='SUSPENDU'}">
+	<div id="forwardAttente"></div>
 </c:when>
 <c:when test="${nb_tour_partie != nb_tour_joueur}">
 		<jsp:forward page="jouer.html"></jsp:forward>
 </c:when>
 </c:choose>
-
+<!-- On récupère les cases, les cases libres (sur lesquelles il doit poser son jeton) et la valeur du dé -->
 <c:set var="cases" value="${cases}" />
 <c:set var="casesLibres" value="${casesLibres}" />
 <c:set var="de" value="${donneesDesParties[id_partie].resultatDe}" />
@@ -54,6 +62,7 @@ Plateau de jeu :
 		</tr>
 	</c:forEach>
 </table>
+<!-- Si on est en phase 1, on affiche la main -->
 <c:choose>
 <c:when test="${!phase2}">
 Mes jetons en main :

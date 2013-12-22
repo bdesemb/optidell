@@ -17,9 +17,9 @@
 		<tr>
 			<td id="page_td"><div id="contenu">
 					<c:choose>
-						<c:when test="${ sessionScope.joueur != null }">
-							<c:url var="lobby" value="lobby.html" />
-							<a href="${ lobby }">Rejoindre lobby</a>
+						<c:when test="${ joueur != null }">
+							<c:url var="lobby" value="connexion.html" />
+							<a href="${lobby}">Rejoindre lobby</a>
 						</c:when>
 						<c:otherwise>
 							<div id="formulaire">
@@ -30,7 +30,7 @@
 									<input type="text" id="pseudo" name="pseudo" class=".depth"/> <br> 
 									<label for="password">Votre mot de passe :</label>
 									<input type="password" id="password" name="password" class=".depth"/> <br> <br>
-									<input class="" type="submit" value="Connexion" />
+									<input type="submit" value="Connexion" />
 								</form>
 								<c:url var="inscription" value="inscription.html" />
 								<a href="${inscription}" class="inline-link-2">S'inscrire</a>

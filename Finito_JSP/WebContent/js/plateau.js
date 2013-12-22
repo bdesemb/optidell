@@ -27,10 +27,16 @@ function refresh() {
 		type : "post",
 	});
 	$request.done(function(response, textStatus, xhr) {
-		setTimeout(refresh, 1000);
 		$('#affichage_plateau').html(response);
-		if($('#forward').length>0){
+		if($('#forwardFini').length>0){
 			window.location.href="terminer_partie.html";
+		} else if($('#forwardLobby').length>0){
+			alert("Vous avez pris trop de temps pour jouer, vous avez été suspendu.");
+			window.location.href="connexion.html";
+		} else if($('#forwardAttente').length>0){
+			window.location.href="attente.html";
+		} else {
+			setTimeout(refresh, 1000);
 		}
 	});
 	$request.fail(function(xhr, textStatus, errorThrown) {

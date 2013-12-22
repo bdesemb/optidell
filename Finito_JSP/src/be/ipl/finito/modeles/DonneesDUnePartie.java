@@ -13,7 +13,7 @@ public class DonneesDUnePartie {
 	private Timer timer;
 	private int resultatDe;
 	private int tour;
-	private Set<Integer> joueurs;
+	private Set<Integer> joueursAyantJoues;
 	private Map<Integer, Integer> joueursNumTours;
 	private String nomPartie;
 	private int nombreJoueurs;
@@ -21,7 +21,7 @@ public class DonneesDUnePartie {
 	public DonneesDUnePartie(final int id) {
 		super();
 		this.id = id;
-		joueurs = new HashSet<Integer>();
+		joueursAyantJoues = new HashSet<Integer>();
 		joueursNumTours = new HashMap<Integer, Integer>();
 	}
 	
@@ -49,14 +49,14 @@ public class DonneesDUnePartie {
 		this.resultatDe = resultatDe;
 	}
 
-	public Set<Integer> getJoueurs() {
-		return joueurs;
+	public Set<Integer> getJoueursAyantJoues() {
+		return joueursAyantJoues;
 	}
-	
-	public void setJoueurs(final Set<Integer> joueurs) {
-		this.joueurs = joueurs;
+
+	public void setJoueursAyantJoues(final Set<Integer> joueursAyantJoues) {
+		this.joueursAyantJoues = joueursAyantJoues;
 	}
-	
+
 	public Timer getTimer() {
 		return timer;
 	}
@@ -91,7 +91,7 @@ public class DonneesDUnePartie {
 	/**
 	 * @param nomPartie the nomPartie to set
 	 */
-	public final void setNomPartie(String nomPartie) {
+	public final void setNomPartie(final String nomPartie) {
 	    this.nomPartie = nomPartie;
 	}
 
@@ -105,7 +105,7 @@ public class DonneesDUnePartie {
 	/**
 	 * @param nombreJoueurs the nombreJoueurs to set
 	 */
-	public final void setNombreJoueurs(int nombreJoueurs) {
+	public final void setNombreJoueurs(final int nombreJoueurs) {
 	    this.nombreJoueurs = nombreJoueurs;
 	}
 	

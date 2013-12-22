@@ -92,6 +92,9 @@ public class RejoindrePartie extends HttpServlet {
 				gestionPartie.reprendreJoueur(partie, joueur);
 				donneesDeLaPartie.setNombreJoueurs(gestionPartie.rechercherNombreJoueursConnectes(partie));
 				session.setAttribute("id_partie", partie.getId());
+				if(donneesDeLaPartie.getNombreJoueurs()==donneesDeLaPartie.getJoueursNumTours().size()){
+					donneesDeLaPartie.setEtat("EN_COURS");
+				}
 				request.setAttribute("title-html", "Partie");
 				getServletContext().getNamedDispatcher("attente.html").forward(
 						request, response);

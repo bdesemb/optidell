@@ -5,8 +5,11 @@
 	<c:when test='${donneesDesParties[id_partie].etat=="FINI"}'>
 		<p> Partie annulée ! </p>
 	</c:when>
-	<c:when test='${donneesDesParties[id_partie].etat!="EN_COURS"}'>
+	<c:when test='${donneesDesParties[id_partie].etat=="EN_ATTENTE"}'>
 		<p> En attente des autres joueurs ... </p>
+	</c:when>
+	<c:when test='${donneesDesParties[id_partie].etat=="SUSPENDU"}'>
+		<p> Partie suspendue, en attente des joueurs manquants ... </p>
 	</c:when>
 	<c:otherwise>
 		<div id="forward"></div>

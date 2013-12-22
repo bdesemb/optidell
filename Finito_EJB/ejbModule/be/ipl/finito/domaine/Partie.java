@@ -252,6 +252,9 @@ public class Partie implements Serializable {
 				}
 			}
 			
+			public void suspendrePartie(final Partie partie) {
+				partie.setEtat(Etat.SUSPENDU);
+			}
 			
 		},
 		FINI {
