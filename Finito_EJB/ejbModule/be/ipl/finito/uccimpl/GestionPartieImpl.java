@@ -13,6 +13,7 @@ import be.ipl.finito.dao.PlateauDao;
 import be.ipl.finito.domaine.Jeton;
 import be.ipl.finito.domaine.Joueur;
 import be.ipl.finito.domaine.Partie;
+import be.ipl.finito.domaine.Partie.Etat;
 import be.ipl.finito.domaine.Plateau;
 import be.ipl.finito.ucc.GestionPartie;
 import be.ipl.finito.ucc.GestionPlateau;
@@ -148,4 +149,9 @@ public class GestionPartieImpl implements GestionPartie {
 		return nbJoueursConnectes;
 	}
 
+	public Partie annulerPartie(Partie partie) {
+		partie.setEtat(Etat.FINI);
+		partie = partieDao.mettreAJour(partie);
+		return partie;
+	}
 }

@@ -122,4 +122,11 @@ public interface GestionPartie {
 	 */
 	int rechercherNombreJoueursConnectes(Partie partieEnCours);
 
+	/**
+	 * Annule la partie passée en paramètre
+	 * @param partieEnCours la partie
+	 * @return la partie modifiée
+	 */
+	Partie annulerPartie(Partie partie);
+
 }

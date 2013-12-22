@@ -93,22 +93,25 @@ public class CreerPartie extends HttpServlet {
 					Partie partie = gestionPartie
 							.rechercherPartie((Integer) session
 									.getAttribute("id_partie"));
+					HashSet<Partie> partiesEnAttente = (HashSet<Partie>) context
+							.getAttribute("partiesEnAttente");
 					if (gestionPartie.listerPlateauxEnJeu(partie).size() >= Util.MIN_JOUEURS) {
 						partie = gestionPartie.debuterPartie(partie);
-						HashSet<Partie> partiesEnAttente = (HashSet<Partie>) context
-								.getAttribute("partiesEnAttente");
-						partiesEnAttente.remove(partie);
 						donneesDeLaPartie.setEtat(
 								partie.getEtat().toString());
 						donneesDeLaPartie.setTimer(null);
 						donneesDeLaPartie.setResultatDe(partie.getResultatDe());
 					} else {
-						System.out.println("Dans timer (else)");
-						// A faire : gestionPartie.annulerPartie();
+						partie = gestionPartie.annulerPartie(partie);
+						donneesDesParties.remove(partie.getId());
+						session.removeAttribute("id_partie");
+						
 					}
+					partiesEnAttente.remove(partie);
 				}
 			};
-			timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE*3);
+			// On le lance et on l'enregistre
+			timer.schedule(timerTask, Util.TEMPS_DEBUT_PARTIE*1000);
 			donneesDeLaPartie.setTimer(timer);
 		}
 		request.setAttribute("title-html", "Partie");

@@ -9,6 +9,7 @@ body {
 	background-image: url("../ressources/images/darth-vader-2.jpg");
 	background-repeat: no-repeat;
 	background-position: center;
+	background-attachment: fixed;
 	color: white;
 	margin: 0;
 	padding: 0;
