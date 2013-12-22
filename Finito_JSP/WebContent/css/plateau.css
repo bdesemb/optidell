@@ -1,7 +1,7 @@
 @CHARSET "ISO-8859-1";
 
 .plateau {
-	background-image: url("../ressources/images/star_wars_plateau.jpg");
+	background-image: url("../ressources/images/plateauJoueur.png");
 	background-repeat: no-repeat;
 	margin: auto;
 }
