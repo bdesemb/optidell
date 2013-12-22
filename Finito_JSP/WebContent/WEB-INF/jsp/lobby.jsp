@@ -21,7 +21,7 @@
 			</td>
 			<td id="page_td">
 				<div id="liste_suspendues">
-					<h3>Partie(s) suspendues</h3>
+					<h3>Partie(s) suspendue(s)</h3>
 					<br/>
 					<form action="rejoindrePartie.html" method="post">
 						<table id="table_lobby">

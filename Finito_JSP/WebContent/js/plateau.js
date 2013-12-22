@@ -29,7 +29,7 @@ function refresh() {
 	$request.done(function(response, textStatus, xhr) {
 		$('#affichage_plateau').html(response);
 		if($('#forwardFini').length>0){
-			window.location.href="terminer_partie.html";
+			window.location.href="afficher_scores.html";
 		} else if($('#forwardLobby').length>0){
 			alert("Vous avez pris trop de temps pour jouer, vous avez été suspendu.");
 			window.location.href="connexion.html";

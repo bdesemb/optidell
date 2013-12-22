@@ -128,7 +128,7 @@ public class JouerPartie extends HttpServlet {
 				    	if(gestionPlateau.calculerScore(p) == 12){
 				    		partie = gestionPartie.finirPartie(partie);
 							donneesDeLaPartie.setEtat("FINI");
-							getServletContext().getNamedDispatcher("terminer_partie.html").forward(request, response);
+							getServletContext().getNamedDispatcher("afficher_scores.html").forward(request, response);
 							return;
 						}
 				    }
