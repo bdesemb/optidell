@@ -20,6 +20,8 @@
 </c:if>
 
 <c:url var="inscription" value="inscription.html"/>
+<div id="formulaire">
+<h3>Inscription</h3>
 <form method="post" action="${inscription}">
 	<label for="pseudo">Votre nom :</label><input type="text" id="nom" name="nom"/><br>
 	<label for="pseudo">Votre prenom :</label><input type="text" id="prenom" name="prenom"/><br>
@@ -29,5 +31,6 @@
 	
 	<input type="submit" value="S'inscrire"/>
 </form>
+</div>
 
 </div></td></tr></table>
