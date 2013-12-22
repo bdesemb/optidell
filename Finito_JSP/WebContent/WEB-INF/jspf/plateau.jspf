@@ -52,8 +52,12 @@ Plateau de jeu :
 </table>
 
 <br/>
+<p>Suite de nombres : ${scorePerso}</p>
+<br/>
 <p>Le resulat du dé :
 ${de}</p>
+<c:choose>
+<c:when test="${!phase2}">
 Mes jetons en main :
 <br/>
 <table align="center">
@@ -66,6 +70,8 @@ Mes jetons en main :
 		</c:forEach>
 	</tr>
 </table>
+</c:when>
+</c:choose>
 
 <form id="form" action="jouer.html" method="post">
 	<input type="hidden" name="numeroJeton" value="" id="numeroJeton" /> <input

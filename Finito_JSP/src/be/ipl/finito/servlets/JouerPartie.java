@@ -156,12 +156,13 @@ public class JouerPartie extends HttpServlet {
 		session.setAttribute("cases", cases);
 		session.setAttribute("jetonsEnMain", jetonsEnMain);
 		session.setAttribute("casesLibres", casesLibres);
-		if(donneesDeLaPartie.getTour() < 11) {
+		if(donneesDeLaPartie.getTour() < 12) {
 			session.setAttribute("phase2", "false");
 		}else{
 			session.setAttribute("phase2", "true");
 		}
-
+		int scorePerso = gestionPlateau.calculerScore(plateau);
+		session.setAttribute("scorePerso", scorePerso);
 		request.setAttribute("title-html", "Partie");
 		
 		getServletContext().getNamedDispatcher("plateau.html").forward(request, response);
