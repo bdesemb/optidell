@@ -103,7 +103,7 @@ public class JouerPartie extends HttpServlet {
 		}
 		
 		if(request.getParameter("numeroJeton")!=null){
-			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").trim());
+			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").replace("jeton_", "").trim());
 			int idCase = Integer.parseInt(request.getParameter("idCase").replace("case_", "").trim());
 			// Verfie si on est dans la phase 1 ou 2
 			if(gestionPlateau.listerJetonsEnMain(plateau).size() == 0){
@@ -156,6 +156,11 @@ public class JouerPartie extends HttpServlet {
 		session.setAttribute("cases", cases);
 		session.setAttribute("jetonsEnMain", jetonsEnMain);
 		session.setAttribute("casesLibres", casesLibres);
+		if(donneesDeLaPartie.getTour() < 11) {
+			session.setAttribute("phase2", "false");
+		}else{
+			session.setAttribute("phase2", "true");
+		}
 
 		request.setAttribute("title-html", "Partie");
 		

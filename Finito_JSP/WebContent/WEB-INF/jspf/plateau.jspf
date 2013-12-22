@@ -38,9 +38,9 @@ Plateau de jeu :
 						${case.numero}
 						<c:choose>
 						<c:when test="${case.jeton != null}">
-						<div id="jeton_${case.jeton.id}" class="drag" draggable="false"
+						<div id="jeton_${case.jeton.id}" class="drag" draggable="${pasEncoreJoue && phase2}"
 							ondragstart="drag(event)" width="40" height="40">
-							<b>${case.jeton.numero}</b>
+							${case.jeton.numero}
 							</div>
 						</c:when>
 						</c:choose>

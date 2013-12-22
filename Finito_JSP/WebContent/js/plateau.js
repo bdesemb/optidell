@@ -4,6 +4,7 @@ function allowDrop(ev) {
 
 function drag(ev) {
 	ev.dataTransfer.setData("Text", ev.target.id);
+	ev.dataTransfer.setData("joue", "true");
 }
 
 function drop(ev) {
@@ -11,8 +12,8 @@ function drop(ev) {
 	var data = ev.dataTransfer.getData("Text");
 	if ($(ev.target).attr("occupe") != "true") {
 		ev.target.appendChild(document.getElementById(data));
-		var $jetonJoue = $("#plateau").find($(".drag[draggable='true']"));
-		$('#numeroJeton').val($jetonJoue.text());
+		var $jetonJoue = $(document.getElementById(data));
+		$('#numeroJeton').val($jetonJoue.attr("id"));
 		var $case = $(ev.target);
 		$('#idCase').val($case.attr("id"));
 		$("#form").submit();
