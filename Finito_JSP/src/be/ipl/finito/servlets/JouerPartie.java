@@ -121,9 +121,12 @@ public class JouerPartie extends HttpServlet {
 				if(gestionPlateau.listerJetonsEnMain(plateau).size() == 0){
 				    List<Plateau> listePlateau = gestionPartie.listerPlateauxEnJeu(partie);
 				    for (Plateau p : listePlateau){
-					if(gestionPlateau.calculerScore(p) == 12){
-					    gestionPartie.finirPartie(partie);
-					}
+				    	if(gestionPlateau.calculerScore(p) == 12){
+				    		gestionPartie.finirPartie(partie);
+				    		donneesDeLaPartie.setEtat("fini");
+				    		getServletContext().getNamedDispatcher("terminer_partie.html").forward(request, response);
+					    	return;
+						}
 				    }
 				}
 				

@@ -128,16 +128,16 @@ a:before {
 	width: 500px;
 	height: 5px;
     background-color: white;
-    animation: progressionAttente 15s;
-    -webkit-animation: progressionAttente 15s;
+    animation: progressionAttente 15s linear;
+    -webkit-animation: progressionAttente 15s linear;
 }
 
 #barre_temps {
 	width: 0px;
 	height: 5px;
     background-color: green;
-    animation: progressionTempsRestant 30s;
-    -webkit-animation: progressionTempsRestant 30s;
+    animation: progressionTempsRestant 30s linear;
+    -webkit-animation: progressionTempsRestant 30s linear;
 }
 
 /* Pour la police personnalisée */

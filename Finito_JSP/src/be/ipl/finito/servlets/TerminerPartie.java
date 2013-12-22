@@ -37,22 +37,25 @@ public class TerminerPartie extends HttpServlet {
 	@EJB
 	GestionJoueur gestionJoueur;
        
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int idPartie = (Integer)session.getAttribute("id_partie");
 		List<Plateau> plateauxDeLaPartie = gestionPartie.listerPlateauxEnJeu(gestionPartie.rechercherPartie(idPartie));
 		Vector<JoueurFinDePartie> joueursDeLaPartie = new Vector<JoueurFinDePartie>(3);
 		for (Plateau p : plateauxDeLaPartie) {
 			JoueurFinDePartie joueur = new JoueurFinDePartie(p.getJoueur(), gestionPlateau.calculerScore(p));
-			List<Case> casesDuJoueur = p.getCases();
+			List<Case> casesDuJoueur = gestionPlateau.listerCases(p);
 			for(Case c : casesDuJoueur) {
 				int cpt = 0;
-				joueur.setJeton(cpt/6, (cpt++)%6, c.getJeton().getNumero());
-				joueur.setCase(cpt/6, (cpt++)%6, c.getNumero());
+				if(c.getJeton()!=null) {
+					joueur.setJeton(cpt/6, cpt%6, c.getJeton().getNumero());
+				}
+				joueur.setCase(cpt/6, cpt%6, c.getNumero());
+				cpt++;
 			}
 			joueursDeLaPartie.add(joueur);
 		}
