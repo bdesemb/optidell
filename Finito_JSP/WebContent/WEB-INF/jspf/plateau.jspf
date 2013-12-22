@@ -22,7 +22,7 @@
 
 Plateau de jeu :
 <br/>
-<table id="plateau">
+<table class="plateau">
 	<c:forEach var="i" begin="0" end="5">
 		<tr>
 			<c:forEach var="j" begin="0" end="5">

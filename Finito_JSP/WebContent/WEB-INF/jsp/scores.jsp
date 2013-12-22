@@ -43,19 +43,24 @@
 		</table>
 	</c:forEach> --%>
 	<!-- fin forEach plateau -->
-	<c:set var="position" value="0" />
+<table id="page_table">
+  <tr>
+   <td id="page_td"><div id="contenu">
+	<c:set var="id_plateau" value="0" />
 	<c:forEach var="plateau" items="${plateaux}">
+		<c:set var="position" value="0" />
+		<c:set var="cases" value="${mapPlateaux_idCases[id_plateau].cases}" />
 		Le joueur "${plateau.joueur.login}"
-		<table class="plateau">
+		<table id="plateau">
 			<c:forEach var="y" begin="0" end="5">
 				<tr>
 					<c:forEach var="j" begin="0" end="5">
-						<c:set var="case" value="${plateau.cases[position]}" />
-						<td><div id="case_${case.id}" class="div2">
+						<c:set var="case" value="${cases[position]}" />
+						<td><div class="div1">
 								${case.numero}
 								<c:choose>
 									<c:when test="${case.jeton != null}">
-										<div id="jeton_${case.jeton.id}" class="drag" width="40"
+										<div class="drag" width="40"
 											height="40">${case.jeton.numero}</div>
 									</c:when>
 								</c:choose>
@@ -65,8 +70,7 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<c:set var="id_plateau" value="${id_plateau +1}" />
 		<c:set var="position" value="0" />
 	</c:forEach>
-
-</body>
-</html>
+</div></td></tr></table>

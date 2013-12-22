@@ -1,6 +1,6 @@
 @CHARSET "ISO-8859-1";
 
-#plateau {
+.plateau {
 	background-image: url("../ressources/images/star_wars_plateau.jpg");
 	background-repeat: no-repeat;
 	margin: auto;

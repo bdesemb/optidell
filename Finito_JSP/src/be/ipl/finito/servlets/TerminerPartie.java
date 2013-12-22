@@ -1,7 +1,9 @@
 package be.ipl.finito.servlets;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.ejb.EJB;
@@ -65,10 +67,18 @@ public class TerminerPartie extends HttpServlet {
 		}
 		Partie partie = gestionPartie.rechercherPartie(idPartie);
 		List<Plateau> plateaux = gestionPartie.listerPlateauxEnJeu(partie);
+		Map<Integer, List<Case>> mapPlateaux_idCases = new HashMap<Integer, List<Case>>();
 		for (Plateau p : plateaux) {
-			gestionPlateau.listerCases(p);
+			List<Case> cases = gestionPlateau.listerCases(p);
+			mapPlateaux_idCases.put(p.getId(), cases);
+			for (Case uneCase : cases){
+				if(uneCase.getJeton() != null){
+					System.out.println("joueur :" +p.getJoueur().getLogin() +", case : "+uneCase.getNumero()+", jeton : " +uneCase.getJeton().getNumero());
+				}
+			}
 		}
 		session.setAttribute("plateaux", plateaux);
+		session.setAttribute("mapPlateaux_idCases", mapPlateaux_idCases);
 		getServletContext().getNamedDispatcher("scores.html").forward(request, response);
 	}
 
