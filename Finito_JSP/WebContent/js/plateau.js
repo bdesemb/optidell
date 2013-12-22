@@ -27,11 +27,11 @@ function refresh() {
 		type : "post",
 	});
 	$request.done(function(response, textStatus, xhr) {
-		if (response.indexOf("vainqueur") == -1) {
-			setTimeout(refresh, 1000);
-
-		}
+		setTimeout(refresh, 1000);
 		$('#affichage_plateau').html(response);
+		if($('#forward').length>0){
+			window.location.href="terminer_partie.html";
+		}
 	});
 	$request.fail(function(xhr, textStatus, errorThrown) {
 		alert(errorThrown);

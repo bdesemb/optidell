@@ -17,12 +17,10 @@
 		<tr>
 			<td id="page_td"><div id="contenu">
 					<div id="affichage_plateau"></div>
-					<c:choose>
-						<c:when test="${pasEncoreJoue=='true'}">
+					<c:choose><c:when test="${pasEncoreJoue=='true'}">
 						Temps restant : <br>
 						<div id="barre_temps"></div>
-						</c:when>
-					</c:choose>
+					</c:when></c:choose>
 				</div></td>
 		</tr>
 	</table>

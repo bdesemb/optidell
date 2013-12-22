@@ -6,23 +6,22 @@
 		<div id="erreur">${message}</div>
 	</c:if>
 
-	<c:if test="${ sessionScope.joueur != null}">
+	<c:if test="${ joueur != null}">
 		<div id="entete">
-			Connecté: ${ sessionScope.joueur.login }
+			Connecté: ${joueur.login}
 			<c:url var="deconnexion" value="deconnexion.html" />
-			<a href="${ deconnexion }">Se déconnecter</a>
+			<a href="${deconnexion}">Se déconnecter</a>
 		</div>
 	</c:if>
 
-	<c:forEach var="i" begin="0"
-		end="${ donnesDesParties[id_partie].nombreJoueurs-1 }">
+	<c:forEach var="i" begin="0" end="1">
 		<c:set var="idPlateau" value="plateau${i}" />
 		<div>
-			Le joueur ${ joueursDeLaPartie[i].joueur.prenom } "${ joueursDeLaPartie[i].joueur.login }"
-			${ joueursDeLaPartie[i].joueur.nom } a fait une suite de
-			<div id="score${i}">${ joueursDeLaPartie[i].score }nombre(s).</div>
+			Le joueur ${ joueursDeLaPartie[i].joueur.prenom} "${joueursDeLaPartie[i].joueur.login}"
+			${joueursDeLaPartie[i].joueur.nom} a fait une suite de
+			<div id="score${i}">${joueursDeLaPartie[i].score}nombre(s).</div>
 		</div>
-		<c:if test="${ joueursDeLaPartie.score == 12 }">
+		<c:if test="${ joueursDeLaPartie.score == '12' }">
 			<div id="win">Vainqueur</div>
 		</c:if>
 		<table id="${idPlateau }">

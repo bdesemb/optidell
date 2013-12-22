@@ -5,7 +5,11 @@
 <c:set var="id_joueur" value="${joueur.id}"/>
 <c:set var="nb_tour_partie" value="${donneesDesParties[id_partie].tour}" />
 <c:set var="nb_tour_joueur" value="${donneesDesParties[id_partie].joueursNumTours[id_joueur]}" />
+<c:set var="etat" value="${donneesDesParties[id_partie].etat}" />
 <c:choose>
+<c:when test="${etat=='FINI'}">
+	<div id="forward"> LE FORWARD EST BIEN RAJOUTE</div>
+</c:when>
 <c:when test="${nb_tour_partie != nb_tour_joueur}">
 		<jsp:forward page="jouer.html"></jsp:forward>
 </c:when>
@@ -50,16 +54,9 @@ Plateau de jeu :
 		</tr>
 	</c:forEach>
 </table>
-
-<br/>
-<p>Suite de nombres : ${scorePerso}</p>
-<br/>
-<p>Le resulat du dé :
-${de}</p>
 <c:choose>
 <c:when test="${!phase2}">
 Mes jetons en main :
-<br/>
 <table align="center">
 	<tr>
 		<c:forEach var="jetonsEnMain" items="${jetonsEnMain}">
@@ -72,6 +69,10 @@ Mes jetons en main :
 </table>
 </c:when>
 </c:choose>
+<p>Suite de nombres : ${scorePerso}</p>
+
+<p>Le resulat du dé :
+${de}</p>
 
 <form id="form" action="jouer.html" method="post">
 	<input type="hidden" name="numeroJeton" value="" id="numeroJeton" /> <input

@@ -9,6 +9,6 @@
 		<p> En attente des autres joueurs ... </p>
 	</c:when>
 	<c:otherwise>
-		<form id="forward" action="jouer.html" method="get"></form>
+		<div id="forward"></div>
 	</c:otherwise>
 </c:choose>

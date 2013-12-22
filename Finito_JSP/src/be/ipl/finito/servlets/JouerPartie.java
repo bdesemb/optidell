@@ -75,7 +75,6 @@ public class JouerPartie extends HttpServlet {
 		
 		HttpSession session = request.getSession(false);
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
-		System.out.println(joueur+" "+(joueur!=null?joueur.getLogin():"")+ " " +session);
 		final int idPartie = (Integer) session.getAttribute("id_partie");
 		Partie partie = gestionPartie.rechercherPartie(idPartie);
 		Plateau plateau = gestionPlateau.rechercherPlateau(idPartie, joueur.getId());
@@ -94,9 +93,6 @@ public class JouerPartie extends HttpServlet {
 				}
 			}
 		};
-		if(partie.getEtat() == Partie.Etat.FINI){
-		    //Il faut forward vers la page de fin de partie
-		}
 		
 		if(donneesDeLaPartie.getJoueursNumTours().get(joueur.getId()) < donneesDesParties.get(partie.getId()).getTour()) {
 			donneesDeLaPartie.getJoueursNumTours().put(joueur.getId(), donneesDesParties.get(partie.getId()).getJoueursNumTours().get(joueur.getId())+1);
@@ -118,14 +114,12 @@ public class JouerPartie extends HttpServlet {
 					donneesDeLaPartie.getTimer().cancel();
 				}
 				// Verifie les scores à la fin de chaque tour pour voir si un joueur à gagner
-				if(gestionPlateau.listerJetonsEnMain(plateau).size() == 0){
+				if(donneesDeLaPartie.getTour()>=3){
 				    List<Plateau> listePlateau = gestionPartie.listerPlateauxEnJeu(partie);
 				    for (Plateau p : listePlateau){
-				    	if(gestionPlateau.calculerScore(p) == 12){
+				    	if(gestionPlateau.calculerScore(p) >= 2){
 				    		gestionPartie.finirPartie(partie);
 				    		donneesDeLaPartie.setEtat("fini");
-				    		getServletContext().getNamedDispatcher("terminer_partie.html").forward(request, response);
-					    	return;
 						}
 				    }
 				}

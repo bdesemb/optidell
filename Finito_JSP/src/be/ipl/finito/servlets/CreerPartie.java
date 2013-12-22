@@ -97,7 +97,6 @@ public class CreerPartie extends HttpServlet {
 						HashSet<Partie> partiesEnAttente = (HashSet<Partie>) context
 								.getAttribute("partiesEnAttente");
 						partiesEnAttente.remove(partie);
-						//context.setAttribute("partiesEnAttente", partiesEnAttente);
 						donneesDeLaPartie.setEtat(
 								partie.getEtat().toString());
 						donneesDeLaPartie.setTimer(null);
