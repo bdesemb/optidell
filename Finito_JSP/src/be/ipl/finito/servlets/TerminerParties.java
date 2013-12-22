@@ -16,8 +16,8 @@ import be.ipl.finito.modeles.DonneesDUnePartie;
 /**
  * Servlet implementation class QuitterPartie
  */
-@WebServlet(name = "afficher_scores.html")
-public class AfficherScores extends HttpServlet {
+@WebServlet(name = "terminer_partie.html")
+public class TerminerParties extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {

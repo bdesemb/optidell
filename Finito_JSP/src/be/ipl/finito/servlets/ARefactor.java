@@ -28,7 +28,7 @@ import be.ipl.finito.ucc.GestionPlateau;
  * 
  */
 @WebServlet(name = "terminer_partie.html")
-public class TerminerPartie extends HttpServlet {
+public class ARefactor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB

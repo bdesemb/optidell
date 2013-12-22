@@ -50,7 +50,7 @@
 		<c:set var="position" value="0" />
 		<c:set var="cases" value="${mapPlateaux_idCases[plateau.id]}" />
 		<div class="plateauJoueur">
-		Joueur :  "${plateau.joueur.login}"<br>
+		Joueur :  "${plateau.joueur.login}" <c:choose><c:when test="${mapPlateaux_idScore[plateau.id]==12}">(Gagnant)</c:when></c:choose><br>
 		Serie : ${mapPlateaux_idScore[plateau.id]}
 		<table class="plateauScore">
 			<c:forEach var="y" begin="0" end="5">
