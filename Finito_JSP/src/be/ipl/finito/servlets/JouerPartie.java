@@ -119,7 +119,7 @@ public class JouerPartie extends HttpServlet {
 				    for (Plateau p : listePlateau){
 				    	if(gestionPlateau.calculerScore(p) >= 2){
 				    		gestionPartie.finirPartie(partie);
-				    		donneesDeLaPartie.setEtat("fini");
+							donneesDeLaPartie.setEtat("FINI");
 						}
 				    }
 				}
