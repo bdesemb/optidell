@@ -59,10 +59,10 @@ Plateau de jeu :
 Mes jetons en main :
 <table align="center">
 	<tr>
-		<c:forEach var="jetonsEnMain" items="${jetonsEnMain}">
-			<td><div id="jeton_${jetonsEnMain.id}" class="drag"
+		<c:forEach var="jetonEnMain" items="${jetonsEnMain}">
+			<td><div id="jeton_${jetonEnMain.id}" class="drag"
 					draggable="${pasEncoreJoue}" ondragstart="drag(event)" width="40" height="40">
-					<b>${jetonsEnMain.numero}</b>
+					<b>${jetonEnMain.numero}</b>
 				</div></td>
 		</c:forEach>
 	</tr>

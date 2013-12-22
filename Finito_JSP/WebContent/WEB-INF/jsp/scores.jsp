@@ -14,7 +14,7 @@
 		</div>
 	</c:if>
 
-	<c:forEach var="i" begin="0" end="1">
+	<%-- <c:forEach var="i" begin="0" end="1">
 		<c:set var="idPlateau" value="plateau${i}" />
 		<div>
 			Le joueur ${ joueursDeLaPartie[i].joueur.prenom} "${joueursDeLaPartie[i].joueur.login}"
@@ -41,8 +41,32 @@
 			</c:forEach>
 			<!-- fin forEach ligne -->
 		</table>
-	</c:forEach>
+	</c:forEach> --%>
 	<!-- fin forEach plateau -->
+	<c:set var="position" value="0" />
+	<c:forEach var="plateau" items="${plateaux}">
+		Le joueur "${plateau.joueur.login}"
+		<table class="plateau">
+			<c:forEach var="y" begin="0" end="5">
+				<tr>
+					<c:forEach var="j" begin="0" end="5">
+						<c:set var="case" value="${plateau.cases[position]}" />
+						<td><div id="case_${case.id}" class="div2">
+								${case.numero}
+								<c:choose>
+									<c:when test="${case.jeton != null}">
+										<div id="jeton_${case.jeton.id}" class="drag" width="40"
+											height="40">${case.jeton.numero}</div>
+									</c:when>
+								</c:choose>
+							</div></td>
+						<c:set var="position" value="${position +1}" />
+					</c:forEach>
+				</tr>
+			</c:forEach>
+		</table>
+		<c:set var="position" value="0" />
+	</c:forEach>
 
 </body>
 </html>

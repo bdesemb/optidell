@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import be.ipl.finito.domaine.Case;
+import be.ipl.finito.domaine.Partie;
 import be.ipl.finito.domaine.Plateau;
 import be.ipl.finito.modeles.JoueurFinDePartie;
 import be.ipl.finito.ucc.GestionJoueur;
@@ -62,6 +63,12 @@ public class TerminerPartie extends HttpServlet {
 		synchronized (session) {
 			session.setAttribute("listeJoueurs", joueursDeLaPartie);
 		}
+		Partie partie = gestionPartie.rechercherPartie(idPartie);
+		List<Plateau> plateaux = gestionPartie.listerPlateauxEnJeu(partie);
+		for (Plateau p : plateaux) {
+			gestionPlateau.listerCases(p);
+		}
+		session.setAttribute("plateaux", plateaux);
 		getServletContext().getNamedDispatcher("scores.html").forward(request, response);
 	}
 
