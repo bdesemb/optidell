@@ -27,7 +27,7 @@ import be.ipl.finito.ucc.GestionPlateau;
  * @author Marjorie
  * 
  */
-@WebServlet(name = "terminer_partie.html")
+@WebServlet(name = "afficher_scores.html")
 public class AfficherScores extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
