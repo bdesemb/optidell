@@ -52,7 +52,7 @@
 		<div class="plateauJoueur">
 		Joueur :  "${plateau.joueur.login}"<br>
 		Serie : ${mapPlateaux_idScore[plateau.id]}
-		<table class="plateau">
+		<table class="plateauScore">
 			<c:forEach var="y" begin="0" end="5">
 				<tr>
 					<c:forEach var="j" begin="0" end="5">
