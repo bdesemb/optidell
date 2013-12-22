@@ -94,7 +94,7 @@ public class GestionPartieImpl implements GestionPartie {
 		for(int i = 0; i<listeDePlateau.size(); i++){
 		    score[i] = gestionPlateau.calculerScore(listeDePlateau.get(i));
 		}
-		partieDao.mettreAJour(partie);
+		partie = partieDao.mettreAJour(partie);
 		return score;
 	}
 
@@ -141,7 +141,7 @@ public class GestionPartieImpl implements GestionPartie {
 		return partie.getPlateauEnJeu();
 	}
 	
-	public int rechercherNombreJoueursConnectes(Partie partieEnCours){
+	public int rechercherNombreJoueursConnectes(final Partie partieEnCours){
 		List<Plateau> plateauxEnJeu = listerPlateauxEnJeu(partieEnCours);
 		int nbJoueursConnectes = plateauxEnJeu.size();
 		for(Plateau p : plateauxEnJeu){

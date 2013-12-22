@@ -142,9 +142,9 @@ public class GestionPlateauImpl implements GestionPlateau{
 		final int numeroJeton) {
 	    List<Case>listeDeCase = listerCases(plateau);
 	    for(Case c : listeDeCase){
-		if(c.getJeton().getNumero() == numeroJeton) {
-			return c;
-		}
+	    	if(c.getJeton()!=null && c.getJeton().getNumero() == numeroJeton) {
+				return c;
+			}
 	    }
 	    return null;
 	}
