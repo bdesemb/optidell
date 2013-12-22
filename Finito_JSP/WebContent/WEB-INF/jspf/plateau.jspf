@@ -78,7 +78,6 @@ Mes jetons en main :
 </table>
 </c:when>
 </c:choose>
-<p>Suite de nombres : ${scorePerso}</p>
 
 <p>Le resulat du dé :
 ${de}</p>

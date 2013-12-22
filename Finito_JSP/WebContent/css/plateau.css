@@ -5,6 +5,12 @@
 	background-repeat: no-repeat;
 	margin: auto;
 }
+.plateauJoueur{
+	background-image: url("../ressources/images/plateauJoueur.png");
+	background-repeat: no-repeat;
+	opacity: 0.8;
+	filter: alpha(opacity = 80);
+}
 
 .div1 {
 	width: 50px;

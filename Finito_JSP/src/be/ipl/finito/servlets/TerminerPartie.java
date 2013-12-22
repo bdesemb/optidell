@@ -68,17 +68,15 @@ public class TerminerPartie extends HttpServlet {
 		Partie partie = gestionPartie.rechercherPartie(idPartie);
 		List<Plateau> plateaux = gestionPartie.listerPlateauxEnJeu(partie);
 		Map<Integer, List<Case>> mapPlateaux_idCases = new HashMap<Integer, List<Case>>();
+		Map<Integer, Integer> mapPlateaux_idScore = new HashMap<Integer, Integer>();
 		for (Plateau p : plateaux) {
 			List<Case> cases = gestionPlateau.listerCases(p);
 			mapPlateaux_idCases.put(p.getId(), cases);
-			for (Case uneCase : cases){
-				if(uneCase.getJeton() != null){
-					System.out.println("joueur :" +p.getJoueur().getLogin() +", case : "+uneCase.getNumero()+", jeton : " +uneCase.getJeton().getNumero());
-				}
-			}
+			mapPlateaux_idScore.put(p.getId(), gestionPlateau.calculerScore(p));
 		}
 		session.setAttribute("plateaux", plateaux);
 		session.setAttribute("mapPlateaux_idCases", mapPlateaux_idCases);
+		session.setAttribute("mapPlateaux_idScore", mapPlateaux_idScore);
 		getServletContext().getNamedDispatcher("scores.html").forward(request, response);
 	}
 

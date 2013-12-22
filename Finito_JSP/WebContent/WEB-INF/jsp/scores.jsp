@@ -46,11 +46,12 @@
 <table id="page_table">
   <tr>
    <td id="page_td"><div id="contenu">
-	<c:set var="id_plateau" value="0" />
 	<c:forEach var="plateau" items="${plateaux}">
 		<c:set var="position" value="0" />
-		<c:set var="cases" value="${mapPlateaux_idCases[id_plateau].cases}" />
-		Le joueur "${plateau.joueur.login}"
+		<c:set var="cases" value="${mapPlateaux_idCases[plateau.id]}" />
+		<div class="plateauJoueur">
+		Joueur :  "${plateau.joueur.login}"<br>
+		Serie : ${mapPlateaux_idScore[plateau.id]}
 		<table id="plateau">
 			<c:forEach var="y" begin="0" end="5">
 				<tr>
@@ -70,7 +71,11 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<c:set var="id_plateau" value="${id_plateau +1}" />
+		</div>
 		<c:set var="position" value="0" />
 	</c:forEach>
+	<form id="form" action="connexion.html" method="post">
+	<input type="submit" value="Lobby"> 
+</form>
 </div></td></tr></table>
+
