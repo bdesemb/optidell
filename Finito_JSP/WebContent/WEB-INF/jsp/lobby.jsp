@@ -35,11 +35,6 @@
 							<tbody>
 								<c:forEach var="partie" items="${partiesSuspendues}">
 								<tr>
-									<!-- <td id="td_lobby"><input type="radio" name="radio_partie" value="${partie.id}"
-										id="${partie.id}" />
-									<td id="td_lobby"><label for="${partie.id}">"${partie.id}"
-										${donneesDesParties[partie.id].nombreJoueurs}</label>
-									<br />-->
 									<td id="td_lobby"><label for="${partie.id}">${donneesDesParties[partie.id].nomPartie}</label></td>
 									<td id="td_lobby"><label for="${partie.id}">${donneesDesParties[partie.id].nombreJoueurs}</label></td>
 									<td id="td_lobby"><input type="radio" name="radio_partie"

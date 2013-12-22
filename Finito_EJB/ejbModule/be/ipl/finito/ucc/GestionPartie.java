@@ -65,7 +65,7 @@ public interface GestionPartie {
 	 * @param partie
 	 * @return la table des scores
 	 */
-	int[] finirPartie(Partie partie);
+	Partie finirPartie(Partie partie);
 
 	/**
 	 * Débute une partie
@@ -80,8 +80,9 @@ public interface GestionPartie {
 	 * 
 	 * @param partie
 	 * @param joueur
+	 * @return 
 	 */
-	void reprendreJoueur(Partie partie, Joueur joueur);
+	Partie reprendreJoueur(Partie partie, Joueur joueur);
 
 	/**
 	 * Renvoie la liste des parties en attente

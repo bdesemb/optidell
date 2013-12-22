@@ -71,7 +71,7 @@ public class Connexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getNamedDispatcher("index.html").forward(request, response);
+		doPost(request, response);
 	}
 
 }

@@ -87,15 +87,10 @@ public class GestionPartieImpl implements GestionPartie {
 		partieDao.mettreAJour(partie);
 	}
 
-	public int[] finirPartie(Partie partie) {
-		partie = partieDao.chargerPlateaux(partie);
-		List<Plateau> listeDePlateau = partie.getPlateauEnJeu();
-		int[] score = new int[listeDePlateau.size()];
-		for(int i = 0; i<listeDePlateau.size(); i++){
-		    score[i] = gestionPlateau.calculerScore(listeDePlateau.get(i));
-		}
+	public Partie finirPartie(Partie partie) {
+		partie.finirPartie();
 		partie = partieDao.mettreAJour(partie);
-		return score;
+		return partie;
 	}
 
 	@Override
@@ -123,12 +118,13 @@ public class GestionPartieImpl implements GestionPartie {
 	}
 
 	@Override
-	public void reprendreJoueur(Partie partie, final Joueur joueur) {
+	public Partie reprendreJoueur(Partie partie, final Joueur joueur) {
 		partie = partieDao.chargerPlateaux(partie);
 		Plateau plateau = plateauDao.recherchePlateauPourJoueurEtPartie(partie.getId(), joueur.getId());
 		partie.reprendreJoueur(plateau);
 		plateauDao.mettreAJour(plateau);
-		partieDao.mettreAJour(partie);
+		partie = partieDao.mettreAJour(partie);
+		return partie;
 	}
 
 	@Override

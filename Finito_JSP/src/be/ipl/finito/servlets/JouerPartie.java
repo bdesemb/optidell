@@ -97,7 +97,12 @@ public class JouerPartie extends HttpServlet {
 		
 		// #### SI LE JOUEUR A JOUE #### Il a donc envoyé un numéro de jeton en POST
 		if(request.getParameter("numeroJeton")!=null){
-			int numeroJeton = Integer.parseInt(request.getParameter("numeroJeton").replace("jeton_", "").trim());
+			String strNumeroJeton = request.getParameter("numeroJeton").replace("jeton_", "").trim();
+			if(strNumeroJeton.equals("")){
+				getServletContext().getNamedDispatcher("plateau.html").forward(request, response);
+				return;
+			}
+			int numeroJeton = Integer.parseInt(strNumeroJeton);
 			int idCase = Integer.parseInt(request.getParameter("idCase").replace("case_", "").trim());
 			// Si on est en phase 1 ou en phase 2, on place ou on déplace
 			if(phase==2){
@@ -121,8 +126,10 @@ public class JouerPartie extends HttpServlet {
 				    List<Plateau> listePlateau = gestionPartie.listerPlateauxEnJeu(partie);
 				    for (Plateau p : listePlateau){
 				    	if(gestionPlateau.calculerScore(p) == 12){
-				    		gestionPartie.finirPartie(partie);
+				    		partie = gestionPartie.finirPartie(partie);
 							donneesDeLaPartie.setEtat("FINI");
+							getServletContext().getNamedDispatcher("terminer_partie.html").forward(request, response);
+							return;
 						}
 				    }
 				}
@@ -162,15 +169,12 @@ public class JouerPartie extends HttpServlet {
 		session.setAttribute("jetonsEnMain", jetonsEnMain);
 		session.setAttribute("casesLibres", casesLibres);
 		// Si le joueur est suspendu
-		System.out.println("Suspendu ?" +plateau.isSuspendu());
 		session.setAttribute("suspendu", (plateau.isSuspendu()?"OUI":"NON"));
 		if(phase==1) {
 			session.setAttribute("phase2", "false");
 		}else{
 			session.setAttribute("phase2", "true");
 		}
-		int scorePerso = gestionPlateau.calculerScore(plateau);
-		session.setAttribute("scorePerso", scorePerso);
 		request.setAttribute("title-html", "Partie");
 		
 		getServletContext().getNamedDispatcher("plateau.html").forward(request, response);

@@ -77,7 +77,7 @@
 		<br>
 		<c:set var="position" value="0" />
 	</c:forEach>
-	<form id="form" action="connexion.html" method="post">
+	<form id="form" action="quitter_partie.html" method="get">
 	<input type="submit" value="Lobby"> 
 </form>
 </div></td></tr></table>

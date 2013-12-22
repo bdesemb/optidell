@@ -241,19 +241,19 @@ public class Partie implements Serializable {
 					final Partie partie) {
 				plateau.setSuspendu(false);
 				List<Plateau> plateauDeJeu = partie.getPlateauEnJeu();
-				int nbJoueurPret = 0;
+				int nbJoueursPrets = 0;
 				for (Plateau p : plateauDeJeu) {
-					if (p.isSuspendu() == false) {
-						nbJoueurPret++;
+					if (!p.isSuspendu()) {
+						nbJoueursPrets++;
 					}
 				}
-				if (nbJoueurPret == plateauDeJeu.size()) {
+				if (nbJoueursPrets == plateauDeJeu.size()) {
 					partie.setEtat(EN_COURS);
 				}
 			}
 			
 			public void suspendrePartie(final Partie partie) {
-				partie.setEtat(Etat.SUSPENDU);
+				partie.setEtat(Etat.SUSPENDU); // Inutile, évite juste un bug
 			}
 			
 		},
