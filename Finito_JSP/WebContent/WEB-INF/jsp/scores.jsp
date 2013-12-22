@@ -52,7 +52,7 @@
 		<div class="plateauJoueur">
 		Joueur :  "${plateau.joueur.login}"<br>
 		Serie : ${mapPlateaux_idScore[plateau.id]}
-		<table id="plateau">
+		<table class="plateau">
 			<c:forEach var="y" begin="0" end="5">
 				<tr>
 					<c:forEach var="j" begin="0" end="5">
@@ -71,7 +71,10 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<br><br>
 		</div>
+		<br>
+		<br>
 		<c:set var="position" value="0" />
 	</c:forEach>
 	<form id="form" action="connexion.html" method="post">
